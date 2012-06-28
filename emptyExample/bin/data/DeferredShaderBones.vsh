@@ -14,7 +14,7 @@ uniform mat4 objectMatrix ;
 uniform mat4 normalMatrix ;
 uniform mat4 worldMatrix ;
 uniform mat4 boneMatrixList[22];
-
+uniform mat4 boneNormalMatrixList[22];
 uniform mat4 perspectiveMatrix ;
 
 
@@ -35,9 +35,9 @@ void main()
     gl_Position = perspectiveMatrix *worldSpace;
 
     
-  
-    vec4 normalL = normalMatrix*normal;
-    normal_var = (normalL ).xyz; // normalWorldMatrix*
+  vec4 normalB  =  (boneNormalMatrixList[int(ids.x)] *normal *weights.x) +(boneNormalMatrixList[int(ids.y)] * normal *weights.y)  ;
+    vec4 normalL = normalMatrix*normalB ;
+    normal_var = normalize(normalL.xyz); // normalWorldMatrix*
     uv_var =uv;
 
 

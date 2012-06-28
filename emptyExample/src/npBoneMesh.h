@@ -18,8 +18,8 @@ public:
 	npBone * rootBone;
 	string name;
 	
-
-	float* matrixes;
+	float* normalMatrices;
+	float* boneMatrices;
 	float time;
 };
 

@@ -125,6 +125,7 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClCompile Include="src\npDeferredBuffers.cpp" />
     <ClCompile Include="src\npDeferredFinal.cpp" />
     <ClCompile Include="src\npDirectionalLight.cpp" />
+    <ClCompile Include="src\npMaterial.cpp" />
     <ClCompile Include="src\npMesh.cpp" />
     <ClCompile Include="src\npMeshRendererColor.cpp" />
     <ClCompile Include="src\npMeshRendererDifText.cpp" />

@@ -29,12 +29,14 @@ void npBoneMeshRenderer::setup()
     uWorldMatrix = glGetUniformLocation(program,"worldMatrix");
     uPerspectiveMatrix = glGetUniformLocation(program,"perspectiveMatrix");
     uBoneMatrixList = glGetUniformLocation(program,"boneMatrixList");
+	uBoneNormalMatrixList = glGetUniformLocation(program,"boneNormalMatrixList");
     glUseProgram(0);
 }
 
 
 void  npBoneMeshRenderer::start(npCamera *cam)
 {
+	glEnable(GL_TEXTURE_2D);
     glUseProgram(program);
     glUniformMatrix4fv(uWorldMatrix, 1, 0,  cam->worldMatrix.getPtr());
     glUniformMatrix4fv(uPerspectiveMatrix, 1, 0,   cam->perspectiveMatrix.getPtr());
@@ -50,7 +52,7 @@ void  npBoneMeshRenderer::start(npCamera *cam)
 void  npBoneMeshRenderer::draw(const npBoneMesh *mesh)
 {
     glBindBuffer(GL_ARRAY_BUFFER,mesh->vertexBuffer);
-    
+	glBindTexture(GL_TEXTURE_2D,mesh->material.diffuseTexture);
 	
     glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 12,(GLvoid*) (sizeof(float) * 0));
     glVertexAttribPointer(ATTRIB_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 12,(GLvoid*) (sizeof(float) *3 ));
@@ -62,7 +64,8 @@ void  npBoneMeshRenderer::draw(const npBoneMesh *mesh)
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  mesh->indexBuffer);
     glUniformMatrix4fv(uObjectMatrix, 1, 0,  mesh->objectMatrix.getPtr());
     glUniformMatrix4fv(uNormalMatrix, 1, 0,   mesh->normalMatrix.getPtr());
-    glUniformMatrix4fv( uBoneMatrixList,22,0, mesh->matrixes);
+    glUniformMatrix4fv( uBoneMatrixList,22,0, mesh->boneMatrices);
+	 glUniformMatrix4fv( uBoneNormalMatrixList,22,0, mesh->normalMatrices);
     glDrawElements(GL_TRIANGLES,mesh->numIndices , GL_UNSIGNED_INT, (void*)0);
 
 

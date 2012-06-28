@@ -11,14 +11,15 @@ npBoneMesh::~npBoneMesh(void)
 }
 void npBoneMesh::prepBones()
 {
-	matrixes =new float[22*16];
-	for (int i=0;i< bones.size();i++)
+	boneMatrices =new float[22*16];
+	normalMatrices =new float[22*16];
+	/*for (int i=0;i< bones.size();i++)
 	{
 		//bones[i]->boneMatrix.makeInvertOf(bones[i]->nodeMatrix);
 		if (i<5){	cout <<bones[i]->name<<endl;
 		cout <<bones[i]->nodeMatrix<< endl<< endl;
 		cout <<bones[i]->boneMatrix<< endl<<endl<< endl;}
-	}
+	}*/
 
 	time =0;
 }
@@ -105,18 +106,22 @@ void npBoneMesh::setMatrixes()
 {
 	objectMatrix.makeIdentityMatrix();
 	objectMatrix.glRotate(180,1,0,0);
-
+	calculateNormalMatrix();
 	int count =0;
 	for (int i=1;i< 23;i++)
 	{
 		
 		float*_mat = bones[i]->finalMatrix.getPtr();
-		//cout << endl;
+		
+		ofMatrix4x4 rot;
+		bones[i]->finalMatrix.getRotate().get(rot);
+		float*_matN =rot.getPtr();
+	
 		for (int j=0;j<16;j++)
 		{
 		
-			matrixes[count++] = _mat[j];
-		//cout <<_mat[j];
+			boneMatrices[count] = _mat[j];
+			normalMatrices[count++]= _matN[j];
 		}
 	
 	

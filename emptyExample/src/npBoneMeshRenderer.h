@@ -22,12 +22,12 @@ public:
 
     GLint program;
     GLint uNormalMatrix;
-    // GLint uNormalWorldMatrix;
     GLint uPerspectiveMatrix;
     GLint uWorldMatrix;
     GLint uObjectMatrix;
-     GLint  uBoneMatrixList;
-    
+    GLint  uBoneMatrixList;
+    GLint uBoneNormalMatrixList;
+
     enum {
         ATTRIB_VERTEX,
         ATTRIB_NORMAL,

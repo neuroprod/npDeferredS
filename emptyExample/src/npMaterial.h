@@ -26,8 +26,8 @@ public:
     float shininess;
 
     GLuint diffuseTexture;
-    
-
+    void loadDiffuse(string fileName,GLenum type =GL_RGB,bool useMipMap =true);
+	
 };
 
 #endif

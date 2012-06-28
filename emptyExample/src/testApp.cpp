@@ -10,28 +10,29 @@ void testApp::setup(){
 	aLoader.load(ofToDataPath("vrouwAnimeTest2.dae"));
 	girl  = aLoader.boneMeshes[0];
 	girl->setPos(0,0,0);
+	girl->material.loadDiffuse("3DAssets/vrouwFinal.png");
 	ofBackground(0, 0, 0);
     
     npMaterial m;
     m.hasColor =true;
     m.hasUV =false;
-    m.r =0.9;
-    m.g =0.9;
+    m.r =0.9f;
+    m.g =0.9f;
     m.b =0.9;
-    for (int i=0;i< 5;i++)
+    for (int i=0;i<20;i++)
     {
         npSphere *t =new npSphere();
-        t->setup(m,(float) rand()/RAND_MAX*5+3);
-        t->setPos (((float) rand()/RAND_MAX -0.5)*100, ((float) rand()/RAND_MAX -0.5)*100, ((float) rand()/RAND_MAX -0.5)*100);
+        t->setup(m,(float) rand()/RAND_MAX*1+2);
+        t->setPos (((float) rand()/RAND_MAX -0.5)*50, ((float) rand()/RAND_MAX -0.5)*50, ((float) rand()/RAND_MAX -0.5)*50);
         spheres.push_back((npMesh *)t);
     
     }
-    for (int i=0;i<100;i++)
+    for (int i=0;i<50;i++)
     {
     
         npPointLight *p = new npPointLight();
         p->setup(20,(float) rand()/RAND_MAX,(float) rand()/RAND_MAX ,(float) rand()/RAND_MAX ,0.5);
-      p->setPos (((float) rand()/RAND_MAX -0.5)*130, ((float) rand()/RAND_MAX -0.5)*130, ((float) rand()/RAND_MAX -0.5)*130);
+      p->setPos (((float) rand()/RAND_MAX -0.5)*100, ((float) rand()/RAND_MAX -0.5)*100, ((float) rand()/RAND_MAX -0.5)*100);
          //p->setPos (0,0,0);
         pLights.push_back(p );
     
@@ -102,7 +103,7 @@ void testApp::update(){
     // main draw;
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
-
+	glClearColor(0.5,0.5,0.5,1.0);
     deferredBuffer.start();
 		rendererColor.start(&camera);
 			for (int i=0;i< spheres.size();i++)
@@ -140,7 +141,7 @@ void testApp::draw(){
    deferredFinal.draw(&camera);
 
    GLErrorCheck::test("draw end");
-  cout << ofGetFrameRate()<<endl ;
+ // cout << ofGetFrameRate()<<endl ;
 }
 
 

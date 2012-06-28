@@ -52,6 +52,9 @@
     <ClCompile Include="src\npBoneAnimation.cpp">
       <Filter>src\np\objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\npMaterial.cpp">
+      <Filter>src\np\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h">

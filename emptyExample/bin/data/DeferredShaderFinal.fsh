@@ -35,8 +35,8 @@ void main()
 	
 
 
-	float lambert = dot(normal,-lightDir_var)*0.6+0.4;
-	vec3 globalLight = vec3(0.8,0.8,0.8)*lambert;
+	float lambert = dot(normal,-lightDir_var)*0.5+0.5;
+	vec3 globalLight = vec3(1.0,1.0,1.0)*lambert;
 
 
 	//vec3 reflectVec = normalize(reflect( lightDir_var,normal));
