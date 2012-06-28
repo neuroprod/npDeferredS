@@ -34,12 +34,13 @@ public:
     GLint program;
     GLint uNormalMatrix;
     GLint uPerspectiveMatrix;
-     GLint uPerspectiveInvMatrix;
-	  GLint uNormalWorldMatrix;
+    GLint uPerspectiveInvMatrix;
+	GLint uNormalWorldMatrix;
     GLint uWorldMatrix;
     GLint uObjectMatrix;
-     GLint uCenter;
-    
+    GLint uCenter;
+    GLint uLightSize;
+
     int width;
     int height;
     

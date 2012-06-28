@@ -12,10 +12,10 @@ uniform mat4 objectMatrix ;
 uniform mat4 normalMatrix ;
 uniform mat4 worldMatrix ;
 uniform mat4 perspectiveMatrix ;
-
+uniform float lightSize ;
 uniform vec3 center;
 
-
+varying float lightSize_var;
 varying vec3 center_var;
 varying vec3 color_var;
 varying vec4 persPos_var;
@@ -36,6 +36,6 @@ void main()
     worldPos_var =worldSpace ;
     persPos_var = gl_Position  ;
 
-
+	lightSize_var =lightSize;
 
 }

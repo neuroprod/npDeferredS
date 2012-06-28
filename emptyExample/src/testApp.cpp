@@ -31,7 +31,21 @@ void testApp::setup(){
     {
     
         npPointLight *p = new npPointLight();
-        p->setup(5,(float) rand()/RAND_MAX,(float) rand()/RAND_MAX ,(float) rand()/RAND_MAX ,0.5);
+        
+		if (i==0)
+		{
+		
+		p->setup(20,(float) rand()/RAND_MAX,(float) rand()/RAND_MAX ,(float) rand()/RAND_MAX ,1);
+		}
+		else
+		{
+		
+		p->setup(5,(float) rand()/RAND_MAX,(float) rand()/RAND_MAX ,(float) rand()/RAND_MAX ,0.5);
+		}
+	
+
+
+
       p->setPos (((float) rand()/RAND_MAX -0.5)*20, ((float) rand()/RAND_MAX -0.5)*20, ((float) rand()/RAND_MAX -0.5)*20);
          //p->setPos (0,0,0);
         pLights.push_back(p );
@@ -126,7 +140,9 @@ void testApp::update(){
 	//pointlights draw
     glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE);
+	glCullFace(GL_FRONT);
 	plRenderer.draw(pLights ,camera);
+	glCullFace(GL_BACK);
     glDisable (GL_BLEND);
     
 	

@@ -19,6 +19,7 @@ public:
     void setPos(float _x,float _y,float _z);
     npSphere drawSphere;
     npSphere rangeSphere;
+	float lightSize;
 };
 
 #endif

@@ -9,7 +9,7 @@
 #include "npPointLight.h"
 void npPointLight::setup(float radius,float  r,float g,float b, float radiusDraw )
 {
-    
+    lightSize =radius;//
     npMaterial mat;
     mat.hasColor =true;
     mat.hasUV = false;
@@ -27,7 +27,7 @@ void npPointLight::setup(float radius,float  r,float g,float b, float radiusDraw
     
     drawSphere.setup(mat2,radiusDraw ,4,3);
     
-    rangeSphere.setup(mat,radius,8,6);
+    rangeSphere.setup(mat,radius*1.1,8,6);// make the radius bigger becouse not perfect sphere
 
    
 }

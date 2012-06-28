@@ -38,7 +38,7 @@ void npPointLightRenderer::setup(int w,int h )
   
    
     uCenter = glGetUniformLocation(program,"center");
-    
+    uLightSize= glGetUniformLocation(program,"lightSize");
     uObjectMatrix = glGetUniformLocation(program,"objectMatrix");
    
     uWorldMatrix = glGetUniformLocation(program,"worldMatrix");
@@ -127,7 +127,7 @@ void npPointLightRenderer::draw(const vector<npPointLight *> &pLights,const npCa
         glUniformMatrix4fv(uObjectMatrix, 1, 0,  pLights[i]->rangeSphere.objectMatrix.getPtr());
         
         glUniform3f(uCenter,pLights[i]->rangeSphere.x,pLights[i]->rangeSphere.y,pLights[i]->rangeSphere.z );
-        
+        glUniform1f(uLightSize,pLights[i]->lightSize );
        // glUniformMatrix4fv(uNormalMatrix, 1, 0,  pLights[i]->rangeSphere.normalMatrix.getPtr());
         
         glBindBuffer(GL_ARRAY_BUFFER,pLights[i]->rangeSphere.vertexBuffer);

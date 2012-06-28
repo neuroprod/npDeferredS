@@ -11,6 +11,9 @@ varying vec3 color_var;
 varying vec4 persPos_var;
 varying vec4 worldPos_var;
 varying vec3 normal_var;
+
+varying float lightSize_var;
+
 void main()
 {
 
@@ -33,7 +36,7 @@ void main()
    
         float l = length( dir);
         
-        float dist =1.0-pow((clamp (l ,0.0,5.0)/5.0),4.0);
+        float dist =1.0-pow((clamp (l ,0.0,lightSize_var)/lightSize_var),3.0);
   
     
         float lambert  =clamp(dot(normalize(dir) , -N ),0.0,1.0);
