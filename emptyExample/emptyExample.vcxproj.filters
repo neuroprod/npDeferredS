@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\testApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npDeferredBuffers.cpp">
+      <Filter>src\np\deferred</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npMeshRendererColor.cpp">
+      <Filter>src\np\deferred</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npMeshRendererDifText.cpp">
+      <Filter>src\np\deferred</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npMesh.cpp">
+      <Filter>src\np\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npPointLight.cpp">
+      <Filter>src\np\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npSphere.cpp">
+      <Filter>src\np\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npProgramLoader.cpp">
+      <Filter>src\np\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npPointLightRenderer.cpp">
+      <Filter>src\np\deferred</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npDirectionalLight.cpp">
+      <Filter>src\np\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npDeferredFinal.cpp">
+      <Filter>src\np\deferred</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npAssimpLoader.cpp">
+      <Filter>src\np\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npBone.cpp">
+      <Filter>src\np\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npBoneMesh.cpp">
+      <Filter>src\np\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npBoneMeshRenderer.cpp">
+      <Filter>src\np\deferred</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npBoneAnimation.cpp">
+      <Filter>src\np\objects</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\testApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npDeferredBuffers.h">
+      <Filter>src\np\deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npMeshRendererDifText.h">
+      <Filter>src\np\deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npMeshRendererColor.h">
+      <Filter>src\np\deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npIncludes.h">
+      <Filter>src\np</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GLErrorCheck.h">
+      <Filter>src\np\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npCamera.h">
+      <Filter>src\np\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npPointLight.h">
+      <Filter>src\np\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npMaterial.h">
+      <Filter>src\np\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npMesh.h">
+      <Filter>src\np\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npObject3D.h">
+      <Filter>src\np\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npSphere.h">
+      <Filter>src\np\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npProgramLoader.h">
+      <Filter>src\np\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npTimer.h">
+      <Filter>src\np\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npTextFileLoader.h">
+      <Filter>src\np\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npPointLightRenderer.h">
+      <Filter>src\np\deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npDirectionalLight.h">
+      <Filter>src\np\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npDeferredFinal.h">
+      <Filter>src\np\deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npAssimpLoader.h">
+      <Filter>src\np\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npBone.h">
+      <Filter>src\np\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npBoneMesh.h">
+      <Filter>src\np\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npBoneMeshRenderer.h">
+      <Filter>src\np\deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npBoneAnimation.h">
+      <Filter>src\np\objects</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{b0b215f2-4f91-460a-bdb4-ba8cf94f855c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\np">
+      <UniqueIdentifier>{454ae5c3-c273-4c4c-9b62-2500d7581a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\np\deferred">
+      <UniqueIdentifier>{fbaab865-d3d7-486b-a80c-1a174cffa6ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\np\utils">
+      <UniqueIdentifier>{dcdb91bb-553b-410d-9dd7-5dafa9d0ede8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\np\objects">
+      <UniqueIdentifier>{ab41280b-a81e-46da-aa9f-d176b909bb5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{8c33f1fb-2ef7-4c9a-9d7d-63f52e1756d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data\shaders">
+      <UniqueIdentifier>{14cc7863-af8c-4cd5-8002-6dbadd15b5e6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\data\DeferredShaderColor.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderColor.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderDifText.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderDifText.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderFinal.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderFinal.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderPointLight.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderPointLight.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderBones.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderBones.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
