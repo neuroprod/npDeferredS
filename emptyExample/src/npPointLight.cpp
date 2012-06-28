@@ -21,9 +21,9 @@ void npPointLight::setup(float radius,float  r,float g,float b, float radiusDraw
     npMaterial mat2;
     mat2.hasColor =true;
     mat2.hasUV = false;
-    mat2.r =1;
-    mat2.g =1;
-    mat2.b =1;
+    mat2.r =r*3;
+    mat2.g =g*3;
+    mat2.b =b*3;
     
     drawSphere.setup(mat2,radiusDraw ,4,3);
     

@@ -9,7 +9,7 @@ attribute vec3 color;
 uniform mat4 objectMatrix ;
 uniform mat4 normalMatrix ;
 uniform mat4 worldMatrix ;
-
+uniform mat4 normalWorldMatrix;
 uniform mat4 perspectiveMatrix ;
 
 
@@ -27,7 +27,7 @@ void main()
     
   
     vec4 normalLok = normalMatrix*normal;
-    normal_var = (normalLok ).xyz; // normalWorldMatrix*
+    normal_var =(normalWorldMatrix* normalLok ).xyz; // normalWorldMatrix*
     color_var =color;
 
 

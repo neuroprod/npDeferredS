@@ -28,7 +28,7 @@ void main()
     vec4 worldSpace =worldMatrix *localSpace;
     gl_Position = perspectiveMatrix *worldSpace;
 
-    center_var =  (worldMatrix*vec4(center,1.0)).xyz;
+    center_var =(  worldMatrix*vec4(center,1.0)).xyz;
   normal_var = (normalMatrix*normal).xyz;
   
     color_var =color;

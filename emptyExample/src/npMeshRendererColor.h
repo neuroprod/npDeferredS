@@ -32,7 +32,7 @@ public:
 
     GLint program;
     GLint uNormalMatrix;
-    // GLint uNormalWorldMatrix;
+    GLint uNormalWorldMatrix;
     GLint uPerspectiveMatrix;
     GLint uWorldMatrix;
     GLint uObjectMatrix;

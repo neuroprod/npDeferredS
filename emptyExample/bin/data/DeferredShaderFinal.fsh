@@ -27,11 +27,11 @@ void main()
     vec3 pLight = texture2D(pointLightTexture, uv_var).xyz;
 	
 	
-	//vec3 pos =vec3(0.0,0.0,0.0);
-	//pos.xy = uv_var *2.0 -1.0;
-	//pos.z =-depth;
-    //vec4 worldPos = perspectiveInvMatrix* vec4(pos,1.0);
-    //worldPos.xyz/=worldPos.w;
+	vec3 pos =vec3(0.0,0.0,0.0);
+	pos.xy = uv_var *2.0 -1.0;
+	pos.z =-depth;
+    vec4 worldPos = perspectiveInvMatrix* vec4(pos,1.0);
+    worldPos.xyz/=worldPos.w;
 	
 
 
@@ -39,14 +39,14 @@ void main()
 	vec3 globalLight = vec3(1.0,1.0,1.0)*lambert;
 
 
-	//vec3 reflectVec = normalize(reflect( lightDir_var,normal));
-	//vec3 eyeVecNormal = normalize(- worldPos.xyz);
-	//float specular =pow(max(dot(eyeVecNormal,reflectVec),0.0),30.0);
+	vec3 reflectVec = normalize(reflect( lightDir_var,normal));
+	vec3 eyeVecNormal = normalize(- worldPos.xyz);
+	float specular =pow(max(dot(eyeVecNormal,reflectVec),0.0),30.0);
 
-	col *=globalLight+pLight ;
+	col *=pLight+lambert/2.0;
 
-    gl_FragColor  =vec4(col,1.0);
+    gl_FragColor  =vec4(col+specular,1.0);
 //gl_FragColor  =vec4(pLight ,1.0);
-//gl_FragColor  = vec4(normal,1.0);
+//gl_FragColor  = vec4(normal*0.5+0.5,1.0);
 	//gl_FragColor  = vec4( pos,1.0);
 }

@@ -3,7 +3,7 @@
 uniform sampler2D normalTexture; 
 uniform sampler2D depthTexture; 
 uniform mat4 perspectiveInvMatrix ;
-uniform mat4 normalWorldMatrix ;
+
 
 
 varying vec3 center_var;
@@ -21,8 +21,8 @@ void main()
     
         float depth  = texture2D(depthTexture, uv).x *2.0-1.0 ;
 		vec3 N   =texture2D(normalTexture, uv).xyz *2.0-1.0 ;
-		vec4 Nworld =  normalWorldMatrix* vec4(N,1.0);
-    
+	
+
 		pos.z =depth;
         vec4 worldPosSurf = perspectiveInvMatrix* vec4(pos,1.0);
         worldPosSurf.xyz/=worldPosSurf.w;
@@ -33,14 +33,15 @@ void main()
    
         float l = length( dir);
         
-        float dist =1.0-pow((clamp (l ,0.0,20.0)/20.0),4.0);
+        float dist =1.0-pow((clamp (l ,0.0,5.0)/5.0),4.0);
   
-		
     
-        float lambert  =clamp(dot(normalize(dir) , -Nworld.xyz ),0.0,1.0);
+        float lambert  =clamp(dot(normalize(dir) , -N ),0.0,1.0);
    
+	
+
         gl_FragColor = vec4(color_var *dist * lambert   ,1.0);
- 
+
    
   
 }

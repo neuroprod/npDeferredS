@@ -5,7 +5,7 @@
 void testApp::setup(){
 	ofSetFrameRate(60);
     
-   
+   srand(3);
 
 	aLoader.load(ofToDataPath("vrouwAnimeTest2.dae"));
 	girl  = aLoader.boneMeshes[0];
@@ -19,20 +19,20 @@ void testApp::setup(){
     m.r =0.9f;
     m.g =0.9f;
     m.b =0.9;
-    for (int i=0;i<20;i++)
+    for (int i=0;i<30;i++)
     {
         npSphere *t =new npSphere();
-        t->setup(m,(float) rand()/RAND_MAX*1+2);
-        t->setPos (((float) rand()/RAND_MAX -0.5)*50, ((float) rand()/RAND_MAX -0.5)*50, ((float) rand()/RAND_MAX -0.5)*50);
+        t->setup(m,(float) rand()/RAND_MAX*1.0+0.5);
+        t->setPos (((float) rand()/RAND_MAX -0.5)*20, ((float) rand()/RAND_MAX -0.5)*20, ((float) rand()/RAND_MAX -0.5)*20);
         spheres.push_back((npMesh *)t);
     
     }
-    for (int i=0;i<50;i++)
+    for (int i=0;i<40;i++)
     {
     
         npPointLight *p = new npPointLight();
-        p->setup(20,(float) rand()/RAND_MAX,(float) rand()/RAND_MAX ,(float) rand()/RAND_MAX ,0.5);
-      p->setPos (((float) rand()/RAND_MAX -0.5)*100, ((float) rand()/RAND_MAX -0.5)*100, ((float) rand()/RAND_MAX -0.5)*100);
+        p->setup(5,(float) rand()/RAND_MAX,(float) rand()/RAND_MAX ,(float) rand()/RAND_MAX ,0.5);
+      p->setPos (((float) rand()/RAND_MAX -0.5)*20, ((float) rand()/RAND_MAX -0.5)*20, ((float) rand()/RAND_MAX -0.5)*20);
          //p->setPos (0,0,0);
         pLights.push_back(p );
     
@@ -40,7 +40,7 @@ void testApp::setup(){
     }
     
     
-   camera.perspectiveMatrix.makePerspectiveMatrix(60, (float)ofGetScreenWidth()/(float)ofGetScreenHeight(), 10, 200);
+   camera.perspectiveMatrix.makePerspectiveMatrix(60, (float)ofGetScreenWidth()/(float)ofGetScreenHeight(), 1, 200);
  
     camera.perspectiveInvMatrix.makeInvertOf(camera.perspectiveMatrix);
   
@@ -87,7 +87,7 @@ void testApp::update(){
 
     // cam update;
     camera.worldMatrix.makeLookAtViewMatrix(ofVec3f(0,0,20), ofVec3f(0,0,0), ofVec3f (0,1,0));
-	camera.worldMatrix.glRotate((float)ofGetFrameNum()/10,0,1,0);
+	camera.worldMatrix.glRotate((float)ofGetFrameNum()/2,0,1,0);
     ofQuaternion q = camera.worldMatrix.getRotate();
    q.inverse();
     camera.normalWorldMatrix.makeRotationMatrix(q);

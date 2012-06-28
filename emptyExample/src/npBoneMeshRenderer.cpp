@@ -27,7 +27,8 @@ void npBoneMeshRenderer::setup()
     uObjectMatrix = glGetUniformLocation(program,"objectMatrix");
     uNormalMatrix = glGetUniformLocation(program,"normalMatrix");
     uWorldMatrix = glGetUniformLocation(program,"worldMatrix");
-    uPerspectiveMatrix = glGetUniformLocation(program,"perspectiveMatrix");
+	 uNormalWorldMatrix = glGetUniformLocation(program,"normalWorldMatrix");
+	uPerspectiveMatrix = glGetUniformLocation(program,"perspectiveMatrix");
     uBoneMatrixList = glGetUniformLocation(program,"boneMatrixList");
 	uBoneNormalMatrixList = glGetUniformLocation(program,"boneNormalMatrixList");
     glUseProgram(0);
@@ -40,7 +41,7 @@ void  npBoneMeshRenderer::start(npCamera *cam)
     glUseProgram(program);
     glUniformMatrix4fv(uWorldMatrix, 1, 0,  cam->worldMatrix.getPtr());
     glUniformMatrix4fv(uPerspectiveMatrix, 1, 0,   cam->perspectiveMatrix.getPtr());
-   //  glUniformMatrix4fv(uNormalWorldMatrix, 1, 0,   cam->normalWorldMatrix.getPtr());
+  glUniformMatrix4fv(uNormalWorldMatrix, 1, 0,   cam->normalWorldMatrix.getPtr());
     glEnableVertexAttribArray(ATTRIB_VERTEX);
     glEnableVertexAttribArray(ATTRIB_NORMAL);
     glEnableVertexAttribArray(ATTRIB_UV);

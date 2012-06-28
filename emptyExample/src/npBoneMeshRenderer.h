@@ -25,8 +25,9 @@ public:
     GLint uPerspectiveMatrix;
     GLint uWorldMatrix;
     GLint uObjectMatrix;
-    GLint  uBoneMatrixList;
+    GLint uBoneMatrixList;
     GLint uBoneNormalMatrixList;
+	GLint uNormalWorldMatrix ;
 
     enum {
         ATTRIB_VERTEX,
