@@ -5,7 +5,7 @@
 
 
 
-#include "npCamera.h"
+#include "GameCamera.h"
 #include "npMeshRendererColor.h"
 #include "npDeferredBuffers.h"
 #include "npPointLightRenderer.h"
@@ -17,8 +17,11 @@
 #include "npDirectionalLight.h"
 
 #include "npBoneMeshRenderer.h"
-#include "npBoneMesh.h"
+#include "MainCharacter.h"
 #include "npAssimpLoader.h"
+
+#include "Terrain.h"
+
 
 class testApp : public ofBaseApp{
 	
@@ -36,12 +39,15 @@ public:
 	void mouseReleased(int x, int y, int button);
 	void windowResized(int w, int h);
 	
+
+	Terrain terain;
+
     vector <npMesh *> spheres;
     vector <npPointLight *> pLights;
-	npAssimpLoader aLoader;
-	npBoneMesh * girl;
-    
-    npCamera camera;
+	
+
+    MainCharacter girl;
+    GameCamera camera;
     npMeshRendererColor rendererColor;
     npBoneMeshRenderer boneMeshRenderer;
 
@@ -52,6 +58,10 @@ public:
     
     npPointLightRenderer plRenderer;
 	npDirectionalLight dirLight;
+
+
+	unsigned long previousTime;
+	unsigned long currentTime;
 };
 
 

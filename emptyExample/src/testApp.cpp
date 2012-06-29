@@ -1,16 +1,21 @@
 #include "testApp.h"
 #include "GLErrorCheck.h"
-#include "npAssimpLoader.h"
+
 //--------------------------------------------------------------
 void testApp::setup(){
 	ofSetFrameRate(60);
     
-   srand(3);
+	srand(3);
 
-	aLoader.load(ofToDataPath("vrouwAnimeTest2.dae"));
-	girl  = aLoader.boneMeshes[0];
-	girl->setPos(0,0,0);
-	girl->material.loadDiffuse("3DAssets/vrouwFinal.png");
+	terain.setup(ofToDataPath("3DAssets/Terain.png"));
+
+
+	girl.setup();
+	girl.terain =  &terain;
+	
+	camera.setup();
+	camera.mainCharacter =&girl;
+
 	ofBackground(0, 0, 0);
     
     npMaterial m;
@@ -18,8 +23,8 @@ void testApp::setup(){
     m.hasUV =false;
     m.r =0.9f;
     m.g =0.9f;
-    m.b =0.9;
-    for (int i=0;i<30;i++)
+    m.b =0.9f;
+    for (int i=0;i<80;i++)
     {
         npSphere *t =new npSphere();
         t->setup(m,(float) rand()/RAND_MAX*1.0+0.5);
@@ -40,7 +45,7 @@ void testApp::setup(){
 		else
 		{
 		
-		p->setup(5,(float) rand()/RAND_MAX,(float) rand()/RAND_MAX ,(float) rand()/RAND_MAX ,0.5);
+		p->setup(5,(float) rand()/RAND_MAX,(float) rand()/RAND_MAX ,(float) rand()/RAND_MAX ,0.2f);
 		}
 	
 
@@ -54,9 +59,8 @@ void testApp::setup(){
     }
     
     
-   camera.perspectiveMatrix.makePerspectiveMatrix(60, (float)ofGetScreenWidth()/(float)ofGetScreenHeight(), 1, 200);
- 
-    camera.perspectiveInvMatrix.makeInvertOf(camera.perspectiveMatrix);
+	
+
   
     
 	boneMeshRenderer.setup();
@@ -85,30 +89,29 @@ void testApp::setup(){
     GLErrorCheck::test("setup end");
    
 	dirLight.lookAt.set(0,0,0);
-	dirLight.pos.set(100,100,0);
+	dirLight.pos.set(100,200,0);
 	dirLight.update();
 	deferredFinal.dirLight =&dirLight;
+
+
+
+	previousTime=ofGetElapsedTimeMicros();
+	currentTime =ofGetElapsedTimeMicros();
 }
 
 
 
 //--------------------------------------------------------------
 void testApp::update(){
+	
+	currentTime =ofGetElapsedTimeMicros();
+	unsigned long timeStep =currentTime -previousTime;   
+	previousTime  = currentTime;
 	//
-	girl->update();
+	girl.update(timeStep);
 
+	camera.update();
 
-
-    // cam update;
-    camera.worldMatrix.makeLookAtViewMatrix(ofVec3f(0,0,20), ofVec3f(0,0,0), ofVec3f (0,1,0));
-	camera.worldMatrix.glRotate((float)ofGetFrameNum()/2,0,1,0);
-    ofQuaternion q = camera.worldMatrix.getRotate();
-   q.inverse();
-    camera.normalWorldMatrix.makeRotationMatrix(q);
-	//camera.normalWorldMatrix.postMultTranslate( camera.worldMatrix.getTranslation());
-
-	//camera.normalWorldMatrix.makeInvertOf(camera.normalWorldMatrix);
-	//scene update
 
 	
 	//light update
@@ -117,9 +120,15 @@ void testApp::update(){
     // main draw;
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
-	glClearColor(0.5,0.5,0.5,1.0);
+	glClearColor(0.2f,0.2f,0.2f,1.0f);
     deferredBuffer.start();
 		rendererColor.start(&camera);
+
+		for (int i=0;i< terain.terrainLowRes.size();i++)
+			{
+			rendererColor.draw( terain.terrainLowRes[i]);
+			}
+
 			for (int i=0;i< spheres.size();i++)
 			{
 				rendererColor.draw( spheres[i]);
@@ -132,7 +141,7 @@ void testApp::update(){
 		rendererColor.stop();
 
 		boneMeshRenderer.start(&camera);
-			boneMeshRenderer.draw(girl);
+			boneMeshRenderer.draw(&girl.charMesh);
 		boneMeshRenderer.stop();
     deferredBuffer.stop();
  
@@ -165,29 +174,40 @@ void testApp::draw(){
 void testApp::keyPressed(int key){
     
 	switch (key) {
-
-		case 'a': // up key
-          		
-        case 'z':
-           
-            break;
-        case'e':
-          
-            break;
-        case 'f':
-            if(ofGetWindowMode() == 0){
-                ofSetFullscreen(true);
-            }else{ 
-                ofSetFullscreen(false);
-        }
-            
+		case OF_KEY_UP: 
+			girl.setKey(MainCharacter::FORWARD_DOWN);
+		
+        break;
+		case OF_KEY_LEFT: 
+		
+		girl.setKey(MainCharacter::LEFT_DOWN);
+        break;
+		case OF_KEY_RIGHT: 
+			girl.setKey(MainCharacter::RIGHT_DOWN);
+		
+        break;
     }
 	
 }
 
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
-	
+
+	switch (key) {
+	case OF_KEY_UP: 
+
+			girl.setKey(MainCharacter::FORWARD_UP);
+        break;
+		case OF_KEY_LEFT: 
+		girl.setKey(MainCharacter::LEFT_UP);
+        break;
+		case OF_KEY_RIGHT: 
+			girl.setKey(MainCharacter::RIGHT_UP);
+		
+          break;
+     
+        }
+          
 }
 
 //--------------------------------------------------------------

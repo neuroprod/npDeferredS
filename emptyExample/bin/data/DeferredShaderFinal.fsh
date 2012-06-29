@@ -41,12 +41,13 @@ void main()
 
 	vec3 reflectVec = normalize(reflect( lightDir_var,normal));
 	vec3 eyeVecNormal = normalize(- worldPos.xyz);
-	float specular =pow(max(dot(eyeVecNormal,reflectVec),0.0),30.0);
+	float specular =pow(max(dot(eyeVecNormal,reflectVec),0.0),4.0)*0.1;
 
-	col *=pLight+lambert/2.0;
+	col *=pLight+lambert;
 
     gl_FragColor  =vec4(col+specular,1.0);
-//gl_FragColor  =vec4(pLight ,1.0);
-//gl_FragColor  = vec4(normal*0.5+0.5,1.0);
+	//gl_FragColor  =vec4(pLight ,1.0);
+	//gl_FragColor  = vec4(normal*0.5+0.5,1.0);
+	//gl_FragColor  = vec4(normal,1.0);
 	//gl_FragColor  = vec4( pos,1.0);
 }

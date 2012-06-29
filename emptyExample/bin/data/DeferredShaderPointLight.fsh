@@ -36,7 +36,7 @@ void main()
    
         float l = length( dir);
         
-        float dist =1.0-pow((clamp (l ,0.0,lightSize_var)/lightSize_var),3.0);
+        float dist =1.0-pow((clamp (l ,0.0,lightSize_var)/lightSize_var),2.0);
   
     
         float lambert  =clamp(dot(normalize(dir) , -N ),0.0,1.0);

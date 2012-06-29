@@ -37,6 +37,8 @@ void npMeshRendererColor::start(npCamera *cam)
     glEnableVertexAttribArray(ATTRIB_VERTEX);
     glEnableVertexAttribArray(ATTRIB_NORMAL);
     glEnableVertexAttribArray(ATTRIB_COLOR);
+
+	
     
 
 }

@@ -104,9 +104,7 @@ void npBoneMesh::update(){
 }
 void npBoneMesh::setMatrixes()
 {
-	objectMatrix.makeIdentityMatrix();
-	objectMatrix.glRotate(180,1,0,0);
-	calculateNormalMatrix();
+	
 	int count =0;
 	for (int i=1;i< 23;i++)
 	{

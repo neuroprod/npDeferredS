@@ -17,11 +17,11 @@ class npCamera
 
 public:
     npCamera(){};
-    
-    ofMatrix4x4 perspectiveMatrix;
       ofMatrix4x4 perspectiveInvMatrix;
     ofMatrix4x4 worldMatrix;
     ofMatrix4x4 normalWorldMatrix;
+    
+    ofMatrix4x4 perspectiveMatrix;
 
 };
 

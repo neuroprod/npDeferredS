@@ -258,7 +258,7 @@ void  npAssimpLoader::getAnime()
 
 	const aiAnimation* mAnim = scene->mAnimations[0];
 	
-	cout << mAnim->mName.data << " anime name"<< endl;
+//	cout << mAnim->mName.data << " anime name"<< endl;
 	float duration = mAnim->mDuration;
 
 	for( unsigned int a = 0; a < mAnim->mNumChannels; a++)
