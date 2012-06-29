@@ -13,6 +13,7 @@ public:
 	void setup();
 	MainCharacter * mainCharacter;
 
-
+	ofVec3f lookAtPos ;
+	ofVec3f camPos;
 
 };

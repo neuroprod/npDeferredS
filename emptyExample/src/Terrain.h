@@ -3,7 +3,8 @@
 
 #include "npIncludes.h"
 #include "npMesh.h"
-
+#include "ChunkHandler.h"
+#include "Chunk.h"
 class Terrain
 {
 public:
@@ -11,7 +12,8 @@ public:
 	~Terrain(){};
 
 	void setup(string heightMap);
-	void createChunkLow(int pixelX,int pixelY,float worldX,float worldY);
+	void createChunkLow(int pixelX,int pixelY,float worldX,float worldY,Chunk *chunk);
+		void createChunkHigh(int pixelX,int pixelY,float worldX,float worldY,Chunk *chunk);
 	//void createChunkHigh(int x,int y);
 
 
@@ -21,8 +23,7 @@ public:
 	ofVec3f getNormal(const ofVec3f &p1,const ofVec3f &p2,const ofVec3f &p3);
 	float getHeightForWorldPos(float x, float y);
 
-	vector<npMesh *> terrainLowRes;
-	vector<npMesh *> terrainHighRes;
+	ChunkHandler * chunkHandler;
 
 	ofImage terainMainMap;
 

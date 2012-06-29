@@ -22,8 +22,11 @@ void Terrain::setup(string heightMap)
 	{
 		for(int x=0;x<divX;x++)
 		{
-			createChunkLow(x*chunkSizeX,y*chunkSizeY,(float) (startX +x*chunkSizeX)*mainPixelSize,(float) (startY +y*chunkSizeY)*mainPixelSize );
-		
+			Chunk * chunk =new Chunk();
+			createChunkLow(x*chunkSizeX,y*chunkSizeY,(float) (startX +x*chunkSizeX)*mainPixelSize,(float) (startY +y*chunkSizeY)*mainPixelSize,chunk );
+			createChunkHigh(x*chunkSizeX,y*chunkSizeY,(float) (startX +x*chunkSizeX)*mainPixelSize,(float) (startY +y*chunkSizeY)*mainPixelSize,chunk );
+			chunk->center.set((startX +x*chunkSizeX)*mainPixelSize  +  (chunkSizeX/2)*mainPixelSize ,0,(startY +y*chunkSizeY)*mainPixelSize  +  (chunkSizeY/2)*mainPixelSize  );
+			chunkHandler->chunks.push_back( chunk );
 		}
 	}
 
@@ -31,19 +34,19 @@ void Terrain::setup(string heightMap)
 
 
 }
-void Terrain::createChunkLow(int pixelX,int pixelY,float worldX,float worldY)
+void Terrain::createChunkLow(int pixelX,int pixelY,float worldX,float worldY,Chunk *chunk)
 {
 		
-	int cDivX = 32;
-	int cDivY = 32;
+	int cDivX = 64;
+	int cDivY = 64;
 	int cStepX = chunkSizeX/ cDivX;
 	int cStepY = chunkSizeY/ cDivY;
 
 	//int startX = x*  (terainMainMap.width/8);
 	//int startX = y*  (terainMainMap.height/8);
 	
-	npMesh * mesh  =new npMesh();
-
+	chunk->terrainLowRes  =new npMesh();
+	npMesh * mesh = chunk->terrainLowRes;
 	mesh->stride = 9;
 	mesh->numVertices =(cDivX+1) *(cDivY+1); 
 	mesh->vertices =new float [mesh->numVertices*	mesh->stride ];
@@ -51,7 +54,7 @@ void Terrain::createChunkLow(int pixelX,int pixelY,float worldX,float worldY)
 	mesh->numIndices  = (cDivX )* (cDivY ) *6 ;
 	mesh->indices =new unsigned int[mesh->numIndices ];
 
-	float  r= (float) rand()/RAND_MAX*0.8 +0.2;
+	float  r= (float) rand()/RAND_MAX*0.3 +0.7;
 
 	int vertcount =0;
 	for(int y=0;y<cDivY +1 ;y++)
@@ -107,11 +110,92 @@ void Terrain::createChunkLow(int pixelX,int pixelY,float worldX,float worldY)
 	mesh->objectMatrix.makeIdentityMatrix();
 	mesh->calculateNormalMatrix();
 
-	terrainLowRes.push_back (mesh);
+	
 
 
 }
 
+
+void Terrain::createChunkHigh(int pixelX,int pixelY,float worldX,float worldY,Chunk *chunk)
+{
+		
+	int cDivX = 256;
+	int cDivY = 256;
+	int cStepX = chunkSizeX/ cDivX;
+	int cStepY = chunkSizeY/ cDivY;
+
+	//int startX = x*  (terainMainMap.width/8);
+	//int startX = y*  (terainMainMap.height/8);
+	
+	chunk->terrainHighRes  =new npMesh();
+	npMesh * mesh = chunk->terrainHighRes;
+	mesh->stride = 9;
+	mesh->numVertices =(cDivX+1) *(cDivY+1); 
+	mesh->vertices =new float [mesh->numVertices*	mesh->stride ];
+
+	mesh->numIndices  = (cDivX )* (cDivY ) *6 ;
+	mesh->indices =new unsigned int[mesh->numIndices ];
+
+	float  r= (float) rand()/RAND_MAX*0.3 +0.7;
+
+	int vertcount =0;
+	for(int y=0;y<cDivY +1 ;y++)
+	{
+		int pPosY = y* cStepY;
+		for(int x=0;x<cDivX+1;x++)
+		{
+			int pPosX = x* cStepX ;
+
+			mesh->vertices[vertcount++] =   (float) pPosX*mainPixelSize  +worldX;
+            mesh->vertices[vertcount++] =  getHeightForPixelPos( pPosX+pixelX, pPosY+pixelY);
+            mesh->vertices[vertcount++] =  (float) pPosY*mainPixelSize  +worldY;//getHeightForPixelPos( pPosX, pPosY);
+            
+           ofVec3f n =  getNormalforPixelPos(pPosX+pixelX, pPosY+pixelY);
+            
+            mesh->vertices[vertcount++] =  n.x;
+            mesh->vertices[vertcount++] =  n.y;
+            mesh->vertices[vertcount++] = n.z;
+            
+			mesh->vertices[vertcount++] = 0;
+            mesh->vertices[vertcount++] =r;
+            mesh->vertices[vertcount++] =0;
+
+
+
+
+
+
+
+		}
+		
+	}
+	int indexCount = 0;
+	for(int y=0;y<cDivY ;y++)
+	{
+	
+		for(int x=0;x< cDivX;x++)
+		{
+			mesh->indices[indexCount++] = x+(y* (cDivX+1));
+			
+			mesh->indices[indexCount++] = x+((y+1)* (cDivX+1));
+			mesh->indices[indexCount++] = x+1+(y* (cDivX+1));
+
+
+			
+			mesh->indices[indexCount++] = x+1+((y+1)* (cDivX+1));
+			mesh->indices[indexCount++] = x+1+(y* (cDivX+1));
+			mesh->indices[indexCount++] = x+((y+1)* (cDivX+1));
+		}
+	
+	}
+	mesh->createBuffers();
+	mesh->objectMatrix.makeIdentityMatrix();
+	mesh->calculateNormalMatrix();
+
+	
+
+
+}
 
 
 

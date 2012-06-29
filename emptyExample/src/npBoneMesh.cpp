@@ -26,7 +26,7 @@ void npBoneMesh::prepBones()
 void npBoneMesh::update(){
 
 	//rootBone
-	time+=0.02;
+	time+=0.04;
 	if (time> bones[1]->animations[0].totalTime)time =0;
 
 	for (int i=0;i< bones.size();i++)

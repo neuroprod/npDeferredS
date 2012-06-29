@@ -6,16 +6,18 @@ void testApp::setup(){
 	ofSetFrameRate(60);
     
 	srand(3);
-
+	chunkHandler.setup();
+	cout << "1"<< endl;
+	terain.chunkHandler = &chunkHandler;
 	terain.setup(ofToDataPath("3DAssets/Terain.png"));
-
+	
 
 	girl.setup();
 	girl.terain =  &terain;
-	
+
 	camera.setup();
 	camera.mainCharacter =&girl;
-
+	
 	ofBackground(0, 0, 0);
     
     npMaterial m;
@@ -111,7 +113,7 @@ void testApp::update(){
 	girl.update(timeStep);
 
 	camera.update();
-
+	chunkHandler.update(camera.lookAtPos,camera.camPos);
 
 	
 	//light update
@@ -124,9 +126,17 @@ void testApp::update(){
     deferredBuffer.start();
 		rendererColor.start(&camera);
 
-		for (int i=0;i< terain.terrainLowRes.size();i++)
+		for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
-			rendererColor.draw( terain.terrainLowRes[i]);
+				if (chunkHandler.chunks[i]->detailLevel==2)
+				{
+					rendererColor.draw( chunkHandler.chunks[i]->terrainLowRes);
+				}
+				else if(chunkHandler.chunks[i]->detailLevel==1)
+				{
+					rendererColor.draw( chunkHandler.chunks[i]->terrainHighRes);
+				
+				}
 			}
 
 			for (int i=0;i< spheres.size();i++)

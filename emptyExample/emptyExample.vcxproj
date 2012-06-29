@@ -116,6 +116,8 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Chunk.cpp" />
+    <ClCompile Include="src\ChunkHandler.cpp" />
     <ClCompile Include="src\GameCamera.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainCharacter.cpp" />
@@ -145,6 +147,8 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Chunk.h" />
+    <ClInclude Include="src\ChunkHandler.h" />
     <ClInclude Include="src\GameCamera.h" />
     <ClInclude Include="src\GLErrorCheck.h" />
     <ClInclude Include="src\MainCharacter.h" />

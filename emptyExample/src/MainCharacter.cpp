@@ -12,7 +12,7 @@ void MainCharacter::setup()
 	rotSpeed =2;
 	walkDir.set(0,0,1);
 	charPos.set(0,0,0);
-	walkspeed =15;
+	walkspeed =50;
 	 isMoving =false;
 	 lastDown =-1;
 	 rightIsDown =false;
@@ -50,17 +50,16 @@ void MainCharacter::update(unsigned long timeStep)
 	if (isMoving){
 	charPos  +=walkDir*(walkspeed* (float)timeStep/1000000);
 
-
+	cout<< charPos<< endl;
 	
 	}
-	cout << walkDir << endl;
-	//charMesh.objectMatrix.makeLookAtMatrix(ofVec3f(0,0,0),walkDir,ofVec3f(0,1,0));
-	//charMesh.objectMatrix.preMultTranslate(charPos);
+	
+
 	
 	charPos.y =  terain->getHeightForWorldPos(charPos.x, charPos.z) +2.3;
 	charMesh.objectMatrix.makeLookAtViewMatrix(ofVec3f(0,0,0),walkDir,ofVec3f(0,-1,0));
 	charMesh.objectMatrix.postMultTranslate(charPos);
-	//charMesh.objectMatrix.glRotate(180,1,0,0);
+
 	charMesh.calculateNormalMatrix();
 }
 

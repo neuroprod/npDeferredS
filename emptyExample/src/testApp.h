@@ -21,6 +21,9 @@
 #include "npAssimpLoader.h"
 
 #include "Terrain.h"
+#include "ChunkHandler.h"
+#include "Chunk.h"
+
 
 
 class testApp : public ofBaseApp{
@@ -51,7 +54,7 @@ public:
     npMeshRendererColor rendererColor;
     npBoneMeshRenderer boneMeshRenderer;
 
-
+	ChunkHandler chunkHandler;
 	
 	npDeferredBuffers deferredBuffer;
     npDeferredFinal deferredFinal;

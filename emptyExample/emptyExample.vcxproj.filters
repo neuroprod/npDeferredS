@@ -64,6 +64,12 @@
     <ClCompile Include="src\MainCharacter.cpp">
       <Filter>src\game</Filter>
     </ClCompile>
+    <ClCompile Include="src\Chunk.cpp">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChunkHandler.cpp">
+      <Filter>src\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h">
@@ -142,6 +148,12 @@
       <Filter>src\game</Filter>
     </ClInclude>
     <ClInclude Include="src\MainCharacter.h">
+      <Filter>src\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Chunk.h">
+      <Filter>src\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChunkHandler.h">
       <Filter>src\game</Filter>
     </ClInclude>
   </ItemGroup>

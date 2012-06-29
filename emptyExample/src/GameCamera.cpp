@@ -4,10 +4,10 @@
 
 void GameCamera::update()
 {
-	ofVec3f charPos  =  mainCharacter->charPos;
-	ofVec3f campos  =  charPos  + mainCharacter->walkDir *-20;
-    campos.y+=10;
-	worldMatrix.makeLookAtViewMatrix(campos, charPos, ofVec3f (0,1,0));
+	 lookAtPos  =  mainCharacter->charPos;
+	 camPos  =  lookAtPos   + mainCharacter->walkDir *-70/3;
+    camPos.y+=20/3;
+	worldMatrix.makeLookAtViewMatrix(camPos,  lookAtPos, ofVec3f (0,1,0));
 	
     ofQuaternion q = worldMatrix.getRotate();
 	q.inverse();
