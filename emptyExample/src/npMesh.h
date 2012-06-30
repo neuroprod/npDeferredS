@@ -24,7 +24,7 @@ public:
         delete[] indices;
     
     }
-  
+	npMesh * getGLCopy();
     void createBuffers();
     void setMaterial (npMaterial  mat){material =mat;};
    

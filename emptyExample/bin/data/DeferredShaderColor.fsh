@@ -1,6 +1,6 @@
 
 varying vec3 normal_var;
-varying vec2 uv_var;
+
 varying vec3 color_var;
 
 void main()

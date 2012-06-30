@@ -1,7 +1,17 @@
 #include "Terrain.h"
 #include "npSphere.h"
+#include "npAssimpLoader.h"
+
 void Terrain::setup(string heightMap,string objectMap)
 {
+
+	npAssimpLoader loader;
+	loader.load(ofToDataPath("3DAssets/treeTest.dae"));
+	treeMesh = loader.meshes[0];
+	treeMesh->material.loadDiffuse("3DAssets/tree1.png",GL_RGBA );
+
+
+
 
 	mainPixelSize =1.0f;
     terainMainMap.loadImage(heightMap);
@@ -208,7 +218,7 @@ void Terrain::getObjects(int pixelX,int pixelY,float worldX,float worldY,Chunk *
 	int cDivY = 256/2;
 	int cStepX = 1;
 	int cStepY = 1;
-
+	npMesh *treeMeshL =treeMesh->getGLCopy();
 
 	for(int y=0;y<cDivY -1 ;y++)
 	{
@@ -224,23 +234,25 @@ void Terrain::getObjects(int pixelX,int pixelY,float worldX,float worldY,Chunk *
 			unsigned char b =   objectMainMap.getPixels()[(sX +sY*2048)*3+2];
 			
 		
-			if (b
-				==255)
+			if (b==255)
 			{
-			cout << "found"<< endl;
+			
 				ofVec3f objPos;
 				objPos.set( (float) pPosX*mainPixelSize  +worldX,  getHeightForPixelPos( pPosX+pixelX, pPosY+pixelY),(float) pPosY*mainPixelSize  +worldY);
-				npSphere *t =new npSphere();
-				npMaterial m;
-				m.hasColor =true;
-				m.hasUV =false;
-				m.r =0.9f;
-				m.g =0.9f;
-				m.b =0.9f;
+				
+				
+				ofMatrix4x4 objMatrix;
+				objMatrix.makeRotationMatrix(90,ofVec3f(1,0,0) );
+				objMatrix.postMultRotate(  (float)rand()/RAND_MAX *360.0f,0,1,0);
+				float s = (float)rand()/RAND_MAX *0.4 +0.8;
+				objMatrix.postMultScale(ofVec3f(s,s,s));
 
-				t->setup(m,1);
-				t->setPos (objPos.x,objPos.y,objPos.z);
-				chunk->objects.push_back(t);
+				objMatrix.postMultTranslate(objPos);
+				
+				
+				
+				treeMeshL->objectMatrices.push_back(objMatrix);
+				
 			
 			}
 
@@ -256,7 +268,18 @@ void Terrain::getObjects(int pixelX,int pixelY,float worldX,float worldY,Chunk *
 		
 	}
 	
+	if(treeMeshL->objectMatrices.size()>0)
+	{
+		treeMeshL->isMultiObject =true;
+	treeMeshL->calculateNormalMatrix();
+	chunk->objects.push_back(treeMeshL);
+	}else 
+	{
 
+		// chek for leaks;
+//	delete treeMeshL;
+	
+	}
 	
 
 

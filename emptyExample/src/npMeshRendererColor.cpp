@@ -28,12 +28,12 @@ void npMeshRendererColor::setup()
 }
 
 
-void npMeshRendererColor::start(npCamera *cam)
+void npMeshRendererColor::start(const npCamera &cam)
 {
     glUseProgram(program);
-    glUniformMatrix4fv(uWorldMatrix, 1, 0,  cam->worldMatrix.getPtr());
-    glUniformMatrix4fv(uPerspectiveMatrix, 1, 0,   cam->perspectiveMatrix.getPtr());
-     glUniformMatrix4fv(uNormalWorldMatrix, 1, 0,   cam->normalWorldMatrix.getPtr());
+    glUniformMatrix4fv(uWorldMatrix, 1, 0,  cam.worldMatrix.getPtr());
+    glUniformMatrix4fv(uPerspectiveMatrix, 1, 0,   cam.perspectiveMatrix.getPtr());
+     glUniformMatrix4fv(uNormalWorldMatrix, 1, 0,   cam.normalWorldMatrix.getPtr());
     glEnableVertexAttribArray(ATTRIB_VERTEX);
     glEnableVertexAttribArray(ATTRIB_NORMAL);
     glEnableVertexAttribArray(ATTRIB_COLOR);

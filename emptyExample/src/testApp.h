@@ -7,6 +7,8 @@
 
 #include "GameCamera.h"
 #include "npMeshRendererColor.h"
+#include "npMeshRendererText.h"
+
 #include "npDeferredBuffers.h"
 #include "npPointLightRenderer.h"
 
@@ -53,6 +55,7 @@ public:
     MainCharacter girl;
     GameCamera camera;
     npMeshRendererColor rendererColor;
+	npMeshRendererText renderTexture;
     npBoneMeshRenderer boneMeshRenderer;
 	TerrainRenderer terrainRenderer;
 	ChunkHandler chunkHandler;

@@ -38,3 +38,16 @@ void npMesh::createBuffers()
 
 
 }
+
+npMesh * npMesh::getGLCopy()
+{
+npMesh *mesh =new npMesh();
+mesh->vertexBuffer = vertexBuffer;
+mesh->indexBuffer = indexBuffer;
+mesh->numVertices = numVertices;
+mesh->numIndices= numIndices;
+
+mesh->material.diffuseTexture = material.diffuseTexture;
+return mesh;
+
+}

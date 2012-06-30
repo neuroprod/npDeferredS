@@ -251,7 +251,58 @@ void  npAssimpLoader::makeBoneMesh(aiMesh *mesh)
 void  npAssimpLoader::makeMesh(aiMesh *mesh)
 {
 
-cout << "todo:: make mesh";
+	npMesh * npmesh = new npMesh();
+
+	
+
+	meshes.push_back( npmesh );
+	
+		
+
+
+	 npmesh->numVertices = mesh->mNumVertices;
+	npmesh->stride = 3+3+2;
+	npmesh->vertices =new float[npmesh->numVertices*npmesh->stride ];
+
+	int count =0;
+	for (int i=0;i<mesh->mNumVertices;i++)
+	{
+		
+		
+		npmesh->vertices[count++] = mesh->mVertices[i].x ;
+		npmesh->vertices[count++] = mesh->mVertices[i].y ;
+		npmesh->vertices[count++] = mesh->mVertices[i].z ;
+
+		npmesh->vertices[count++] = mesh->mNormals[i].x;
+		npmesh->vertices[count++] = mesh->mNormals[i].y;
+		npmesh->vertices[count++] = mesh->mNormals[i].z;
+
+
+		npmesh->vertices[count++] = mesh->mTextureCoords[0][i].x;
+		npmesh->vertices[count++] = mesh->mTextureCoords[0][i].y;
+	
+		
+
+	
+
+		
+	}
+		
+
+
+	npmesh->numIndices = mesh->mNumFaces*3;
+	npmesh->indices =new unsigned[npmesh->numIndices];
+
+	count =0;
+	for (int i=0;i< mesh->mNumFaces;i++)
+	{
+			for (unsigned int a = 0; a < 3; ++a){
+				npmesh->indices[count++]=mesh->mFaces[i].mIndices[a];
+			}
+	}
+
+	npmesh->createBuffers();
+
 }
 void  npAssimpLoader::getAnime()
 {

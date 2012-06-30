@@ -66,7 +66,7 @@ void testApp::setup(){
     
 	boneMeshRenderer.setup();
     rendererColor.setup();
-		
+	renderTexture.setup();
 	terrainRenderer.setup();
 
     deferredBuffer.setup(ofGetScreenWidth(),ofGetScreenHeight());
@@ -142,9 +142,28 @@ void testApp::update(){
 				}
 		}
 		terrainRenderer.stop();
-		//rest
-		rendererColor.start(&camera);
-		for (int i=0;i< chunkHandler.chunks.size();i++)
+
+		renderTexture.start(camera);
+			for (int i=0;i< chunkHandler.chunks.size();i++)
+			{
+				 if(chunkHandler.chunks[i]->detailLevel>0)
+				{
+				
+					for (int j=0;j< chunkHandler.chunks[i]->objects.size();j++)
+					{
+				
+					
+						renderTexture.draw(	chunkHandler.chunks[i]->objects[j]);
+					}
+				 }
+			}
+		renderTexture.stop();
+		
+	/*	rendererColor.start(camera);
+	
+		
+
+	for (int i=0;i< chunkHandler.chunks.size();i++)
 		{
 				 if(chunkHandler.chunks[i]->detailLevel>0)
 				{
@@ -158,7 +177,7 @@ void testApp::update(){
 	
 		}
 		rendererColor.stop();
-
+		*/
 		boneMeshRenderer.start(&camera);
 			boneMeshRenderer.draw(&girl.charMesh);
 		boneMeshRenderer.stop();

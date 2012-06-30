@@ -13,9 +13,6 @@
     <ClCompile Include="src\npMeshRendererColor.cpp">
       <Filter>src\np\deferred</Filter>
     </ClCompile>
-    <ClCompile Include="src\npMeshRendererDifText.cpp">
-      <Filter>src\np\deferred</Filter>
-    </ClCompile>
     <ClCompile Include="src\npMesh.cpp">
       <Filter>src\np\objects</Filter>
     </ClCompile>
@@ -73,15 +70,15 @@
     <ClCompile Include="src\TerrainRenderer.cpp">
       <Filter>src\game</Filter>
     </ClCompile>
+    <ClCompile Include="src\npMeshRendererText.cpp">
+      <Filter>src\np\deferred</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\npDeferredBuffers.h">
-      <Filter>src\np\deferred</Filter>
-    </ClInclude>
-    <ClInclude Include="src\npMeshRendererDifText.h">
       <Filter>src\np\deferred</Filter>
     </ClInclude>
     <ClInclude Include="src\npMeshRendererColor.h">
@@ -161,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="src\TerrainRenderer.h">
       <Filter>src\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npMeshRendererText.h">
+      <Filter>src\np\deferred</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

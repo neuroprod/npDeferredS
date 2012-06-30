@@ -4,7 +4,7 @@
 void MainCharacter::setup()
 {
 
-	aLoader.load(ofToDataPath("vrouwAnimeTest2.dae"));
+	aLoader.load(ofToDataPath("3DAssets/vrouwAnimeTest2.dae"));
 	charMesh  = *aLoader.boneMeshes[0];
 	charMesh.setPos(0,0,0);
 	charMesh.material.loadDiffuse("3DAssets/vrouwFinal.png");

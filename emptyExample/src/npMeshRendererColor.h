@@ -24,7 +24,7 @@ public:
     void setup();
     
     
-    void start(npCamera *cam);
+    void start(const npCamera &cam);
     void draw(const npMesh *mesh);
     void stop();
     

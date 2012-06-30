@@ -39,4 +39,10 @@ public:
 	int chunkSizeX ;
 	int chunkSizeY;
 
+
+
+
+
+	npMesh * treeMesh;
+
 };
