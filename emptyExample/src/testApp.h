@@ -23,6 +23,7 @@
 #include "Terrain.h"
 #include "ChunkHandler.h"
 #include "Chunk.h"
+#include "TerrainRenderer.h"
 
 
 
@@ -53,7 +54,7 @@ public:
     GameCamera camera;
     npMeshRendererColor rendererColor;
     npBoneMeshRenderer boneMeshRenderer;
-
+	TerrainRenderer terrainRenderer;
 	ChunkHandler chunkHandler;
 	
 	npDeferredBuffers deferredBuffer;

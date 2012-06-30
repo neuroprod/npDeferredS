@@ -11,9 +11,12 @@ public:
 	Terrain(){};
 	~Terrain(){};
 
-	void setup(string heightMap);
+	void setup(string heightMap,string objectMap);
 	void createChunkLow(int pixelX,int pixelY,float worldX,float worldY,Chunk *chunk);
 		void createChunkHigh(int pixelX,int pixelY,float worldX,float worldY,Chunk *chunk);
+
+		void getObjects(int pixelX,int pixelY,float worldX,float worldY,Chunk *chunk);
+
 	//void createChunkHigh(int x,int y);
 
 
@@ -26,7 +29,7 @@ public:
 	ChunkHandler * chunkHandler;
 
 	ofImage terainMainMap;
-
+	ofImage	objectMainMap;
 	float mainPixelSize;
 	int divX;
 	int divY;

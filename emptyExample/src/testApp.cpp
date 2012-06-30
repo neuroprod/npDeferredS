@@ -7,10 +7,9 @@ void testApp::setup(){
     
 	srand(3);
 	chunkHandler.setup();
-	cout << "1"<< endl;
-	terain.chunkHandler = &chunkHandler;
-	terain.setup(ofToDataPath("3DAssets/Terain.png"));
 	
+	terain.chunkHandler = &chunkHandler;
+	terain.setup(ofToDataPath("3DAssets/Terain.png"),ofToDataPath("3DAssets/objects.png"));
 
 	girl.setup();
 	girl.terain =  &terain;
@@ -19,14 +18,14 @@ void testApp::setup(){
 	camera.mainCharacter =&girl;
 	
 	ofBackground(0, 0, 0);
-    
+    /*
     npMaterial m;
     m.hasColor =true;
     m.hasUV =false;
     m.r =0.9f;
     m.g =0.9f;
-    m.b =0.9f;
-    for (int i=0;i<80;i++)
+    m.b =0.9f;*/
+    /*for (int i=0;i<80;i++)
     {
         npSphere *t =new npSphere();
         t->setup(m,(float) rand()/RAND_MAX*1.0+0.5);
@@ -59,14 +58,16 @@ void testApp::setup(){
     
     
     }
-    
+    */
     
 	
-
+		
   
     
 	boneMeshRenderer.setup();
     rendererColor.setup();
+		
+	terrainRenderer.setup();
 
     deferredBuffer.setup(ofGetScreenWidth(),ofGetScreenHeight());
     
@@ -99,6 +100,8 @@ void testApp::setup(){
 
 	previousTime=ofGetElapsedTimeMicros();
 	currentTime =ofGetElapsedTimeMicros();
+
+	cout << "setupDone"<< endl;
 }
 
 
@@ -124,30 +127,36 @@ void testApp::update(){
     glEnable(GL_CULL_FACE);
 	glClearColor(0.2f,0.2f,0.2f,1.0f);
     deferredBuffer.start();
-		rendererColor.start(&camera);
-
-		for (int i=0;i< chunkHandler.chunks.size();i++)
-			{
+		// terain floor
+		terrainRenderer.start(camera);
+			for (int i=0;i< chunkHandler.chunks.size();i++)
+				{
 				if (chunkHandler.chunks[i]->detailLevel==2)
 				{
-					rendererColor.draw( chunkHandler.chunks[i]->terrainLowRes);
+					terrainRenderer.draw( chunkHandler.chunks[i]->terrainLowRes);
 				}
 				else if(chunkHandler.chunks[i]->detailLevel==1)
 				{
-					rendererColor.draw( chunkHandler.chunks[i]->terrainHighRes);
+					terrainRenderer.draw( chunkHandler.chunks[i]->terrainHighRes);
 				
 				}
-			}
-
-			for (int i=0;i< spheres.size();i++)
-			{
-				rendererColor.draw( spheres[i]);
-			}
-			for (int i=0;i< pLights.size();i++)
-			{
-				rendererColor.draw( &pLights[i]->drawSphere);
-			}
-    
+		}
+		terrainRenderer.stop();
+		//rest
+		rendererColor.start(&camera);
+		for (int i=0;i< chunkHandler.chunks.size();i++)
+		{
+				 if(chunkHandler.chunks[i]->detailLevel>0)
+				{
+				
+					for (int j=0;j< chunkHandler.chunks[i]->objects.size();j++)
+					{
+					
+						rendererColor.draw(chunkHandler.chunks[i]->objects[j]);
+					}
+				 }
+	
+		}
 		rendererColor.stop();
 
 		boneMeshRenderer.start(&camera);

@@ -50,7 +50,7 @@ void MainCharacter::update(unsigned long timeStep)
 	if (isMoving){
 	charPos  +=walkDir*(walkspeed* (float)timeStep/1000000);
 
-	cout<< charPos<< endl;
+	
 	
 	}
 	

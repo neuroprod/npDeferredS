@@ -1,14 +1,15 @@
 #include "Terrain.h"
-
-void Terrain::setup(string heightMap)
+#include "npSphere.h"
+void Terrain::setup(string heightMap,string objectMap)
 {
 
-	mainPixelSize =0.8f;
+	mainPixelSize =1.0f;
     terainMainMap.loadImage(heightMap);
 	terainMainMap.setImageType(OF_IMAGE_COLOR);
-
-	divX =8;
-	divY =8;
+	objectMainMap.loadImage(objectMap);
+	objectMainMap.setImageType(OF_IMAGE_COLOR);
+	divX =16;
+	divY =16;
 	totalWidth = terainMainMap.width;
 	totalHeight = terainMainMap.height;
 	
@@ -23,6 +24,9 @@ void Terrain::setup(string heightMap)
 		for(int x=0;x<divX;x++)
 		{
 			Chunk * chunk =new Chunk();
+
+			getObjects(x*chunkSizeX,y*chunkSizeY,(float) (startX +x*chunkSizeX)*mainPixelSize,(float) (startY +y*chunkSizeY)*mainPixelSize,chunk);
+
 			createChunkLow(x*chunkSizeX,y*chunkSizeY,(float) (startX +x*chunkSizeX)*mainPixelSize,(float) (startY +y*chunkSizeY)*mainPixelSize,chunk );
 			createChunkHigh(x*chunkSizeX,y*chunkSizeY,(float) (startX +x*chunkSizeX)*mainPixelSize,(float) (startY +y*chunkSizeY)*mainPixelSize,chunk );
 			chunk->center.set((startX +x*chunkSizeX)*mainPixelSize  +  (chunkSizeX/2)*mainPixelSize ,0,(startY +y*chunkSizeY)*mainPixelSize  +  (chunkSizeY/2)*mainPixelSize  );
@@ -37,8 +41,8 @@ void Terrain::setup(string heightMap)
 void Terrain::createChunkLow(int pixelX,int pixelY,float worldX,float worldY,Chunk *chunk)
 {
 		
-	int cDivX = 64;
-	int cDivY = 64;
+	int cDivX = 32;
+	int cDivY = 32;
 	int cStepX = chunkSizeX/ cDivX;
 	int cStepY = chunkSizeY/ cDivY;
 
@@ -47,7 +51,7 @@ void Terrain::createChunkLow(int pixelX,int pixelY,float worldX,float worldY,Chu
 	
 	chunk->terrainLowRes  =new npMesh();
 	npMesh * mesh = chunk->terrainLowRes;
-	mesh->stride = 9;
+	mesh->stride = 8;
 	mesh->numVertices =(cDivX+1) *(cDivY+1); 
 	mesh->vertices =new float [mesh->numVertices*	mesh->stride ];
 
@@ -74,9 +78,8 @@ void Terrain::createChunkLow(int pixelX,int pixelY,float worldX,float worldY,Chu
             mesh->vertices[vertcount++] =  n.y;
             mesh->vertices[vertcount++] = n.z;
             
-			mesh->vertices[vertcount++] = r;
-            mesh->vertices[vertcount++] =0;
-            mesh->vertices[vertcount++] =0;
+		mesh->vertices[vertcount++] = (float)(pPosX+pixelX)/totalWidth;
+            mesh->vertices[vertcount++] =(float)(pPosY+pixelY)/totalHeight;
 
 
 
@@ -119,8 +122,8 @@ void Terrain::createChunkLow(int pixelX,int pixelY,float worldX,float worldY,Chu
 void Terrain::createChunkHigh(int pixelX,int pixelY,float worldX,float worldY,Chunk *chunk)
 {
 		
-	int cDivX = 256;
-	int cDivY = 256;
+	int cDivX = 256/4;
+	int cDivY = 256/4;
 	int cStepX = chunkSizeX/ cDivX;
 	int cStepY = chunkSizeY/ cDivY;
 
@@ -129,7 +132,7 @@ void Terrain::createChunkHigh(int pixelX,int pixelY,float worldX,float worldY,Ch
 	
 	chunk->terrainHighRes  =new npMesh();
 	npMesh * mesh = chunk->terrainHighRes;
-	mesh->stride = 9;
+	mesh->stride = 8;
 	mesh->numVertices =(cDivX+1) *(cDivY+1); 
 	mesh->vertices =new float [mesh->numVertices*	mesh->stride ];
 
@@ -156,10 +159,8 @@ void Terrain::createChunkHigh(int pixelX,int pixelY,float worldX,float worldY,Ch
             mesh->vertices[vertcount++] =  n.y;
             mesh->vertices[vertcount++] = n.z;
             
-			mesh->vertices[vertcount++] = 0;
-            mesh->vertices[vertcount++] =r;
-            mesh->vertices[vertcount++] =0;
-
+			mesh->vertices[vertcount++] = (float)(pPosX+pixelX)/totalWidth;
+            mesh->vertices[vertcount++] =(float)(pPosY+pixelY)/totalHeight;
 
 
 
@@ -200,6 +201,67 @@ void Terrain::createChunkHigh(int pixelX,int pixelY,float worldX,float worldY,Ch
 
 
 
+void Terrain::getObjects(int pixelX,int pixelY,float worldX,float worldY,Chunk *chunk)
+{
+		
+	int cDivX = 256/2;
+	int cDivY = 256/2;
+	int cStepX = 1;
+	int cStepY = 1;
+
+
+	for(int y=0;y<cDivY -1 ;y++)
+	{
+		int pPosY = y* cStepY;
+		for(int x=0;x<cDivX-1;x++)
+		{
+			int pPosX = x* cStepX ;
+			int sX  = pPosX+pixelX;
+			int sY	=pPosY+pixelY;
+
+			unsigned char r =   objectMainMap.getPixels()[(sX +sY*2048)*3];
+			unsigned char g =   objectMainMap.getPixels()[(sX +sY*2048)*3+1];
+			unsigned char b =   objectMainMap.getPixels()[(sX +sY*2048)*3+2];
+			
+		
+			if (b
+				==255)
+			{
+			cout << "found"<< endl;
+				ofVec3f objPos;
+				objPos.set( (float) pPosX*mainPixelSize  +worldX,  getHeightForPixelPos( pPosX+pixelX, pPosY+pixelY),(float) pPosY*mainPixelSize  +worldY);
+				npSphere *t =new npSphere();
+				npMaterial m;
+				m.hasColor =true;
+				m.hasUV =false;
+				m.r =0.9f;
+				m.g =0.9f;
+				m.b =0.9f;
+
+				t->setup(m,1);
+				t->setPos (objPos.x,objPos.y,objPos.z);
+				chunk->objects.push_back(t);
+			
+			}
+
+			
+          
+
+
+
+
+
+
+		}
+		
+	}
+	
+
+	
+
+
+}
+
 
 
 float Terrain::getHeightForPixelPos(int x, int y)
@@ -213,10 +275,18 @@ float Terrain::getHeightForPixelPos(int x, int y)
 	{
 	return 0;
 	}
+			if (x<0)
+	{
+	return 0;
+	}
+		if (y<0)
+	{
+	return 0;
+	}
 	float pixelVal =  (float ) terainMainMap.getPixels()[(x+y*2048)*3];
 
-	float height = pixelVal/256.0f   *8;
-	return (height * height)-2 ;
+	float height = pixelVal/256.0f   *1.5;
+	return height *height*height *20;
 }
 
 ofVec3f  Terrain::getNormalforPixelPos(int x, int y)
@@ -225,6 +295,9 @@ ofVec3f  Terrain::getNormalforPixelPos(int x, int y)
 	ofVec3f normal;
 	normal.set(0,0,0);
 	normal+= getNormal( ofVec3f(mainPixelSize *x,getHeightForPixelPos(x,y),mainPixelSize* y) , ofVec3f(mainPixelSize *(x+1),getHeightForPixelPos(x+1,y),mainPixelSize* y)   , ofVec3f(mainPixelSize *x,getHeightForPixelPos(x,y+1),mainPixelSize* (y+1))                              );
+	normal+= getNormal( ofVec3f(mainPixelSize *x,getHeightForPixelPos(x,y),mainPixelSize* y) , ofVec3f(mainPixelSize *(x),getHeightForPixelPos(x,y-1),mainPixelSize* (y-1))   , ofVec3f(mainPixelSize *(x+1),getHeightForPixelPos((x+1),y+1),mainPixelSize* (y+1)) );
+	normal+= getNormal( ofVec3f(mainPixelSize *x,getHeightForPixelPos(x,y),mainPixelSize* y) , ofVec3f(mainPixelSize *(x-1),getHeightForPixelPos(x-1,y),mainPixelSize* (y))   , ofVec3f(mainPixelSize *(x-1),getHeightForPixelPos((x-1),y-1),mainPixelSize* (y-1)) );
+	normal+= getNormal( ofVec3f(mainPixelSize *x,getHeightForPixelPos(x,y),mainPixelSize* y) , ofVec3f(mainPixelSize *(x),getHeightForPixelPos(x,y+1),mainPixelSize* (y+1))   , ofVec3f(mainPixelSize *(x-1),getHeightForPixelPos((x-1),y),mainPixelSize* (y)) );
 	normal.normalize();
 
 	return normal;

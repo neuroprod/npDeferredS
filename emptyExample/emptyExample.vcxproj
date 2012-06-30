@@ -138,6 +138,7 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClCompile Include="src\npProgramLoader.cpp" />
     <ClCompile Include="src\npSphere.cpp" />
     <ClCompile Include="src\Terrain.cpp" />
+    <ClCompile Include="src\TerrainRenderer.cpp" />
     <ClCompile Include="src\testApp.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +175,7 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClInclude Include="src\npTextFileLoader.h" />
     <ClInclude Include="src\npTimer.h" />
     <ClInclude Include="src\Terrain.h" />
+    <ClInclude Include="src\TerrainRenderer.h" />
     <ClInclude Include="src\testApp.h" />
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +189,8 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <None Include="bin\data\DeferredShaderFinal.vsh" />
     <None Include="bin\data\DeferredShaderPointLight.fsh" />
     <None Include="bin\data\DeferredShaderPointLight.vsh" />
+    <None Include="bin\data\DeferredShaderTerrain.fsh" />
+    <None Include="bin\data\DeferredShaderTerrain.vsh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

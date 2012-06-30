@@ -13,7 +13,7 @@ public:
 	void calculateDetail(const ofVec3f &camPos,const ofVec3f &lookDir);
 	void setDetailLevel(int _detailLevel);
 	ofVec3f center;
-
+	vector <npMesh*> objects;
 
 	int detailLevel;
 	npMesh * terrainLowRes;

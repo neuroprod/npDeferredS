@@ -70,6 +70,9 @@
     <ClCompile Include="src\ChunkHandler.cpp">
       <Filter>src\game</Filter>
     </ClCompile>
+    <ClCompile Include="src\TerrainRenderer.cpp">
+      <Filter>src\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h">
@@ -156,6 +159,9 @@
     <ClInclude Include="src\ChunkHandler.h">
       <Filter>src\game</Filter>
     </ClInclude>
+    <ClInclude Include="src\TerrainRenderer.h">
+      <Filter>src\game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -212,6 +218,12 @@
       <Filter>data\shaders</Filter>
     </None>
     <None Include="bin\data\DeferredShaderBones.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderTerrain.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderTerrain.vsh">
       <Filter>data\shaders</Filter>
     </None>
   </ItemGroup>
