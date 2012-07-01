@@ -49,7 +49,7 @@ void main()
 
     gl_FragColor  =vec4(col+specular,1.0);
 	//gl_FragColor  =vec4(pLight ,1.0);
-	//gl_FragColor  = vec4(normal*0.5+0.5,1.0);
+//	gl_FragColor  = vec4(normal*0.5+0.5,1.0);
 	//gl_FragColor  = vec4(normal,1.0);
 	//gl_FragColor  = vec4( pos,1.0);
 }

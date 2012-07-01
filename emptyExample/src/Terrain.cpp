@@ -8,8 +8,8 @@ void Terrain::setup(string heightMap,string objectMap)
 	npAssimpLoader loader;
 	loader.load(ofToDataPath("3DAssets/treeTest.dae"));
 	treeMesh = loader.meshes[0];
-	treeMesh->material.loadDiffuse("3DAssets/tree1.png",GL_RGBA );
-
+	treeMesh->material.loadDiffuse("3DAssets/tree1.png",GL_RGB );
+	treeMesh->material.loadNormal("3DAssets/tree1_n.png",GL_RGB );
 
 
 

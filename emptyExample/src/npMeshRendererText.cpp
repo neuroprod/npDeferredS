@@ -14,6 +14,7 @@ void npMeshRendererText::setup()
 
     glBindAttribLocation(program,ATTRIB_VERTEX,"position");
     glBindAttribLocation(program,ATTRIB_NORMAL,"normal");
+	 glBindAttribLocation(program,ATTRIB_TANGENT,"tangent");
     glBindAttribLocation(program,ATTRIB_UV,"uv");
  
     pl.linkProgram();
@@ -24,6 +25,11 @@ void npMeshRendererText::setup()
     uWorldMatrix = glGetUniformLocation(program,"worldMatrix");
     uPerspectiveMatrix = glGetUniformLocation(program,"perspectiveMatrix");
    uNormalWorldMatrix = glGetUniformLocation(program,"normalWorldMatrix");
+
+    uTextureNormal= glGetUniformLocation(program,"textureNormal");
+	uTextureDiffuse= glGetUniformLocation(program,"textureDiffuse");
+	 glUniform1i(uTextureDiffuse,0);
+   glUniform1i(  uTextureNormal,1);
 
     glUseProgram(0);
 }
@@ -37,21 +43,26 @@ void npMeshRendererText::start(const npCamera &cam)
      glUniformMatrix4fv(uNormalWorldMatrix, 1, 0,   cam.normalWorldMatrix.getPtr());
     glEnableVertexAttribArray(ATTRIB_VERTEX);
     glEnableVertexAttribArray(ATTRIB_NORMAL);
+		  glEnableVertexAttribArray(ATTRIB_TANGENT);
     glEnableVertexAttribArray(ATTRIB_UV);
     
 
 }
 void npMeshRendererText::draw(const npMesh *mesh)
 {
+	    glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, mesh->material.normalTexture);
+	    glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, mesh->material.diffuseTexture);
 
-	glBindTexture(GL_TEXTURE_2D, mesh->material.diffuseTexture);
 
     glBindBuffer(GL_ARRAY_BUFFER,mesh->vertexBuffer);
     
 	
-    glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8,(GLvoid*) (sizeof(float) * 0));
-    glVertexAttribPointer(ATTRIB_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8,(GLvoid*) (sizeof(float) *3 ));
-    glVertexAttribPointer(ATTRIB_UV, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 8,(GLvoid*) (sizeof(float) * 6));
+    glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 11,(GLvoid*) (sizeof(float) * 0));
+    glVertexAttribPointer(ATTRIB_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 11,(GLvoid*) (sizeof(float) *3 ));
+	    glVertexAttribPointer(ATTRIB_TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 11,(GLvoid*) (sizeof(float) *6 ));
+    glVertexAttribPointer(ATTRIB_UV, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 11,(GLvoid*) (sizeof(float) * 9));
     
     
     
@@ -85,6 +96,7 @@ void npMeshRendererText::stop()
 {
     glDisableVertexAttribArray(ATTRIB_VERTEX);
     glDisableVertexAttribArray(ATTRIB_NORMAL);
+	  glDisableVertexAttribArray(ATTRIB_TANGENT);
     glDisableVertexAttribArray(ATTRIB_UV);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  0);

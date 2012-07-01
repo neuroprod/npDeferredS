@@ -36,11 +36,13 @@ public:
     GLint uPerspectiveMatrix;
     GLint uWorldMatrix;
     GLint uObjectMatrix;
-    
+    GLint uTextureNormal;
+GLint uTextureDiffuse;
     
     enum {
         ATTRIB_VERTEX,
         ATTRIB_NORMAL,
+		 ATTRIB_TANGENT,
         ATTRIB_UV
     };
     

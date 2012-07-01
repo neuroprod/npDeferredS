@@ -14,7 +14,7 @@ void npAssimpLoader::load(string fileName)
 
     // aiProcess_FlipUVs is for VAR code. Not needed otherwise. Not sure why.
     unsigned int flags = aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_Triangulate | aiProcess_FlipUVs| aiProcess_ImproveCacheLocality | aiProcess_OptimizeGraph |aiProcess_OptimizeMeshes | aiProcess_JoinIdenticalVertices |
-			aiProcess_RemoveRedundantMaterials ;
+			aiProcess_RemoveRedundantMaterials|aiProcess_CalcTangentSpace ;
 	
     scene = aiImportFile(fileName.c_str(), flags);
 
@@ -261,7 +261,7 @@ void  npAssimpLoader::makeMesh(aiMesh *mesh)
 
 
 	 npmesh->numVertices = mesh->mNumVertices;
-	npmesh->stride = 3+3+2;
+	npmesh->stride = 3+3+3+2;
 	npmesh->vertices =new float[npmesh->numVertices*npmesh->stride ];
 
 	int count =0;
@@ -277,6 +277,10 @@ void  npAssimpLoader::makeMesh(aiMesh *mesh)
 		npmesh->vertices[count++] = mesh->mNormals[i].y;
 		npmesh->vertices[count++] = mesh->mNormals[i].z;
 
+		npmesh->vertices[count++] = mesh->mTangents[i].x;
+		npmesh->vertices[count++] = mesh->mTangents[i].y;
+		npmesh->vertices[count++] = mesh->mTangents[i].z;
+	
 
 		npmesh->vertices[count++] = mesh->mTextureCoords[0][i].x;
 		npmesh->vertices[count++] = mesh->mTextureCoords[0][i].y;

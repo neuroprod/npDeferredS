@@ -46,7 +46,7 @@ mesh->vertexBuffer = vertexBuffer;
 mesh->indexBuffer = indexBuffer;
 mesh->numVertices = numVertices;
 mesh->numIndices= numIndices;
-
+mesh->material.normalTexture = material.normalTexture ;
 mesh->material.diffuseTexture = material.diffuseTexture;
 return mesh;
 

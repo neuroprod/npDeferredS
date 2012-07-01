@@ -26,8 +26,10 @@ public:
     float shininess;
 
     GLuint diffuseTexture;
+	 GLuint normalTexture;
     void loadDiffuse(string fileName,GLenum type =GL_RGB,bool useMipMap =true);
-	
+	void loadNormal(string fileName,GLenum type =GL_RGB,bool useMipMap =true);
+	void loadTexture(string fileName,GLenum type =GL_RGB,bool useMipMap =true);
 };
 
 #endif
