@@ -36,7 +36,7 @@ void main()
 
 	 vec4 tangentLok = normalMatrix*tangent;
     tangent_var =(normalWorldMatrix* tangentLok ).xyz;
-	bitangent_var =cross(normal_var,tangent_var);
+	bitangent_var =cross(tangent_var,normal_var);
 	normalize(bitangent_var);
     uv_var =uv;
 

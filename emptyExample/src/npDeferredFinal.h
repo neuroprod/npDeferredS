@@ -43,7 +43,7 @@ public:
     GLint uPointLightTexture;
 	GLint uLambertMap;
     GLint uLightDir;
-
+	 GLint uWorldMatrix;
 
     GLuint depthTexture;
     GLuint colorTexture;	

@@ -308,7 +308,7 @@ float Terrain::getHeightForPixelPos(int x, int y)
 	}
 	float pixelVal =  (float ) terainMainMap.getPixels()[(x+y*2048)*3];
 
-	float height = pixelVal/256.0f   *1.5;
+	float height = pixelVal/256.0f  *2;// *1.5;
 	return height *height*height *20;
 }
 
@@ -332,7 +332,7 @@ ofVec3f  Terrain::getNormal(const ofVec3f &p1,const ofVec3f &p2,const ofVec3f &p
 	ofVec3f d1  = p1-p2;
 	ofVec3f d2 = p1-p3;
 
-	return d2.getCrossed( d1 ).normalize();
+	return d2.getCrossed( d1).normalize();
 }
 
 

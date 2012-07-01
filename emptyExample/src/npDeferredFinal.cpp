@@ -49,7 +49,7 @@ void npDeferredFinal::setup(string prog)
     uDepthTexture= glGetUniformLocation( program, "depthTexture");
     uPointLightTexture= glGetUniformLocation( program, "pointLightTexture");
 	
-
+	uWorldMatrix =  glGetUniformLocation( program, "worldMatrix");
     
 	uPerspectiveInvMatrix =  glGetUniformLocation( program, "perspectiveInvMatrix");
 
@@ -64,7 +64,7 @@ void npDeferredFinal::setup(string prog)
     
   
     
-    cout << uLambertMap <<" "<< uPointLightTexture ;
+  
     
    
     
@@ -156,7 +156,9 @@ void npDeferredFinal::draw(npCamera *cam){
 
 	glUniform3f(uLightDir,dirLight->dir.x,dirLight->dir.y,dirLight->dir.z);
 	glUniformMatrix4fv(uPerspectiveInvMatrix, 1, 0,   cam->perspectiveInvMatrix.getPtr());
-	
+	//ofMatrix4x4 worldRot =  cam->normalWorldMatrix.getInverse();
+
+	glUniformMatrix4fv(uWorldMatrix, 1, 0, cam->normalWorldMatrix.getPtr());
     glEnableVertexAttribArray(ATTRIB_VERTEX_FS);
     glEnableVertexAttribArray(ATTRIB_UV_FS);
 	GLfloat *pointer;

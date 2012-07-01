@@ -13,7 +13,7 @@ uniform vec3 lightDir;
 
 varying vec2 uv_var;
 varying vec3 lightDir_var;
-
+uniform mat4 worldMatrix ;
 
 void main()
 {
@@ -21,7 +21,7 @@ void main()
     gl_Position =position;
     uv_var=uv;
   
-    lightDir_var = lightDir;
+    lightDir_var =(worldMatrix*vec4( lightDir.xyz,1.0)).xyz;
      
     
 }
