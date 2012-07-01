@@ -3,6 +3,12 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
+
+	int units;
+	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS,  &units);
+	cout <<"maxTexture units " <<units<< endl;
+
+
 	ofSetFrameRate(60);
     
 	srand(3);
@@ -32,7 +38,7 @@ void testApp::setup(){
         t->setPos (((float) rand()/RAND_MAX -0.5)*20, ((float) rand()/RAND_MAX -0.5)*20, ((float) rand()/RAND_MAX -0.5)*20);
         spheres.push_back((npMesh *)t);
     
-    }
+    }*/
     for (int i=0;i<40;i++)
     {
     
@@ -58,7 +64,7 @@ void testApp::setup(){
     
     
     }
-    */
+    
     
 	
 		
@@ -204,7 +210,7 @@ void testApp::draw(){
    deferredFinal.draw(&camera);
 
    GLErrorCheck::test("draw end");
- // cout << ofGetFrameRate()<<endl ;
+// cout << ofGetFrameRate()<<endl ;
 }
 
 

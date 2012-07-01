@@ -41,6 +41,7 @@ public:
     GLint uNormalTexture;
     GLint uDepthTexture;
     GLint uPointLightTexture;
+	GLint uLambertMap;
     GLint uLightDir;
 
 
@@ -48,7 +49,7 @@ public:
     GLuint colorTexture;	
     GLuint normalTexture;
     GLuint pointLightTexture;
-    
+    GLuint lambertMap;
     GLuint program;
    
 	npDirectionalLight * dirLight;

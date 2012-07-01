@@ -17,6 +17,8 @@ public:
     ~npPointLight(){};
     void setup(float radius,float  r,float g,float b, float radiusDraw =0);
     void setPos(float _x,float _y,float _z);
+
+	
     npSphere drawSphere;
     npSphere rangeSphere;
 	float lightSize;

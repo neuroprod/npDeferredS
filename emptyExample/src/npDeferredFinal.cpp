@@ -19,7 +19,7 @@
 
 #include "npDeferredFinal.h"
 #include "npProgramLoader.h"
-
+#include "npMaterial.h"
 enum {
     ATTRIB_VERTEX_FS,
     ATTRIB_UV_FS
@@ -27,7 +27,9 @@ enum {
 
 void npDeferredFinal::setup(string prog)
 {
-
+	npMaterial mat;
+	mat.loadDiffuse("3DAssets/lambertMap.png");
+	lambertMap = mat.diffuseTexture;
   
     npProgramLoader pLoader ;
     program=    pLoader.loadProgram (prog);
@@ -41,11 +43,13 @@ void npDeferredFinal::setup(string prog)
     glUseProgram( program);
     
 	uLightDir= glGetUniformLocation( program, "lightDir");
-	
+	uLambertMap= glGetUniformLocation( program, "lambertTexture");
 	uColorTexture= glGetUniformLocation( program, "colorTexture");
     uNormalTexture= glGetUniformLocation( program, "normalTexture");
     uDepthTexture= glGetUniformLocation( program, "depthTexture");
     uPointLightTexture= glGetUniformLocation( program, "pointLightTexture");
+	
+
     
 	uPerspectiveInvMatrix =  glGetUniformLocation( program, "perspectiveInvMatrix");
 
@@ -54,12 +58,13 @@ void npDeferredFinal::setup(string prog)
     glUniform1i(  uNormalTexture, 1);
     glUniform1i(  uDepthTexture, 2);
     glUniform1i(  uPointLightTexture, 3);
-  
-    glUseProgram(0);
+ glUniform1i(  uLambertMap, 4);
+ 
+ glUseProgram(0);
     
   
     
-    
+    cout << uLambertMap <<" "<< uPointLightTexture ;
     
    
     
@@ -145,7 +150,10 @@ void npDeferredFinal::draw(npCamera *cam){
     
     glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_2D,pointLightTexture);
-  
+
+	  glActiveTexture(GL_TEXTURE4);
+	glBindTexture(GL_TEXTURE_2D,lambertMap);
+
 	glUniform3f(uLightDir,dirLight->dir.x,dirLight->dir.y,dirLight->dir.z);
 	glUniformMatrix4fv(uPerspectiveInvMatrix, 1, 0,   cam->perspectiveInvMatrix.getPtr());
 	

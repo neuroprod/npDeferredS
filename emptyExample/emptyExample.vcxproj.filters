@@ -73,6 +73,18 @@
     <ClCompile Include="src\npMeshRendererText.cpp">
       <Filter>src\np\deferred</Filter>
     </ClCompile>
+    <ClCompile Include="src\npDepthFBO.cpp">
+      <Filter>src\np\objects</Filter>
+    </ClCompile>
+    <ClCompile Include="npShadowMap.cpp">
+      <Filter>src\np\deferred</Filter>
+    </ClCompile>
+    <ClCompile Include="npShadowMapMeshRenderer.cpp">
+      <Filter>src\np\deferred</Filter>
+    </ClCompile>
+    <ClCompile Include="npShadowMapBoneRenderer.cpp">
+      <Filter>src\np\deferred</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h">
@@ -162,6 +174,18 @@
     <ClInclude Include="src\npMeshRendererText.h">
       <Filter>src\np\deferred</Filter>
     </ClInclude>
+    <ClInclude Include="src\npDepthFBO.h">
+      <Filter>src\np\objects</Filter>
+    </ClInclude>
+    <ClInclude Include="npShadowMap.h">
+      <Filter>src\np\deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="npShadowMapMeshRenderer.h">
+      <Filter>src\np\deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="npShadowMapBoneRenderer.h">
+      <Filter>src\np\deferred</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -224,6 +248,18 @@
       <Filter>data\shaders</Filter>
     </None>
     <None Include="bin\data\DeferredShaderTerrain.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\ShadowShaderBones.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\ShadowShaderBones.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\ShadowShaderMesh.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\ShadowShaderMesh.vsh">
       <Filter>data\shaders</Filter>
     </None>
   </ItemGroup>

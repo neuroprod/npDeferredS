@@ -10,7 +10,7 @@ public:
 	
 
 	void update();
-
+	
 	ofVec3f pos;
 	ofVec3f lookAt;
 
@@ -19,6 +19,8 @@ public:
 	ofMatrix4x4 lightPerspectivedMatrix;
 	ofMatrix4x4 lightWorldMatrix;
 	ofMatrix4x4 lightMatrix;
+
+
 
 };
 

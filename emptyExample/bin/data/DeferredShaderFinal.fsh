@@ -8,11 +8,13 @@
 
 
 varying vec2 uv_var;
-
+uniform sampler2D lambertTexture; 
 uniform sampler2D pointLightTexture; 
 uniform sampler2D colorTexture; 
 uniform sampler2D normalTexture; 
 uniform sampler2D depthTexture; 
+
+
 
 uniform mat4 perspectiveInvMatrix ;
 
@@ -24,7 +26,7 @@ void main()
     vec3 col = texture2D(colorTexture, uv_var).xyz;
     vec3 normal = texture2D(normalTexture, uv_var).xyz*2.0 -1.0;
     float depth = texture2D(depthTexture, uv_var).x;
-    vec3 pLight = texture2D(pointLightTexture, uv_var).xyz;
+   vec3 pLight = texture2D(pointLightTexture, uv_var).xyz;
 	
 	
 	vec3 pos =vec3(0.0,0.0,0.0);
@@ -36,14 +38,14 @@ void main()
 
 
 	float lambert = dot(normal,-lightDir_var)*0.5+0.5;
-	vec3 globalLight = vec3(1.0,1.0,1.0)*lambert;
+	vec3 globalLight = texture2D(lambertTexture,vec2( lambert,0.1)).xyz;
 
 
 	vec3 reflectVec = normalize(reflect( lightDir_var,normal));
 	vec3 eyeVecNormal = normalize(- worldPos.xyz);
 	float specular =pow(max(dot(eyeVecNormal,reflectVec),0.0),4.0)*0.1;
 
-	col *=pLight+lambert;
+	col *=globalLight+pLight;
 
     gl_FragColor  =vec4(col+specular,1.0);
 	//gl_FragColor  =vec4(pLight ,1.0);
