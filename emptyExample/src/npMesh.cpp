@@ -42,6 +42,7 @@ void npMesh::createBuffers()
 npMesh * npMesh::getGLCopy()
 {
 npMesh *mesh =new npMesh();
+mesh->stride =stride;
 mesh->vertexBuffer = vertexBuffer;
 mesh->indexBuffer = indexBuffer;
 mesh->numVertices = numVertices;

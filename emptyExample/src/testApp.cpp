@@ -4,11 +4,11 @@
 //--------------------------------------------------------------
 void testApp::setup(){
 
-	int units;
+	/*int units;
 	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS,  &units);
 	cout <<"maxTexture units " <<units<< endl;
 
-
+	*/
 	ofSetFrameRate(60);
     
 	srand(3);
@@ -65,16 +65,19 @@ void testApp::setup(){
     
     }
     
-    
-	
+  
 		
   
     
 	boneMeshRenderer.setup();
+
     rendererColor.setup();
+
 	renderTexture.setup();
+	
 	terrainRenderer.setup();
 
+	
     deferredBuffer.setup(ofGetScreenWidth(),ofGetScreenHeight());
     
   
@@ -88,25 +91,25 @@ void testApp::setup(){
     deferredFinal.normalTexture =deferredBuffer.normalTexture;
     deferredFinal.colorTexture =deferredBuffer.colorTexture;
     deferredFinal.pointLightTexture = plRenderer.pointLightTexture;
-   
-    
-    
-    
-    
     deferredFinal.setup("DeferredShaderFinal");
     
-    GLErrorCheck::test("setup end");
+ 
    
 	dirLight.lookAt.set(0,0,0);
 	dirLight.pos.set(100,200,0);
-	dirLight.update();
+
 	deferredFinal.dirLight =&dirLight;
+	
 
-
+	shadowMap.setup();
+	deferredFinal.shadowTexture1 =shadowMap.shadowTexture1;
+	shadowMeshRenderer.setup();
 
 	previousTime=ofGetElapsedTimeMicros();
 	currentTime =ofGetElapsedTimeMicros();
 
+
+	GLErrorCheck::test("setup end");
 	cout << "setupDone"<< endl;
 }
 
@@ -118,17 +121,59 @@ void testApp::update(){
 	currentTime =ofGetElapsedTimeMicros();
 	unsigned long timeStep =currentTime -previousTime;   
 	previousTime  = currentTime;
+	
+	//
+	// PRE RENDER UPDATE
+	//
 	//
 	girl.update(timeStep);
+	dirLight.update();
+
+	camera.lightDir = dirLight.dir;
 
 	camera.update();
 	chunkHandler.update(camera.lookAtPos,camera.camPos);
-
 	
-	//light update
-
-
-    // main draw;
+	//
+	//
+	// FRAME  BUFFERS
+	//
+	//
+	
+	//
+    // SHADOW MAP DRAW;
+	//
+		//glPolygonOffset(6.0,1.0);
+	//glEnable(GL_POLYGON_OFFSET_FILL);
+	shadowMap.start();
+	shadowMeshRenderer.start(camera);
+		for (int i=0;i< chunkHandler.chunks.size();i++)
+			{
+				 if(chunkHandler.chunks[i]->detailLevel>0)
+				{
+				if (chunkHandler.chunks[i]->detailLevel==2)
+				{
+					shadowMeshRenderer.draw( chunkHandler.chunks[i]->terrainLowRes);
+				}
+				else if(chunkHandler.chunks[i]->detailLevel==1)
+				{
+					shadowMeshRenderer.draw( chunkHandler.chunks[i]->terrainHighRes);
+				
+				}
+					for (int j=0;j< chunkHandler.chunks[i]->objects.size();j++)
+					{
+				
+					
+						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->objects[j]);
+					}
+				 }
+			}
+		shadowMeshRenderer.stop();
+	shadowMap.stop();
+		//glDisable(GL_POLYGON_OFFSET_FILL);
+	//
+    // MAIN DRAW;
+	//
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 	glClearColor(0.2f,0.2f,0.2f,1.0f);
@@ -190,7 +235,9 @@ void testApp::update(){
     deferredBuffer.stop();
  
    
-	//pointlights draw
+	//
+    // POINTLIGHT DRAW;
+	//
     glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE);
 	glCullFace(GL_FRONT);

@@ -76,13 +76,13 @@
     <ClCompile Include="src\npDepthFBO.cpp">
       <Filter>src\np\objects</Filter>
     </ClCompile>
-    <ClCompile Include="npShadowMap.cpp">
+    <ClCompile Include="src\ShadowMap.cpp">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\npShadowMapBoneRenderer.cpp">
       <Filter>src\np\deferred</Filter>
     </ClCompile>
-    <ClCompile Include="npShadowMapMeshRenderer.cpp">
-      <Filter>src\np\deferred</Filter>
-    </ClCompile>
-    <ClCompile Include="npShadowMapBoneRenderer.cpp">
+    <ClCompile Include="src\npShadowMapMeshRenderer.cpp">
       <Filter>src\np\deferred</Filter>
     </ClCompile>
   </ItemGroup>
@@ -177,13 +177,13 @@
     <ClInclude Include="src\npDepthFBO.h">
       <Filter>src\np\objects</Filter>
     </ClInclude>
-    <ClInclude Include="npShadowMap.h">
+    <ClInclude Include="src\ShadowMap.h">
+      <Filter>src\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npShadowMapBoneRenderer.h">
       <Filter>src\np\deferred</Filter>
     </ClInclude>
-    <ClInclude Include="npShadowMapMeshRenderer.h">
-      <Filter>src\np\deferred</Filter>
-    </ClInclude>
-    <ClInclude Include="npShadowMapBoneRenderer.h">
+    <ClInclude Include="src\npShadowMapMeshRenderer.h">
       <Filter>src\np\deferred</Filter>
     </ClInclude>
   </ItemGroup>

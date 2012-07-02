@@ -27,7 +27,8 @@
 #include "Chunk.h"
 #include "TerrainRenderer.h"
 
-
+#include "ShadowMap.h"
+#include "npShadowMapMeshRenderer.h"
 
 class testApp : public ofBaseApp{
 	
@@ -65,6 +66,9 @@ public:
     
     npPointLightRenderer plRenderer;
 	npDirectionalLight dirLight;
+
+	ShadowMap shadowMap;
+	npShadowMapMeshRenderer shadowMeshRenderer;
 
 
 	unsigned long previousTime;

@@ -306,7 +306,7 @@ void  npAssimpLoader::makeMesh(aiMesh *mesh)
 	}
 
 	npmesh->createBuffers();
-
+		npmesh->stride = 3+3+3+2;
 }
 void  npAssimpLoader::getAnime()
 {

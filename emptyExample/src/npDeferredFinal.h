@@ -35,21 +35,27 @@ public:
     void draw(npCamera *cam);
 
     float *dataFB;
-    
+	GLint uLightDir;
+	GLint uWorldMatrix;
 	GLint uPerspectiveInvMatrix;
+	GLint uLight1Matrix;
+
 	GLint uColorTexture;
     GLint uNormalTexture;
     GLint uDepthTexture;
     GLint uPointLightTexture;
 	GLint uLambertMap;
-    GLint uLightDir;
-	 GLint uWorldMatrix;
+	GLint uShadowTexture1;
+
 
     GLuint depthTexture;
     GLuint colorTexture;	
     GLuint normalTexture;
     GLuint pointLightTexture;
     GLuint lambertMap;
+	GLuint shadowTexture1;
+
+
     GLuint program;
    
 	npDirectionalLight * dirLight;

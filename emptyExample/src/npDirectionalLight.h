@@ -16,9 +16,7 @@ public:
 
 	ofVec3f dir;
 
-	ofMatrix4x4 lightPerspectivedMatrix;
-	ofMatrix4x4 lightWorldMatrix;
-	ofMatrix4x4 lightMatrix;
+
 
 
 

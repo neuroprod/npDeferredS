@@ -48,19 +48,22 @@ void npDeferredFinal::setup(string prog)
     uNormalTexture= glGetUniformLocation( program, "normalTexture");
     uDepthTexture= glGetUniformLocation( program, "depthTexture");
     uPointLightTexture= glGetUniformLocation( program, "pointLightTexture");
-	
-	uWorldMatrix =  glGetUniformLocation( program, "worldMatrix");
-    
-	uPerspectiveInvMatrix =  glGetUniformLocation( program, "perspectiveInvMatrix");
+	 uShadowTexture1= glGetUniformLocation( program, "shadowTexture1");
 
+
+	uWorldMatrix =  glGetUniformLocation( program, "worldMatrix");
+	uPerspectiveInvMatrix =  glGetUniformLocation( program, "perspectiveInvMatrix");
+	uLight1Matrix=  glGetUniformLocation( program, "light1Matrix");
 
     glUniform1i(  uColorTexture, 0);
     glUniform1i(  uNormalTexture, 1);
     glUniform1i(  uDepthTexture, 2);
     glUniform1i(  uPointLightTexture, 3);
- glUniform1i(  uLambertMap, 4);
- 
- glUseProgram(0);
+	glUniform1i(  uLambertMap, 4);
+	glUniform1i(  uShadowTexture1, 5);
+	
+	
+	glUseProgram(0);
     
   
     
@@ -100,7 +103,7 @@ void npDeferredFinal::setup(string prog)
     dataFB[10] = uvY +uvHeight;
     dataFB[11] = 1;
     
-     dataFB[12] = -1 ;
+    dataFB[12] = -1 ;
     dataFB[13] = -1 ;
     dataFB[14] = 0;
     dataFB[15] = uvX +uvWidth;
@@ -151,34 +154,40 @@ void npDeferredFinal::draw(npCamera *cam){
     glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_2D,pointLightTexture);
 
-	  glActiveTexture(GL_TEXTURE4);
+	glActiveTexture(GL_TEXTURE4);
 	glBindTexture(GL_TEXTURE_2D,lambertMap);
 
-	glUniform3f(uLightDir,dirLight->dir.x,dirLight->dir.y,dirLight->dir.z);
-	glUniformMatrix4fv(uPerspectiveInvMatrix, 1, 0,   cam->perspectiveInvMatrix.getPtr());
-	//ofMatrix4x4 worldRot =  cam->normalWorldMatrix.getInverse();
+	glActiveTexture(GL_TEXTURE5);
+	glBindTexture(GL_TEXTURE_2D,shadowTexture1);
 
+	glUniform3f(uLightDir,dirLight->dir.x,dirLight->dir.y,dirLight->dir.z);
+	
+	
 	glUniformMatrix4fv(uWorldMatrix, 1, 0, cam->normalWorldMatrix.getPtr());
+	glUniformMatrix4fv(uPerspectiveInvMatrix, 1, 0,   cam->perspectiveInvMatrix.getPtr());
+
+
+
+	ofMatrix4x4 testMatrix ;
+	testMatrix = cam->worldMatrix.getInverse();
+	testMatrix.postMult(cam->lightMatrix1);
+
+	glUniformMatrix4fv(uLight1Matrix, 1, 0,   testMatrix.getPtr());
+
     glEnableVertexAttribArray(ATTRIB_VERTEX_FS);
     glEnableVertexAttribArray(ATTRIB_UV_FS);
+	
+	
 	GLfloat *pointer;
-
-	
     pointer =dataFB;
-	
-    
-    
+
     glVertexAttribPointer(ATTRIB_VERTEX_FS, 3, GL_FLOAT, 0, 6*sizeof(GLfloat), pointer);
     glEnableVertexAttribArray(ATTRIB_VERTEX_FS);
-    
-    
+
     pointer +=3;
     glVertexAttribPointer(ATTRIB_UV_FS, 3, GL_FLOAT, 0, 6*sizeof(GLfloat), pointer);
     glEnableVertexAttribArray(ATTRIB_UV_FS);
-    
-    
-   
-    
+
     glDrawArrays(GL_TRIANGLES, 0, 6);
     
     
@@ -189,7 +198,7 @@ void npDeferredFinal::draw(npCamera *cam){
     glUseProgram(0);
 
 
-    glActiveTextureARB(GL_TEXTURE0);
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,0);
 
 

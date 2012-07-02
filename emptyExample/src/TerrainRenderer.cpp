@@ -7,6 +7,9 @@
 //
 #include "TerrainRenderer.h"
 #include "npProgramLoader.h"
+#include "GLErrorCheck.h"
+
+
 void TerrainRenderer::setup()
 {
 	
@@ -54,7 +57,7 @@ void TerrainRenderer::setup()
     glBindAttribLocation(program,ATTRIB_UV,"uv");
     pl.linkProgram();
     glUseProgram(program);
-    
+  
 	 uVegMapTexture= glGetUniformLocation(program,"vegMapTexture");
 	 uGrassTexture= glGetUniformLocation(program,"grassTexture");
 	 uDirtTexture= glGetUniformLocation(program,"dirtTexture");
@@ -73,7 +76,7 @@ void TerrainRenderer::setup()
    glUniform1i( uForestTexture,3);
 
   
- 
+
     glUseProgram(0);
 		
 }

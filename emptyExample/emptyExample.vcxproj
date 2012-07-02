@@ -116,9 +116,6 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="npShadowMap.cpp" />
-    <ClCompile Include="npShadowMapBoneRenderer.cpp" />
-    <ClCompile Include="npShadowMapMeshRenderer.cpp" />
     <ClCompile Include="src\Chunk.cpp" />
     <ClCompile Include="src\ChunkHandler.cpp" />
     <ClCompile Include="src\GameCamera.cpp" />
@@ -140,6 +137,9 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClCompile Include="src\npPointLight.cpp" />
     <ClCompile Include="src\npPointLightRenderer.cpp" />
     <ClCompile Include="src\npProgramLoader.cpp" />
+    <ClCompile Include="src\npShadowMapBoneRenderer.cpp" />
+    <ClCompile Include="src\npShadowMapMeshRenderer.cpp" />
+    <ClCompile Include="src\ShadowMap.cpp" />
     <ClCompile Include="src\npSphere.cpp" />
     <ClCompile Include="src\Terrain.cpp" />
     <ClCompile Include="src\TerrainRenderer.cpp" />
@@ -152,9 +152,6 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="npShadowMap.h" />
-    <ClInclude Include="npShadowMapBoneRenderer.h" />
-    <ClInclude Include="npShadowMapMeshRenderer.h" />
     <ClInclude Include="src\Chunk.h" />
     <ClInclude Include="src\ChunkHandler.h" />
     <ClInclude Include="src\GameCamera.h" />
@@ -179,6 +176,9 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClInclude Include="src\npPointLight.h" />
     <ClInclude Include="src\npPointLightRenderer.h" />
     <ClInclude Include="src\npProgramLoader.h" />
+    <ClInclude Include="src\npShadowMapBoneRenderer.h" />
+    <ClInclude Include="src\npShadowMapMeshRenderer.h" />
+    <ClInclude Include="src\ShadowMap.h" />
     <ClInclude Include="src\npSphere.h" />
     <ClInclude Include="src\npTextFileLoader.h" />
     <ClInclude Include="src\npTimer.h" />

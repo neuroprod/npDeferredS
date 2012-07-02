@@ -23,6 +23,11 @@ public:
     
     ofMatrix4x4 perspectiveMatrix;
 
+		ofMatrix4x4 lightMatrix1;
+		ofMatrix4x4 lightMatrix2;
+		ofMatrix4x4 lightMatrix3;		
+		ofMatrix4x4 lightMatrix4;
+		
 };
 
 #endif

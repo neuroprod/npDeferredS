@@ -52,8 +52,8 @@ public:
     static void test(string pos ="") 
     {
     
-     
-        return;
+     return;
+
         GLenum errCode;
         errCode = glGetError();
         if ((errCode ) != GL_NO_ERROR) {

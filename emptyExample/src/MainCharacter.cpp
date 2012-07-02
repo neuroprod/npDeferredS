@@ -8,9 +8,9 @@ void MainCharacter::setup()
 	charMesh  = *aLoader.boneMeshes[0];
 	charMesh.setPos(0,0,0);
 	charMesh.material.loadDiffuse("3DAssets/vrouwFinal.png");
-	walkDirRot =0;
+	walkDirRot =180;
 	rotSpeed =2;
-	walkDir.set(0,0,1);
+	walkDir.set(0,0,-1);
 	charPos.set(0,0,0);
 	walkspeed =50;
 	 isMoving =false;
