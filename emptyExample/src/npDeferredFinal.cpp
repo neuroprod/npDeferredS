@@ -49,12 +49,13 @@ void npDeferredFinal::setup(string prog)
     uDepthTexture= glGetUniformLocation( program, "depthTexture");
     uPointLightTexture= glGetUniformLocation( program, "pointLightTexture");
 	 uShadowTexture1= glGetUniformLocation( program, "shadowTexture1");
-
+	 
 
 	uWorldMatrix =  glGetUniformLocation( program, "worldMatrix");
 	uPerspectiveInvMatrix =  glGetUniformLocation( program, "perspectiveInvMatrix");
 	uLight1Matrix=  glGetUniformLocation( program, "light1Matrix");
 	uWorldMatrixInv=  glGetUniformLocation( program, "worldMatrixInv");
+	 uTime  =  glGetUniformLocation( program, "time");
     glUniform1i(  uColorTexture, 0);
     glUniform1i(  uNormalTexture, 1);
     glUniform1i(  uDepthTexture, 2);
@@ -135,9 +136,9 @@ void npDeferredFinal::setup(string prog)
     dataFB[35] = dataFB[11];
     
 }
-void npDeferredFinal::draw(npCamera *cam){
+void npDeferredFinal::draw(npCamera *cam,float time){
     
-  
+ 
  
     glUseProgram(program);
   
@@ -166,7 +167,7 @@ void npDeferredFinal::draw(npCamera *cam){
 	glUniformMatrix4fv(uWorldMatrix, 1, 0, cam->normalWorldMatrix.getPtr());
 	glUniformMatrix4fv(uPerspectiveInvMatrix, 1, 0,   cam->perspectiveInvMatrix.getPtr());
 
-
+	glUniform1f(uTime,time);
 
 	
 	//glUniformMatrix4fv(uWorldMatrixInv, 1, 0,    cam->lightMatrix2.getPtr());

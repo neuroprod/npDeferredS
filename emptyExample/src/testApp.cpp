@@ -119,7 +119,7 @@ void testApp::setup(){
 void testApp::update(){
 	
 	currentTime =ofGetElapsedTimeMicros();
-	unsigned long timeStep =currentTime -previousTime;   
+	 timeStep =currentTime -previousTime;   
 	previousTime  = currentTime;
 	
 	//
@@ -178,7 +178,7 @@ void testApp::update(){
 	//
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
-	glClearColor(0.2f,0.2f,0.2f,1.0f);
+	glClearColor(0.8f,0.8f,1.0f,1.0f);
     deferredBuffer.start();
 		// terain floor
 		terrainRenderer.start(camera);
@@ -255,8 +255,9 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	
- 
-   deferredFinal.draw(&camera);
+	float cycleTime =  (currentTime/1000)%10000;
+
+   deferredFinal.draw(&camera,  cycleTime/10000 );
 
    GLErrorCheck::test("draw end");
 // cout << ofGetFrameRate()<<endl ;

@@ -32,7 +32,7 @@ public:
     
     
     void setup(string prog ="DeferredShaderFinal");
-    void draw(npCamera *cam);
+    void draw(npCamera *cam,float time);
 
     float *dataFB;
 	GLint uLightDir;
@@ -40,6 +40,9 @@ public:
 	GLint uWorldMatrixInv;
 	GLint uPerspectiveInvMatrix;
 	GLint uLight1Matrix;
+
+
+	GLint uTime;
 
 	GLint uColorTexture;
     GLint uNormalTexture;

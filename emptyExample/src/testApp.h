@@ -73,6 +73,7 @@ public:
 
 	unsigned long previousTime;
 	unsigned long currentTime;
+	unsigned long timeStep;
 };
 
 
