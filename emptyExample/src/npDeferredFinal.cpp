@@ -31,6 +31,18 @@ void npDeferredFinal::setup(string prog)
 	mat.loadDiffuse("3DAssets/lambertMap.png");
 	lambertMap = mat.diffuseTexture;
   
+
+
+		npMaterial matN;
+	matN.loadDiffuse("3DAssets/AONoise.png");
+	AONoiseTexture = matN.diffuseTexture;
+
+	
+
+
+
+
+
     npProgramLoader pLoader ;
     program=    pLoader.loadProgram (prog);
     
@@ -49,7 +61,7 @@ void npDeferredFinal::setup(string prog)
     uDepthTexture= glGetUniformLocation( program, "depthTexture");
     uPointLightTexture= glGetUniformLocation( program, "pointLightTexture");
 	 uShadowTexture1= glGetUniformLocation( program, "shadowTexture1");
-	 
+	 uAONoiseTexture= glGetUniformLocation( program, "AONoiseTexture");
 
 	uWorldMatrix =  glGetUniformLocation( program, "worldMatrix");
 	uPerspectiveInvMatrix =  glGetUniformLocation( program, "perspectiveInvMatrix");
@@ -62,7 +74,7 @@ void npDeferredFinal::setup(string prog)
     glUniform1i(  uPointLightTexture, 3);
 	glUniform1i(  uLambertMap, 4);
 	glUniform1i(  uShadowTexture1, 5);
-	
+	glUniform1i(   uAONoiseTexture, 6);
 	
 	glUseProgram(0);
     
@@ -160,6 +172,11 @@ void npDeferredFinal::draw(npCamera *cam,float time){
 
 	glActiveTexture(GL_TEXTURE5);
 	glBindTexture(GL_TEXTURE_2D,shadowTexture1);
+
+	
+	glActiveTexture(GL_TEXTURE6);
+	glBindTexture(GL_TEXTURE_2D,AONoiseTexture);
+
 
 	glUniform3f(uLightDir,dirLight->dir.x,dirLight->dir.y,dirLight->dir.z);
 	

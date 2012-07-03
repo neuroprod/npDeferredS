@@ -50,7 +50,7 @@ public:
     GLint uPointLightTexture;
 	GLint uLambertMap;
 	GLint uShadowTexture1;
-
+	GLint uAONoiseTexture;
 
     GLuint depthTexture;
     GLuint colorTexture;	
@@ -58,7 +58,7 @@ public:
     GLuint pointLightTexture;
     GLuint lambertMap;
 	GLuint shadowTexture1;
-
+	GLuint AONoiseTexture;
 
     GLuint program;
    
