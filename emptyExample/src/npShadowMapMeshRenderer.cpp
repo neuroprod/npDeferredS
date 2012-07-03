@@ -6,7 +6,7 @@ void npShadowMapMeshRenderer::setup()
     program = pl.loadProgram ("ShadowShaderMesh");
 
     glBindAttribLocation(program,ATTRIB_VERTEX,"position");
-  
+   glBindAttribLocation(program,ATTRIB_UV,"uv");
  
     pl.linkProgram();
     glUseProgram(program);
@@ -29,7 +29,7 @@ void npShadowMapMeshRenderer::start(const npCamera &cam)
     glUniformMatrix4fv(uLightProjectionMatrix , 1, 0,   cam.lightMatrix1.getPtr());
 	  glUniformMatrix4fv(uWorldMatrix , 1, 0,   cam.worldMatrix.getPtr());
     glEnableVertexAttribArray(ATTRIB_VERTEX);
- 
+   glEnableVertexAttribArray(ATTRIB_UV);
     
 
 }
@@ -42,8 +42,11 @@ void npShadowMapMeshRenderer::draw(const npMesh *mesh)
  
 	
     glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, sizeof(float) * mesh->stride,(GLvoid*) (sizeof(float) * 0));
-    
+     glVertexAttribPointer(ATTRIB_UV,2, GL_FLOAT, GL_FALSE, sizeof(float) * mesh->stride,(GLvoid*) (sizeof(float) *6));
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  mesh->indexBuffer);
+
+	glBindTexture(GL_TEXTURE_2D,mesh->material.diffuseTexture);
+
 	if (mesh->isMultiObject)
 	{
 
@@ -68,7 +71,7 @@ void npShadowMapMeshRenderer::draw(const npMesh *mesh)
 void npShadowMapMeshRenderer::stop()
 {
     glDisableVertexAttribArray(ATTRIB_VERTEX);
-   
+     glDisableVertexAttribArray(ATTRIB_UV);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  0);
     glBindBuffer(GL_ARRAY_BUFFER,0);
 	   glUseProgram(0);

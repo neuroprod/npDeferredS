@@ -26,10 +26,10 @@ public:
 	GLint uLightProjectionMatrix;
 	GLint uWorldMatrix;
 	GLint uObjectMatrix;
-
+		GLint uTexture;
     
     enum {
-        ATTRIB_VERTEX,   ATTRIB_NORMAL,
+        ATTRIB_VERTEX,   ATTRIB_UV,
     
     };
     

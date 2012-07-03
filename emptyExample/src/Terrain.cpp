@@ -11,7 +11,7 @@ vegetationPerlin=new Perlin(2,1,1,rand());
 	npAssimpLoader loader;
 	loader.load(ofToDataPath("3DAssets/treeTest.dae"));
 	treeMesh = loader.meshes[0];
-	treeMesh->material.loadDiffuse("3DAssets/tree1.png",GL_RGB );
+	treeMesh->material.loadDiffuse("3DAssets/tree1.png",GL_RGBA );
 	treeMesh->material.loadNormal("3DAssets/tree1_n.png",GL_RGB );
 
 

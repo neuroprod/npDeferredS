@@ -143,9 +143,11 @@ void testApp::update(){
 	//
     // SHADOW MAP DRAW;
 	//
-	glPolygonOffset(1.2,0.2);
+	glPolygonOffset(4.2,1.2);
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	shadowMap.start();
+	//glEnable(GL_ALPHA_TEST);
+		//glAlphaFunc(GL_GREATER,0.5f);
 		shadowMeshRenderer.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
@@ -165,7 +167,7 @@ void testApp::update(){
 				 
 		}
 		shadowMeshRenderer.stop();
-
+			//glDisable(GL_ALPHA_TEST);
 		shadowBoneRenderer.start(camera);
 		shadowBoneRenderer.draw(&girl.charMesh);
 		shadowBoneRenderer.stop();
@@ -177,7 +179,7 @@ void testApp::update(){
     // MAIN DRAW;
 	//
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
 	glClearColor(0.8f,0.8f,1.0f,1.0f);
     deferredBuffer.start();
 		// terain floor
@@ -195,6 +197,8 @@ void testApp::update(){
 				}
 		}
 		terrainRenderer.stop();
+		glEnable(GL_ALPHA_TEST);
+				glAlphaFunc(GL_GREATER,0.5f);
 
 		renderTexture.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
@@ -211,7 +215,7 @@ void testApp::update(){
 				 }
 			}
 		renderTexture.stop();
-		
+			glDisable(GL_ALPHA_TEST);
 	/*	rendererColor.start(camera);
 	
 		
@@ -255,9 +259,9 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	
-	float cycleTime =  (currentTime/1000)%10000;
+	float cycleTime =  (currentTime/1000)%60000;
 
-   deferredFinal.draw(&camera,  cycleTime/10000 );
+   deferredFinal.draw(&camera,  cycleTime/60000 );
 
    GLErrorCheck::test("draw end");
 // cout << ofGetFrameRate()<<endl ;
