@@ -20,7 +20,7 @@ public:
       ofMatrix4x4 perspectiveInvMatrix;
     ofMatrix4x4 worldMatrix;
     ofMatrix4x4 normalWorldMatrix;
-    
+    	ofMatrix4x4 worldInv;
     ofMatrix4x4 perspectiveMatrix;
 
 		ofMatrix4x4 lightMatrix1;

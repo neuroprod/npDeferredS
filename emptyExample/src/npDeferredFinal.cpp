@@ -54,7 +54,7 @@ void npDeferredFinal::setup(string prog)
 	uWorldMatrix =  glGetUniformLocation( program, "worldMatrix");
 	uPerspectiveInvMatrix =  glGetUniformLocation( program, "perspectiveInvMatrix");
 	uLight1Matrix=  glGetUniformLocation( program, "light1Matrix");
-
+	uWorldMatrixInv=  glGetUniformLocation( program, "worldMatrixInv");
     glUniform1i(  uColorTexture, 0);
     glUniform1i(  uNormalTexture, 1);
     glUniform1i(  uDepthTexture, 2);
@@ -168,11 +168,9 @@ void npDeferredFinal::draw(npCamera *cam){
 
 
 
-	ofMatrix4x4 testMatrix ;
-	testMatrix = cam->worldMatrix.getInverse();
-	testMatrix.postMult(cam->lightMatrix1);
-
-	glUniformMatrix4fv(uLight1Matrix, 1, 0,   testMatrix.getPtr());
+	
+	//glUniformMatrix4fv(uWorldMatrixInv, 1, 0,    cam->lightMatrix2.getPtr());
+	glUniformMatrix4fv(uLight1Matrix, 1, 0,    cam->lightMatrix2.getPtr());
 
     glEnableVertexAttribArray(ATTRIB_VERTEX_FS);
     glEnableVertexAttribArray(ATTRIB_UV_FS);

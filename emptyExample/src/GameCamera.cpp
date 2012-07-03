@@ -4,37 +4,49 @@
 
 void GameCamera::update()
 {
+	ofVec3f camOf = mainCharacter->walkDir *-70/4;
+	camOf.y+=20/4;
 	 lookAtPos  =  mainCharacter->charPos;
-	 camPos  =  lookAtPos   + mainCharacter->walkDir *-70/3;
-    camPos.y+=20/3;
+	 camPos  =  lookAtPos   +camOf;
+  
 	worldMatrix.makeLookAtViewMatrix(camPos,  lookAtPos, ofVec3f (0,1,0));
-	//worldMatrix.makeIdentityMatrix();
+	
     ofQuaternion q = worldMatrix.getRotate();
 	q.inverse();
     normalWorldMatrix.makeRotationMatrix(q);
-	
-	/*
-	ofMatrix4x4 lightPerspectivedMatrix1;
-	ofMatrix4x4 lightWorldMatrix1;*/
-	//	ofMatrix4x4 lightMatrix1;
 
 		
-	lightPerspectivedMatrix1.makeOrthoMatrix(-100,100,-100,100,50,300);
+	lightPerspectivedMatrix1.makeOrthoMatrix(-75,75,-75,75,300,2000);
 	
-	lightWorldMatrix1.makeLookAtViewMatrix ( (lightDir *-100) + lookAtPos,ofVec3f(0,0,0)  +lookAtPos, ofVec3f(0,1,0));
+	ofVec3f eye;
+	eye =lightDir *-500+camPos+mainCharacter->walkDir *75 ;
+	ofVec3f lookat;
+	lookat = ofVec3f(0,0,0)+camPos+mainCharacter->walkDir *75;
+	ofVec3f up;
+	up =ofVec3f(0,1,0);
+	
+
+	  ofQuaternion qw = worldMatrix.getRotate();
+	  //qw.inverse();
+	 ofMatrix4x4 worldRot;
+	 worldRot.makeRotationMatrix(qw);
+	  worldInv  =worldMatrix.getInverse();
+
+	  ofMatrix4x4 worldTrans;
+	  worldTrans.makeTranslationMatrix(worldMatrix.getTranslation());
+
+
+	lightWorldMatrix1.makeLookAtViewMatrix (eye,	lookat, up);
+	lightMatrix1 =worldInv*  lightWorldMatrix1	* lightPerspectivedMatrix1;
 
 	
 
-
-	lightMatrix1 = lightWorldMatrix1* lightPerspectivedMatrix1;
-	
-	// perspectiveMatrix= lightMatrix1;
-  //  perspectiveInvMatrix.makeInvertOf(perspectiveMatrix);
+	lightMatrix2 = worldInv*  lightWorldMatrix1* 	 lightPerspectivedMatrix1;
 
 }
 void GameCamera::setup()
 {
-	 perspectiveMatrix.makePerspectiveMatrix(60, (float)ofGetScreenWidth()/(float)ofGetScreenHeight(), 1, 2000);
+	 perspectiveMatrix.makePerspectiveMatrix(60, (float)ofGetScreenWidth()/(float)ofGetScreenHeight(), 2,1000);
     perspectiveInvMatrix.makeInvertOf(perspectiveMatrix);
 
 

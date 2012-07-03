@@ -289,7 +289,7 @@ void Terrain::getObjects(int pixelX,int pixelY,float worldX,float worldY,Chunk *
 
 float Terrain::getHeightForPixelPos(int x, int y)
 {
-	return -2;
+	return 0;
 	if (x>=2048)
 	{
 	return 0;

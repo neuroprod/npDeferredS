@@ -96,7 +96,7 @@ void testApp::setup(){
  
    
 	dirLight.lookAt.set(0,0,0);
-	dirLight.pos.set(100,200,0);
+	dirLight.pos.set(500,1000,0);
 
 	deferredFinal.dirLight =&dirLight;
 	
@@ -143,34 +143,31 @@ void testApp::update(){
 	//
     // SHADOW MAP DRAW;
 	//
-		//glPolygonOffset(6.0,1.0);
-	//glEnable(GL_POLYGON_OFFSET_FILL);
+	glPolygonOffset(1.2,0.2);
+	glEnable(GL_POLYGON_OFFSET_FILL);
 	shadowMap.start();
-	shadowMeshRenderer.start(camera);
-		for (int i=0;i< chunkHandler.chunks.size();i++)
+		shadowMeshRenderer.start(camera);
+			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
-				 if(chunkHandler.chunks[i]->detailLevel>0)
+				 if(chunkHandler.chunks[i]->detailLevel==1)
 				{
-				if (chunkHandler.chunks[i]->detailLevel==2)
-				{
-					shadowMeshRenderer.draw( chunkHandler.chunks[i]->terrainLowRes);
-				}
-				else if(chunkHandler.chunks[i]->detailLevel==1)
-				{
+			
+			
 					shadowMeshRenderer.draw( chunkHandler.chunks[i]->terrainHighRes);
-				
-				}
 					for (int j=0;j< chunkHandler.chunks[i]->objects.size();j++)
 					{
 				
 					
 						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->objects[j]);
 					}
+			
 				 }
-			}
+				 
+		}
 		shadowMeshRenderer.stop();
 	shadowMap.stop();
-		//glDisable(GL_POLYGON_OFFSET_FILL);
+	glViewport(0,0 , 1920,1080);
+	glDisable(GL_POLYGON_OFFSET_FILL);
 	//
     // MAIN DRAW;
 	//

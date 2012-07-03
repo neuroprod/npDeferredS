@@ -37,6 +37,7 @@ public:
     float *dataFB;
 	GLint uLightDir;
 	GLint uWorldMatrix;
+	GLint uWorldMatrixInv;
 	GLint uPerspectiveInvMatrix;
 	GLint uLight1Matrix;
 
