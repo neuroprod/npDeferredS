@@ -261,7 +261,7 @@ void testApp::draw(){
 	
 	float cycleTime =  (currentTime/1000)%60000;
 
-   deferredFinal.draw(&camera,  cycleTime/60000 );
+   deferredFinal.draw(&camera,  0);//cycleTime/60000 );
 
    GLErrorCheck::test("draw end");
 // cout << ofGetFrameRate()<<endl ;
