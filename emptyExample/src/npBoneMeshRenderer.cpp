@@ -35,13 +35,13 @@ void npBoneMeshRenderer::setup()
 }
 
 
-void  npBoneMeshRenderer::start(npCamera *cam)
+void  npBoneMeshRenderer::start(const npCamera &cam)
 {
 	glEnable(GL_TEXTURE_2D);
     glUseProgram(program);
-    glUniformMatrix4fv(uWorldMatrix, 1, 0,  cam->worldMatrix.getPtr());
-    glUniformMatrix4fv(uPerspectiveMatrix, 1, 0,   cam->perspectiveMatrix.getPtr());
-  glUniformMatrix4fv(uNormalWorldMatrix, 1, 0,   cam->normalWorldMatrix.getPtr());
+    glUniformMatrix4fv(uWorldMatrix, 1, 0,  cam.worldMatrix.getPtr());
+    glUniformMatrix4fv(uPerspectiveMatrix, 1, 0,   cam.perspectiveMatrix.getPtr());
+  glUniformMatrix4fv(uNormalWorldMatrix, 1, 0,   cam.normalWorldMatrix.getPtr());
     glEnableVertexAttribArray(ATTRIB_VERTEX);
     glEnableVertexAttribArray(ATTRIB_NORMAL);
     glEnableVertexAttribArray(ATTRIB_UV);

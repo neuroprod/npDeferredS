@@ -14,7 +14,7 @@ public:
 	 void setup();
     
     
-    void start(npCamera *cam);
+    void start(const npCamera &cam);
     void draw(const npBoneMesh *mesh);
     void stop();
     

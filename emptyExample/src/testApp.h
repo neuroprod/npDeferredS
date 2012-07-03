@@ -29,7 +29,7 @@
 
 #include "ShadowMap.h"
 #include "npShadowMapMeshRenderer.h"
-
+#include "npShadowMapBoneRenderer.h"
 class testApp : public ofBaseApp{
 	
 public:
@@ -69,7 +69,7 @@ public:
 
 	ShadowMap shadowMap;
 	npShadowMapMeshRenderer shadowMeshRenderer;
-
+	npShadowMapBoneRenderer shadowBoneRenderer;
 
 	unsigned long previousTime;
 	unsigned long currentTime;

@@ -104,7 +104,7 @@ void testApp::setup(){
 	shadowMap.setup();
 	deferredFinal.shadowTexture1 =shadowMap.shadowTexture1;
 	shadowMeshRenderer.setup();
-
+	shadowBoneRenderer.setup();
 	previousTime=ofGetElapsedTimeMicros();
 	currentTime =ofGetElapsedTimeMicros();
 
@@ -165,6 +165,11 @@ void testApp::update(){
 				 
 		}
 		shadowMeshRenderer.stop();
+
+		shadowBoneRenderer.start(camera);
+		shadowBoneRenderer.draw(&girl.charMesh);
+		shadowBoneRenderer.stop();
+
 	shadowMap.stop();
 	glViewport(0,0 , 1920,1080);
 	glDisable(GL_POLYGON_OFFSET_FILL);
@@ -226,7 +231,7 @@ void testApp::update(){
 		}
 		rendererColor.stop();
 		*/
-		boneMeshRenderer.start(&camera);
+		boneMeshRenderer.start(camera);
 			boneMeshRenderer.draw(&girl.charMesh);
 		boneMeshRenderer.stop();
     deferredBuffer.stop();
