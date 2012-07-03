@@ -5,6 +5,7 @@
 #include "npMesh.h"
 #include "ChunkHandler.h"
 #include "Chunk.h"
+#include "perlin.h"
 class Terrain
 {
 public:
@@ -28,8 +29,7 @@ public:
 
 	ChunkHandler * chunkHandler;
 
-	ofImage terainMainMap;
-	ofImage	objectMainMap;
+
 	float mainPixelSize;
 	int divX;
 	int divY;
@@ -41,8 +41,9 @@ public:
 
 
 
-
-
+	Perlin *heightMacroPerlin;	
+	Perlin *heightMicroPerlin;
+	Perlin *vegetationPerlin;
 	npMesh * treeMesh;
 
 };

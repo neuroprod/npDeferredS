@@ -85,6 +85,9 @@
     <ClCompile Include="src\npShadowMapMeshRenderer.cpp">
       <Filter>src\np\deferred</Filter>
     </ClCompile>
+    <ClCompile Include="src\perlin.cpp">
+      <Filter>src\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h">
@@ -185,6 +188,9 @@
     </ClInclude>
     <ClInclude Include="src\npShadowMapMeshRenderer.h">
       <Filter>src\np\deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="src\perlin.h">
+      <Filter>src\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

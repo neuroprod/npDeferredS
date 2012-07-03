@@ -96,7 +96,7 @@ void testApp::setup(){
  
    
 	dirLight.lookAt.set(0,0,0);
-	dirLight.pos.set(500,1000,0);
+	dirLight.pos.set(750,750,0);
 
 	deferredFinal.dirLight =&dirLight;
 	

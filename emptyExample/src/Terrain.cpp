@@ -4,6 +4,9 @@
 
 void Terrain::setup(string heightMap,string objectMap)
 {
+	heightMacroPerlin=new Perlin(5,1,1,rand());
+heightMicroPerlin  =new Perlin(2,1,1,rand());
+vegetationPerlin=new Perlin(2,1,1,rand());
 
 	npAssimpLoader loader;
 	loader.load(ofToDataPath("3DAssets/treeTest.dae"));
@@ -14,14 +17,11 @@ void Terrain::setup(string heightMap,string objectMap)
 
 
 	mainPixelSize =1.0f;
-    terainMainMap.loadImage(heightMap);
-	terainMainMap.setImageType(OF_IMAGE_COLOR);
-	objectMainMap.loadImage(objectMap);
-	objectMainMap.setImageType(OF_IMAGE_COLOR);
+  
 	divX =16;
 	divY =16;
-	totalWidth = terainMainMap.width;
-	totalHeight = terainMainMap.height;
+	totalWidth =2048;
+	totalHeight = 2048;
 	
 	chunkSizeX = totalWidth/divX;
 	chunkSizeY = totalHeight/divY;
@@ -226,20 +226,19 @@ void Terrain::getObjects(int pixelX,int pixelY,float worldX,float worldY,Chunk *
 		for(int x=0;x<cDivX-1;x++)
 		{
 			int pPosX = x* cStepX ;
-			int sX  = pPosX+pixelX;
-			int sY	=pPosY+pixelY;
-
-			unsigned char r =   objectMainMap.getPixels()[(sX +sY*2048)*3];
-			unsigned char g =   objectMainMap.getPixels()[(sX +sY*2048)*3+1];
-			unsigned char b =   objectMainMap.getPixels()[(sX +sY*2048)*3+2];
-			
+			ofVec3f worldPos;
+			worldPos.set( (float) pPosX*mainPixelSize  +worldX,  getHeightForPixelPos( pPosX+pixelX, pPosY+pixelY),(float) pPosY*mainPixelSize  +worldY);
+				
+		float veg =  vegetationPerlin->Get(worldPos.x/1000.1, worldPos.z/1000.1)+0.5;
 		
-			if (b==255)
+		if (veg>0.5 && worldPos.y <100){
+
+			int b = rand()%1000;
+		
+			if (b==1)
 			{
 			
-				ofVec3f objPos;
-				objPos.set( (float) pPosX*mainPixelSize  +worldX,  getHeightForPixelPos( pPosX+pixelX, pPosY+pixelY),(float) pPosY*mainPixelSize  +worldY);
-				
+			
 				
 				ofMatrix4x4 objMatrix;
 				objMatrix.makeRotationMatrix(90,ofVec3f(1,0,0) );
@@ -247,7 +246,7 @@ void Terrain::getObjects(int pixelX,int pixelY,float worldX,float worldY,Chunk *
 				float s = (float)rand()/RAND_MAX *0.4 +0.8;
 				objMatrix.postMultScale(ofVec3f(s,s,s));
 
-				objMatrix.postMultTranslate(objPos);
+				objMatrix.postMultTranslate(worldPos);
 				
 				
 				
@@ -258,7 +257,7 @@ void Terrain::getObjects(int pixelX,int pixelY,float worldX,float worldY,Chunk *
 
 			
           
-
+		}
 
 
 
@@ -289,27 +288,10 @@ void Terrain::getObjects(int pixelX,int pixelY,float worldX,float worldY,Chunk *
 
 float Terrain::getHeightForPixelPos(int x, int y)
 {
-	return 0;
-	if (x>=2048)
-	{
-	return 0;
-	}
-		if (y>=2048)
-	{
-	return 0;
-	}
-			if (x<0)
-	{
-	return 0;
-	}
-		if (y<0)
-	{
-	return 0;
-	}
-	float pixelVal =  (float ) terainMainMap.getPixels()[(x+y*2048)*3];
-
-	float height = pixelVal/256.0f  *2;// *1.5;
-	return height *height*height *20;
+	float heightMac  =heightMacroPerlin->Get((float) x/1500.1, float(y)/1500.1)+0.5+0.3 ;
+	heightMac =  heightMac*heightMac*heightMac*100;
+	//float heightMic  = heightMicroPerlin->Get((float) x/10.1, float(y)/10.1)*heightMac/50;
+	return heightMac  ;
 }
 
 ofVec3f  Terrain::getNormalforPixelPos(int x, int y)
@@ -339,7 +321,7 @@ ofVec3f  Terrain::getNormal(const ofVec3f &p1,const ofVec3f &p2,const ofVec3f &p
 float Terrain::getHeightForWorldPos(float x, float y)
 {
 	
-	return 	getHeightForPixelPos( x/mainPixelSize +terainMainMap.width/2,y/mainPixelSize+terainMainMap.height/2);
+	return 	getHeightForPixelPos( x/mainPixelSize +totalWidth/2,y/mainPixelSize+totalHeight/2);
 
 }
 

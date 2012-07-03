@@ -16,7 +16,7 @@ void GameCamera::update()
     normalWorldMatrix.makeRotationMatrix(q);
 
 		
-	lightPerspectivedMatrix1.makeOrthoMatrix(-75,75,-75,75,300,2000);
+	lightPerspectivedMatrix1.makeOrthoMatrix(-75,75,-75,75,200,2000);
 	
 	ofVec3f eye;
 	eye =lightDir *-500+camPos+mainCharacter->walkDir *75 ;
@@ -46,7 +46,7 @@ void GameCamera::update()
 }
 void GameCamera::setup()
 {
-	 perspectiveMatrix.makePerspectiveMatrix(60, (float)ofGetScreenWidth()/(float)ofGetScreenHeight(), 2,1000);
+	 perspectiveMatrix.makePerspectiveMatrix(60, (float)ofGetScreenWidth()/(float)ofGetScreenHeight(), 2,2000);
     perspectiveInvMatrix.makeInvertOf(perspectiveMatrix);
 
 
