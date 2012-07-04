@@ -182,7 +182,7 @@ void main()
 	//gl_FragColor =vec4(lightDepth,0.0, texture2D(shadowTexture1, uv_var).x ,1.0);
 	
 	//gl_FragColor =vec4(lightDepth,zLight, zLight,1.0);
-	//gl_FragColor =vec4(texture2D(shadowTexture1, uv_var).xyz,1.0);
+//gl_FragColor =vec4(texture2D(shadowTexture1, uv_var).xyz,1.0);
 	//gl_FragColor =vec4( lightWorld.xy,0.0,1.0);
 	//gl_FragColor  =vec4(pLight ,1.0);
 	//gl_FragColor  = vec4(normal*0.5+0.5,1.0);

@@ -6,7 +6,7 @@ void Terrain::setup(string heightMap,string objectMap)
 {
 	heightMacroPerlin=new Perlin(5,1,1,rand());
 heightMicroPerlin  =new Perlin(2,1,1,rand());
-vegetationPerlin=new Perlin(2,1,1,rand());
+vegetationPerlin=new Perlin(4,1,1,rand());
 
 	npAssimpLoader loader;
 	loader.load(ofToDataPath("3DAssets/treeTest.dae"));

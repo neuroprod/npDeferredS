@@ -22,7 +22,7 @@ void testApp::setup(){
 
 	camera.setup();
 	camera.mainCharacter =&girl;
-	
+	camera.terrain =   &terain;
 	ofBackground(0, 0, 0);
     /*
     npMaterial m;
@@ -122,6 +122,11 @@ void testApp::update(){
 	 timeStep =currentTime -previousTime;   
 	previousTime  = currentTime;
 	
+	float cycleTime =  (currentTime/1000)%60000;
+	dayTime = cycleTime/60000 ;
+
+
+
 	//
 	// PRE RENDER UPDATE
 	//
@@ -130,7 +135,7 @@ void testApp::update(){
 	dirLight.update();
 
 	camera.lightDir = dirLight.dir;
-
+	camera.setMouse(mouseIsDown,vecMouseMove.x,vecMouseMove.y);
 	camera.update();
 	chunkHandler.update(camera.lookAtPos,camera.camPos);
 	
@@ -146,8 +151,8 @@ void testApp::update(){
 	glPolygonOffset(4.2,1.2);
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	shadowMap.start();
-	//glEnable(GL_ALPHA_TEST);
-		//glAlphaFunc(GL_GREATER,0.5f);
+	glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_LESS,0.5f);
 		shadowMeshRenderer.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
@@ -167,7 +172,7 @@ void testApp::update(){
 				 
 		}
 		shadowMeshRenderer.stop();
-			//glDisable(GL_ALPHA_TEST);
+			glDisable(GL_ALPHA_TEST);
 		shadowBoneRenderer.start(camera);
 		shadowBoneRenderer.draw(&girl.charMesh);
 		shadowBoneRenderer.stop();
@@ -179,7 +184,7 @@ void testApp::update(){
     // MAIN DRAW;
 	//
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
+  //  glEnable(GL_CULL_FACE);
 	glClearColor(0.8f,0.8f,1.0f,1.0f);
     deferredBuffer.start();
 		// terain floor
@@ -259,9 +264,8 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	
-	float cycleTime =  (currentTime/1000)%60000;
-
-   deferredFinal.draw(&camera,  0);//cycleTime/60000 );
+	
+   deferredFinal.draw(&camera,  dayTime);
 
    GLErrorCheck::test("draw end");
 // cout << ofGetFrameRate()<<endl ;
@@ -316,16 +320,29 @@ void testApp::mouseMoved(int x, int y ){
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
 	
+		
+		if ( button ==0)
+		{
+			vecMouseMove.set(x -vecMouseStart.x,y -vecMouseStart.y);
+		}
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
 	
+	if ( button ==0)
+	{
+		vecMouseStart.set(x,y);
+		mouseIsDown = true;
+	}
 }
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-	
+	if ( button ==0)
+	{
+		mouseIsDown = false;
+	}
 }
 
 //--------------------------------------------------------------

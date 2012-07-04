@@ -74,6 +74,13 @@ public:
 	unsigned long previousTime;
 	unsigned long currentTime;
 	unsigned long timeStep;
+
+	float dayTime;
+
+
+	ofVec2f vecMouseStart;
+	ofVec2f vecMouseMove;
+	bool mouseIsDown;
 };
 
 

@@ -1,16 +1,74 @@
 #include "GameCamera.h"
 
+void GameCamera::setMouse(bool mouseIsDown,float moveX,float moveY)
+{
+	if (mouseIsDown)
+	{
+	mouseIsDown =true;
+	
+		mouseMatrix.makeIdentityMatrix();
+	mouseMatrix.rotate( moveX,0,0,1);
+		mouseMatrix.rotate( moveY/10,1,0,0);
+	
+	
+	
+	}else
+	{
+	mouseIsDown =false;
+	
+	
+	
+	}
+
+
+
+
+}
 
 
 void GameCamera::update()
 {
-	ofVec3f camOf = mainCharacter->walkDir *-70/4;
-	camOf.y+=20/4;
-	 lookAtPos  =  mainCharacter->charPos;
-	 camPos  =  lookAtPos   +camOf;
+	lookAtPos  =  mainCharacter->charPos;
+
+
+	ofVec3f camTarget = mainCharacter->walkDir*20 ;
+	camTarget.y-=5;
+
+
   
-	worldMatrix.makeLookAtViewMatrix(camPos,  lookAtPos, ofVec3f (0,1,0));
+	ofMatrix4x4 targetRotationWalk;
+	targetRotationWalk.makeLookAtViewMatrix(ofVec3f(0,0,0),camTarget,ofVec3f(0,1,0));
+	targetRotationWalk.postMult(mouseMatrix);
+	ofQuaternion targetRotationWalkQuat =  targetRotationWalk.getRotate();
+
+
+	ofQuaternion currentQuaternationTemp;
+
+	 currentQuaternationTemp.slerp(0.04,currentQuaternation,targetRotationWalkQuat);
+	//cout << currentQuaternation<< endl<< targetRotationWalkQuat<< endl<< endl<< endl<< endl<< endl;
+	 currentQuaternationTemp.get(currentRotation);
+
+
+	 currentQuaternation =  currentQuaternationTemp;
 	
+
+	camDir =  currentRotation *ofVec3f(0,0,15);
+	camPos =camDir +lookAtPos;
+
+	float terHeight = terrain->getHeightForWorldPos(camPos.x,camPos.z);
+	if (camPos.y<terHeight+1){
+		camPos.y =terHeight+1 ;
+	
+	}
+	//
+	 worldMatrix.makeLookAtViewMatrix(camPos,  lookAtPos, ofVec3f (0,1,0));
+
+	 //cout << lookAtPos<<endl <<	camPos << endl;
+	
+
+
+
+
     ofQuaternion q = worldMatrix.getRotate();
 	q.inverse();
     normalWorldMatrix.makeRotationMatrix(q);
@@ -46,6 +104,7 @@ void GameCamera::update()
 }
 void GameCamera::setup()
 {
+	lookAtPos.set(0,0,0);
 	 perspectiveMatrix.makePerspectiveMatrix(60, (float)ofGetScreenWidth()/(float)ofGetScreenHeight(), 2,2000);
     perspectiveInvMatrix.makeInvertOf(perspectiveMatrix);
 

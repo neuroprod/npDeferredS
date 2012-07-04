@@ -35,8 +35,8 @@ void npShadowMapMeshRenderer::start(const npCamera &cam)
 }
 void npShadowMapMeshRenderer::draw(const npMesh *mesh)
 {
-	
-
+  glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D,mesh->material.diffuseTexture);
 
     glBindBuffer(GL_ARRAY_BUFFER,mesh->vertexBuffer);
  
@@ -45,7 +45,7 @@ void npShadowMapMeshRenderer::draw(const npMesh *mesh)
      glVertexAttribPointer(ATTRIB_UV,2, GL_FLOAT, GL_FALSE, sizeof(float) * mesh->stride,(GLvoid*) (sizeof(float) *6));
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  mesh->indexBuffer);
 
-	glBindTexture(GL_TEXTURE_2D,mesh->material.diffuseTexture);
+
 
 	if (mesh->isMultiObject)
 	{

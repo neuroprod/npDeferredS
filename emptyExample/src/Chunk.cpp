@@ -19,7 +19,11 @@ void Chunk::calculateDetail(const ofVec3f &camPos,const ofVec3f &lookDir)
 
 		if (dot<0.1)
 		{
+			//
+			
 			setDetailLevel(0);
+			//
+			
 			return;
 		}
 
