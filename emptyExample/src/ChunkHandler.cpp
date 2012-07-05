@@ -12,7 +12,7 @@ ChunkHandler::ChunkHandler()
 void ChunkHandler::setup()
 {
 
-
+	 terrainFBO.setup();
 
 	for (int y= -numChunksW2;y<numChunksW2;y++)
 	{
@@ -89,6 +89,8 @@ void ChunkHandler::updateChunkPositions()
 		if (!chunks[i]->isReady)
 		{
 			chunks[i]->update();
+			 terrainFBO.draw(chunks[i]);
+
 		return;
 		
 		}

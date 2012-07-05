@@ -32,7 +32,10 @@ public:
 
 	bool isReady;
 
-
+	int vpX;
+	int vpY;
+	int vpW;
+	int vpH;
 
 	ofVec3f center;
 	vector <npMesh*> objects;

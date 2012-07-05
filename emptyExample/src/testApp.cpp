@@ -63,7 +63,7 @@ void testApp::setup(){
 	renderTexture.setup();
 	
 	terrainRenderer.setup();
-
+	terrainRenderer.vegMapTexture=chunkHandler.terrainFBO.texture;
 	
     deferredBuffer.setup(ofGetScreenWidth(),ofGetScreenHeight());
     

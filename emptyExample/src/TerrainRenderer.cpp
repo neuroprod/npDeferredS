@@ -13,9 +13,8 @@
 void TerrainRenderer::setup()
 {
 	
-	npMaterial vegMap;
-	vegMap.loadDiffuse("3DAssets/Vegetation.png",GL_RGB,false );
-	vegMapTexture =vegMap.diffuseTexture;
+	
+	
 
 
 

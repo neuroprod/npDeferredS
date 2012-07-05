@@ -211,12 +211,15 @@ void  Chunk::buildFirst()
 
 		float uvXStart =(worldX+halfWorld)/ totalWorld;
 	float uvYStart =(worldY+halfWorld)/ totalWorld;
-	cout << uvXStart<<" " << uvYStart  << endl;;
-
-		float uvXStep =width/totalWorld /cDivX;
+	vpX =uvXStart*2048;
+	vpY =uvYStart*2048;
+	vpW = 128;
+	vpH = 128;
+	
+	float uvXStep =width/totalWorld /cDivX;
 	float uvYStep =height/totalWorld /cDivY;
-	cout << uvXStep<<" " <<  uvYStep   << endl;;
- terrain =new npMesh();
+	
+	terrain =new npMesh();
 	npMesh * mesh = terrain;
 	
 	mesh->stride = 8;
@@ -251,8 +254,8 @@ void  Chunk::buildFirst()
             mesh->vertices[vertcount++] =  n.y;
             mesh->vertices[vertcount++] =n.z;
             
-			mesh->vertices[vertcount++] =uvXStart+x*uvXStep ;//(float)(pPosX+pixelX)/totalWidth;
-            mesh->vertices[vertcount++] =uvYStart+y*uvYStep;//(float)(pPosY+pixelY)/totalHeight;
+			mesh->vertices[vertcount++] =uvXStart+x*uvXStep ;
+            mesh->vertices[vertcount++] =uvYStart+y*uvYStep;
 	
 
 

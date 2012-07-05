@@ -58,15 +58,6 @@
     <ClCompile Include="src\MainCharacter.cpp">
       <Filter>src\game</Filter>
     </ClCompile>
-    <ClCompile Include="src\Chunk.cpp">
-      <Filter>src\game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ChunkHandler.cpp">
-      <Filter>src\game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TerrainRenderer.cpp">
-      <Filter>src\game</Filter>
-    </ClCompile>
     <ClCompile Include="src\npMeshRendererText.cpp">
       <Filter>src\np\deferred</Filter>
     </ClCompile>
@@ -85,8 +76,20 @@
     <ClCompile Include="src\perlin.cpp">
       <Filter>src\game</Filter>
     </ClCompile>
+    <ClCompile Include="src\Chunk.cpp">
+      <Filter>src\game\terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChunkHandler.cpp">
+      <Filter>src\game\terrain</Filter>
+    </ClCompile>
     <ClCompile Include="src\TerrainFunctions.cpp">
-      <Filter>src\game</Filter>
+      <Filter>src\game\terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TerrainRenderer.cpp">
+      <Filter>src\game\terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TerrainFBO.cpp">
+      <Filter>src\game\terrain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -162,15 +165,6 @@
     <ClInclude Include="src\MainCharacter.h">
       <Filter>src\game</Filter>
     </ClInclude>
-    <ClInclude Include="src\Chunk.h">
-      <Filter>src\game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ChunkHandler.h">
-      <Filter>src\game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TerrainRenderer.h">
-      <Filter>src\game</Filter>
-    </ClInclude>
     <ClInclude Include="src\npMeshRendererText.h">
       <Filter>src\np\deferred</Filter>
     </ClInclude>
@@ -189,8 +183,20 @@
     <ClInclude Include="src\perlin.h">
       <Filter>src\game</Filter>
     </ClInclude>
+    <ClInclude Include="src\ChunkHandler.h">
+      <Filter>src\game\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Chunk.h">
+      <Filter>src\game\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TerrainRenderer.h">
+      <Filter>src\game\terrain</Filter>
+    </ClInclude>
     <ClInclude Include="src\TerrainFunctions.h">
-      <Filter>src\game</Filter>
+      <Filter>src\game\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TerrainFBO.h">
+      <Filter>src\game\terrain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +223,9 @@
     </Filter>
     <Filter Include="src\game">
       <UniqueIdentifier>{f3dbb665-2909-4197-b889-a63aee84ebce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\game\terrain">
+      <UniqueIdentifier>{fe981ff5-b3e7-4d15-8eea-bbc91ee3adc7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

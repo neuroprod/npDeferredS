@@ -4,6 +4,7 @@
 #include "npIncludes.h"
 #include "Chunk.h"
 #include "TerrainFunctions.h"
+#include "TerrainFBO.h"
 struct ComparePrio 
 {
   bool operator () ( Chunk * a, Chunk * b )
@@ -32,6 +33,9 @@ public:
 
 	int chunkSize;
 	int chunkParts;
+	 GLuint texture;
 	TerrainFunctions *terrainFunctions;
+
+	TerrainFBO terrainFBO;
 };
 
