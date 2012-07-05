@@ -56,7 +56,7 @@ void MainCharacter::update(unsigned long timeStep)
 	
 
 	
-	charPos.y =  terain->getHeightForWorldPos(charPos.x, charPos.z) +2.3;
+	charPos.y =  terrainFunctions->getHeightForPos(charPos.x, charPos.z) +2.3;
 	charMesh.objectMatrix.makeLookAtViewMatrix(ofVec3f(0,0,0),walkDir,ofVec3f(0,-1,0));
 	charMesh.objectMatrix.postMultTranslate(charPos);
 

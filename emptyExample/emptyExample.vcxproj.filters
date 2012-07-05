@@ -52,9 +52,6 @@
     <ClCompile Include="src\npMaterial.cpp">
       <Filter>src\np\objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\Terrain.cpp">
-      <Filter>src\game</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameCamera.cpp">
       <Filter>src\game</Filter>
     </ClCompile>
@@ -86,6 +83,9 @@
       <Filter>src\np\deferred</Filter>
     </ClCompile>
     <ClCompile Include="src\perlin.cpp">
+      <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TerrainFunctions.cpp">
       <Filter>src\game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -156,9 +156,6 @@
     <ClInclude Include="src\npBoneAnimation.h">
       <Filter>src\np\objects</Filter>
     </ClInclude>
-    <ClInclude Include="src\Terrain.h">
-      <Filter>src\game</Filter>
-    </ClInclude>
     <ClInclude Include="src\GameCamera.h">
       <Filter>src\game</Filter>
     </ClInclude>
@@ -190,6 +187,9 @@
       <Filter>src\np\deferred</Filter>
     </ClInclude>
     <ClInclude Include="src\perlin.h">
+      <Filter>src\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TerrainFunctions.h">
       <Filter>src\game</Filter>
     </ClInclude>
   </ItemGroup>

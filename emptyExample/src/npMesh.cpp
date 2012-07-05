@@ -9,7 +9,7 @@
 #include "npMesh.h"
 
 
-void npMesh::createBuffers()
+void npMesh::createBuffers(GLenum type)
 {
 
     vertexBuffer;
@@ -19,7 +19,7 @@ void npMesh::createBuffers()
     
     
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, numVertices*stride* sizeof(float), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, numVertices*stride* sizeof(float), vertices, type);
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
@@ -31,7 +31,19 @@ void npMesh::createBuffers()
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
   
     
+	if (numIndices2!=0)
+	{
+	
+	    glGenBuffers(1, &indexBuffer2);
     
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer2);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, numIndices2 * sizeof(unsigned int), indices2, GL_STATIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+  
+	
+	
+	}
     
  
 

@@ -18,7 +18,7 @@ public:
     
     
     void start(const npCamera &cam);
-    void draw(const npMesh *mesh);
+    void draw(const npMesh *mesh,int detailLevel);
     void stop();
     
    

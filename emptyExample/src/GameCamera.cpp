@@ -44,7 +44,7 @@ void GameCamera::update()
 
 	ofQuaternion currentQuaternationTemp;
 
-	 currentQuaternationTemp.slerp(0.04,currentQuaternation,targetRotationWalkQuat);
+	 currentQuaternationTemp.slerp(0.04f,currentQuaternation,targetRotationWalkQuat);
 	//cout << currentQuaternation<< endl<< targetRotationWalkQuat<< endl<< endl<< endl<< endl<< endl;
 	 currentQuaternationTemp.get(currentRotation);
 
@@ -55,7 +55,7 @@ void GameCamera::update()
 	camDir =  currentRotation *ofVec3f(0,0,15);
 	camPos =camDir +lookAtPos;
 
-	float terHeight = terrain->getHeightForWorldPos(camPos.x,camPos.z);
+	float terHeight = terrainFunctions->getHeightForPos(camPos.x,camPos.z);
 	if (camPos.y<terHeight+1){
 		camPos.y =terHeight+1 ;
 	
@@ -105,7 +105,7 @@ void GameCamera::update()
 void GameCamera::setup()
 {
 	lookAtPos.set(0,0,0);
-	 perspectiveMatrix.makePerspectiveMatrix(60, (float)ofGetScreenWidth()/(float)ofGetScreenHeight(), 2,2000);
+	 perspectiveMatrix.makePerspectiveMatrix(60, (float)ofGetScreenWidth()/(float)ofGetScreenHeight(), 2,1900);
     perspectiveInvMatrix.makeInvertOf(perspectiveMatrix);
 
 

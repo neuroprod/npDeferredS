@@ -12,33 +12,20 @@ void testApp::setup(){
 	ofSetFrameRate(60);
     
 	srand(3);
+	terrainFunctions.setup();
+	chunkHandler.terrainFunctions =&terrainFunctions;
 	chunkHandler.setup();
 	
-	terain.chunkHandler = &chunkHandler;
-	terain.setup(ofToDataPath("3DAssets/Terain.png"),ofToDataPath("3DAssets/objects.png"));
+
 
 	girl.setup();
-	girl.terain =  &terain;
+	girl.terrainFunctions =  &terrainFunctions;
 
 	camera.setup();
 	camera.mainCharacter =&girl;
-	camera.terrain =   &terain;
+	camera.terrainFunctions  =   &terrainFunctions;
 	ofBackground(0, 0, 0);
-    /*
-    npMaterial m;
-    m.hasColor =true;
-    m.hasUV =false;
-    m.r =0.9f;
-    m.g =0.9f;
-    m.b =0.9f;*/
-    /*for (int i=0;i<80;i++)
-    {
-        npSphere *t =new npSphere();
-        t->setup(m,(float) rand()/RAND_MAX*1.0+0.5);
-        t->setPos (((float) rand()/RAND_MAX -0.5)*20, ((float) rand()/RAND_MAX -0.5)*20, ((float) rand()/RAND_MAX -0.5)*20);
-        spheres.push_back((npMesh *)t);
-    
-    }*/
+   
     for (int i=0;i<40;i++)
     {
     
@@ -148,7 +135,7 @@ void testApp::update(){
 	//
     // SHADOW MAP DRAW;
 	//
-	glPolygonOffset(4.2,1.2);
+	glPolygonOffset(4.2f,1.2f);
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	shadowMap.start();
 	glEnable(GL_ALPHA_TEST);
@@ -160,11 +147,11 @@ void testApp::update(){
 				{
 			
 			
-					shadowMeshRenderer.draw( chunkHandler.chunks[i]->terrainHighRes);
+					shadowMeshRenderer.draw( chunkHandler.chunks[i]->terrain);
 					for (int j=0;j< chunkHandler.chunks[i]->objects.size();j++)
 					{
 				
-					
+					if ( chunkHandler.chunks[i]->detailLevel==1)
 						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->objects[j]);
 					}
 			
@@ -190,17 +177,14 @@ void testApp::update(){
 		// terain floor
 		terrainRenderer.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
-				{
-				if (chunkHandler.chunks[i]->detailLevel==2)
-				{
-					terrainRenderer.draw( chunkHandler.chunks[i]->terrainLowRes);
-				}
-				else if(chunkHandler.chunks[i]->detailLevel==1)
-				{
-					terrainRenderer.draw( chunkHandler.chunks[i]->terrainHighRes);
+			{
 				
+				if (chunkHandler.chunks[i]->detailLevel!=0)
+				{
+					terrainRenderer.draw( chunkHandler.chunks[i]->terrain,chunkHandler.chunks[i]->detailLevel);
 				}
-		}
+				
+			}
 		terrainRenderer.stop();
 		glEnable(GL_ALPHA_TEST);
 				glAlphaFunc(GL_GREATER,0.5f);
@@ -265,7 +249,7 @@ void testApp::update(){
 void testApp::draw(){
 	
 	
-   deferredFinal.draw(&camera,  dayTime);
+   deferredFinal.draw(&camera, 0);
 
    GLErrorCheck::test("draw end");
 // cout << ofGetFrameRate()<<endl ;

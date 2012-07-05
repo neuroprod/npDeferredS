@@ -17,15 +17,16 @@ class npMesh :public npObject3D
 
 public:
     
-    npMesh():vertices(NULL),indices(NULL) ,stride(8){}
+    npMesh():vertices(NULL),indices(NULL),indices2(NULL) ,stride(8),numVertices(-1), numIndices2(0){}
     virtual ~npMesh()
     {
         delete[] vertices;
         delete[] indices;
+		  delete[] indices2;
     
     }
 	npMesh * getGLCopy();
-    void createBuffers();
+    void createBuffers(GLenum type =GL_STATIC_DRAW);
     void setMaterial (npMaterial  mat){material =mat;};
    
     npMaterial material;
@@ -36,10 +37,14 @@ public:
     
     unsigned int * indices;
     int  numIndices;
+
+	 unsigned int * indices2;
+    int  numIndices2;
+
   
     GLuint vertexBuffer;
     GLuint indexBuffer;
-    
+     GLuint indexBuffer2;
     
    
    

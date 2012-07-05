@@ -14,12 +14,12 @@ void TerrainRenderer::setup()
 {
 	
 	npMaterial vegMap;
-	vegMap.loadDiffuse("3DAssets/Vegetation.png" );
+	vegMap.loadDiffuse("3DAssets/Vegetation.png",GL_RGB,false );
 	vegMapTexture =vegMap.diffuseTexture;
 
 
 
-	npMaterial GrassMat;
+	/*npMaterial GrassMat;
 	GrassMat.loadDiffuse("3DAssets/grass1.png" );
 	grassTexture =GrassMat.diffuseTexture;
 
@@ -32,7 +32,7 @@ void TerrainRenderer::setup()
 	npMaterial forestMap;
 	forestMap.loadDiffuse("3DAssets/forestFloor1.png" );
 	 forestTexture =forestMap.diffuseTexture;
-
+	 *
 
 
 	/*  
@@ -59,10 +59,7 @@ void TerrainRenderer::setup()
     glUseProgram(program);
   
 	 uVegMapTexture= glGetUniformLocation(program,"vegMapTexture");
-	 uGrassTexture= glGetUniformLocation(program,"grassTexture");
-	 uDirtTexture= glGetUniformLocation(program,"dirtTexture");
-	 uForestTexture= glGetUniformLocation(program,"forestTexture");
-
+	
 
     uObjectMatrix = glGetUniformLocation(program,"objectMatrix");
     uNormalMatrix = glGetUniformLocation(program,"normalMatrix");
@@ -70,11 +67,11 @@ void TerrainRenderer::setup()
     uPerspectiveMatrix = glGetUniformLocation(program,"perspectiveMatrix");
    uNormalWorldMatrix = glGetUniformLocation(program,"normalWorldMatrix");
 
-   glUniform1i(uVegMapTexture,0);
-   glUniform1i( uGrassTexture,1);
+ glUniform1i(uVegMapTexture,0);
+  /* glUniform1i( uGrassTexture,1);
    glUniform1i( uDirtTexture,2);
    glUniform1i( uForestTexture,3);
-
+   */
   
 
     glUseProgram(0);
@@ -94,7 +91,7 @@ void TerrainRenderer::start(const npCamera &cam)
     glEnableVertexAttribArray(ATTRIB_NORMAL);
     glEnableVertexAttribArray(ATTRIB_UV);
 
-	    glActiveTexture(GL_TEXTURE1);
+	/*    glActiveTexture(GL_TEXTURE1);
 	glBindTexture (GL_TEXTURE_2D,grassTexture);
 
 	    glActiveTexture(GL_TEXTURE2);
@@ -102,13 +99,14 @@ void TerrainRenderer::start(const npCamera &cam)
 
 	    glActiveTexture(GL_TEXTURE3);
 	glBindTexture (GL_TEXTURE_2D,forestTexture);
-
+	*/
       glActiveTexture(GL_TEXTURE0);
 	glBindTexture (GL_TEXTURE_2D,vegMapTexture);
 
 }
-void TerrainRenderer::draw(const npMesh *mesh)
+void TerrainRenderer::draw(const npMesh *mesh, int detailLevel)
 {
+
     glBindBuffer(GL_ARRAY_BUFFER,mesh->vertexBuffer);
     
 	
@@ -118,14 +116,24 @@ void TerrainRenderer::draw(const npMesh *mesh)
   
     
     
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  mesh->indexBuffer);
+	if (detailLevel==3)
+	{
+	   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  mesh->indexBuffer2);
  
     glUniformMatrix4fv(uObjectMatrix, 1, 0,  mesh->objectMatrix.getPtr());
     glUniformMatrix4fv(uNormalMatrix, 1, 0,   mesh->normalMatrix.getPtr());
     
-    glDrawElements(GL_TRIANGLES,mesh->numIndices , GL_UNSIGNED_INT, (void*)0);
-
+    glDrawElements(GL_TRIANGLES,mesh->numIndices2 , GL_UNSIGNED_INT, (void*)0);
+	}
+	else
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  mesh->indexBuffer);
+ 
+		glUniformMatrix4fv(uObjectMatrix, 1, 0,  mesh->objectMatrix.getPtr());
+		glUniformMatrix4fv(uNormalMatrix, 1, 0,   mesh->normalMatrix.getPtr());
+    
+		glDrawElements(GL_TRIANGLES,mesh->numIndices , GL_UNSIGNED_INT, (void*)0);
+	}
 
 
 }

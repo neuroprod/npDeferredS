@@ -94,7 +94,6 @@ void main()
   // bl-=0.5;
 //	bl =min(bl,0.0); 
    bl =1.0-bl;
-	
 
 	 ///SSAO
 
@@ -126,7 +125,7 @@ void main()
 	
 	
 	 //DROPSHADOW
-	 float shadowTerm =bl;
+	 float shadowTerm =1.0;
 	//MAP 1
 	 if (depth<0.965)
 	 {
@@ -174,7 +173,7 @@ void main()
 
 
 		//fogFactor = (end - z) / (end - start) 
-	float fogFactor =pow(1.0- clamp((1.0 - depthScreen) / 0.005,0.0,1.0),4.0);
+	float fogFactor =pow(1.0- clamp((1.0 - depthScreen) / 0.02,0.0,1.0),8.0);
 
 
    gl_FragColor  =vec4(col+specular,1.0)*(1.0-fogFactor) +(fogFactor)*vec4(0.8,0.8,1.0,1.0) ;

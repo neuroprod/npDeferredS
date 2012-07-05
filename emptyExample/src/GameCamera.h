@@ -4,7 +4,7 @@
 #include "npIncludes.h"
 #include "npCamera.h"
 #include "MainCharacter.h"
-#include "Terrain.h"
+#include "TerrainFunctions.h"
 class GameCamera:public npCamera
 {
 
@@ -35,5 +35,5 @@ public:
 	ofQuaternion currentQuaternation;
 
 
-	Terrain *terrain;
+	TerrainFunctions *terrainFunctions;
 };

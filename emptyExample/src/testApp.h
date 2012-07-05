@@ -22,7 +22,7 @@
 #include "MainCharacter.h"
 #include "npAssimpLoader.h"
 
-#include "Terrain.h"
+#include "TerrainFunctions.h"
 #include "ChunkHandler.h"
 #include "Chunk.h"
 #include "TerrainRenderer.h"
@@ -47,7 +47,7 @@ public:
 	void windowResized(int w, int h);
 	
 
-	Terrain terain;
+	TerrainFunctions terrainFunctions;
 
     vector <npMesh *> spheres;
     vector <npPointLight *> pLights;

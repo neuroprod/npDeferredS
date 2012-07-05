@@ -3,7 +3,7 @@
 #include "npAssimpLoader.h"
 #include "npIncludes.h"
 #include "npBoneMesh.h"
-#include "Terrain.h"
+#include "TerrainFunctions.h"
 class MainCharacter
 {
 
@@ -30,7 +30,7 @@ public :
 	bool leftIsDown;
 	bool rightIsDown;
 
-	Terrain * terain;
+	TerrainFunctions * terrainFunctions;
 
 	enum
 	{
