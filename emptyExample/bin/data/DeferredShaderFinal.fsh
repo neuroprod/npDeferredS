@@ -173,7 +173,7 @@ void main()
 
 
 		//fogFactor = (end - z) / (end - start) 
-	float fogFactor =pow(1.0- clamp((1.0 - depthScreen) / 0.02,0.0,1.0),8.0);
+	float fogFactor =pow(1.0- clamp((1.0 - depthScreen) / 0.001,0.0,1.0),2.0);
 
 
    gl_FragColor  =vec4(col+specular,1.0)*(1.0-fogFactor) +(fogFactor)*vec4(0.8,0.8,1.0,1.0) ;

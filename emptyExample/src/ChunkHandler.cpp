@@ -11,8 +11,10 @@ ChunkHandler::ChunkHandler()
 
 void ChunkHandler::setup()
 {
-
+	 terrainFBO.cDivX = chunkParts;
+ terrainFBO.cDivY = chunkParts;
 	 terrainFBO.setup();
+
 
 	for (int y= -numChunksW2;y<numChunksW2;y++)
 	{

@@ -204,6 +204,9 @@
     <ClInclude Include="src\ObjectLib.h">
       <Filter>src\game\terrain</Filter>
     </ClInclude>
+    <ClInclude Include="src\TerrainVertex.h">
+      <Filter>src\game\terrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -281,6 +284,12 @@
       <Filter>data\shaders</Filter>
     </None>
     <None Include="bin\data\ShadowShaderMesh.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\TerrainShader.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\TerrainShader.vsh">
       <Filter>data\shaders</Filter>
     </None>
   </ItemGroup>

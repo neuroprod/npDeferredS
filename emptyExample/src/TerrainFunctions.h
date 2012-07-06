@@ -4,7 +4,7 @@
 #include "ObjectLib.h"
 #include "perlin.h"
 #include "Chunk.h"
-
+#include "TerrainVertex.h"
 class Chunk;
 
 class TerrainFunctions {
@@ -17,6 +17,7 @@ public:
 	float getHeightForPos(float  x, float z);
 
 	ofVec3f getNormalforPos(float x, float z);
+	void getNormalforVertex( TerrainVertex &vertex);
 	ofVec3f getNormal(const ofVec3f &p1,const ofVec3f &p2,const ofVec3f &p3);
 
 

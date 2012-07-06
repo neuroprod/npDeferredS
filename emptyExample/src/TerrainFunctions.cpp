@@ -9,7 +9,7 @@ void TerrainFunctions::setup()
 	heightPerlin1 = new Perlin(5,1,1,122335);
 	
 	heightPerlin2= new Perlin(3,1,1,1223);
-	typePerlin= new Perlin(8,1,1,123);	
+	typePerlin= new Perlin(8,1,1,1243);	
 
 
 	vegatationPerlin =new Perlin(5,1,1,125523);
@@ -43,7 +43,25 @@ float TerrainFunctions::getHeightForPos(float  x, float z)
 	return heightMac1 ;
 
 }
+void  TerrainFunctions::getNormalforVertex( TerrainVertex &vertex)
+{
 
+
+
+	ofVec3f pos2 = vertex.positionT;
+	pos2.x+=1;
+	pos2.y=getHeightForPos(pos2.x,pos2.z);
+	ofVec3f pos3= vertex.positionT;
+	pos3.z+=1;
+	pos3.y=getHeightForPos(pos3.x,pos3.z);
+
+
+	vertex.normalT = getNormal( vertex.positionT , pos2,pos3 );
+
+
+
+
+}
 ofVec3f TerrainFunctions::getNormalforPos(float x, float z)
 {
 
@@ -60,8 +78,10 @@ ofVec3f  TerrainFunctions::getNormal(const ofVec3f &p1,const ofVec3f &p2,const o
 {
 	ofVec3f d1  = p1-p2;
 	ofVec3f d2 = p1-p3;
+	ofVec3f normal= d2.getCrossed( d1).normalize();
 
-	return d2.getCrossed( d1).normalize();
+	
+	return normal;
 }
 
 
@@ -98,7 +118,7 @@ void TerrainFunctions::getObjectsForPos(float x, float y)
 	
 	if ( veg>0.2)
 	{
-	if (r%25==1){
+		if (r%25==1){
 			ofMatrix4x4 objMatrix;
 			objMatrix.makeRotationMatrix(90,ofVec3f(1,0,0) );
 			objMatrix.postMultRotate(  (float)rand()/RAND_MAX *360.0f,0,1,0);
@@ -111,7 +131,8 @@ void TerrainFunctions::getObjectsForPos(float x, float y)
 				
 			
 			tempObjects[0]->objectMatrices.push_back(objMatrix);
-	}
+			return;
+		}
 	
 	
 	}

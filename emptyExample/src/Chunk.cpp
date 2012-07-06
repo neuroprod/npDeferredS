@@ -18,14 +18,6 @@ Chunk::Chunk(){
 
 void Chunk::update()
 {
-
-	if ( terrain->numVertices == -1)
-	{
-
-		buildFirst();
-		return;
-	} 
-	
 	float worldX = posX *width;
 	float worldY = posY *height;
 
@@ -34,39 +26,105 @@ void Chunk::update()
 	float cStepY  = (float)height/cDivY;
 	float cStepX  =(float) width/cDivX;
 
+	for(int y=-1;y<cDivY +2 ;y++)
+	{
+		int pPosY = y* cStepY;
+		for(int x=-1;x<cDivX+2;x++)
+		{
+			int pPosX = x* cStepX ;
+		
+			
+			TerrainVertex vertex;
+			vertex.positionT.x = (float) pPosX  +worldX;
+			vertex.positionT.z =  (float) pPosY  +worldY;
+			vertex.positionT.y = terrainFunctions-> getHeightForPos( 	vertex.positionT.x,vertex.positionT.z);
+			 terrainFunctions->getNormalforVertex(vertex);
+
+			 terrainVertices.push_back(vertex);
+		}
+	}
+
+	///blur
+	for(int y=0;y<cDivY +1 ;y++)
+	{
+		
+		for(int x=0;x<cDivX+1;x++)
+		{
+		
+			TerrainVertex * vertex= getVertexForXY(x,y);
+			vertex->position.set(0,0,0);
+			vertex->normal.set(0,0,0);
+			for(int bx=-1;bx<2;bx++)
+			{
+			
+				for(int by=-1;by<2;by++)
+				{
+					TerrainVertex * vertexT = getVertexForXY(x+bx,y+by);
+					vertex->position+= vertexT->positionT; 
+					vertex->normal+= vertexT->normalT; 
+				}
+			}
+			vertex->normal.normalize();
+			vertex->position/=9;
+			vertex->hil =vertex->normal.dot(ofVec3f(0,1,0));
+			vertex->uv.x = (float)x/(cDivX+1);
+			vertex->uv.y = (float)y/(cDivY+1);
+
+			//cout <<vertex->hil;
+
+			if(vertex->hil<0.7)
+			{
+			vertex->color.set(0.37,0.27,0.17);
+			}else
+			{
+			vertex->color.set(0.51,0.66,0.15);
+			
+			}
+		}
+	}
+
+
+
+
+	if ( terrain->numVertices == -1)
+	{
+
+		buildFirst();
+		return;
+	} 
+	
+
+
 
 	npMesh * mesh = terrain;
 	
 
 	
 
-	float  r= (float) rand()/RAND_MAX;
-	
-	float  g= (float) rand()/RAND_MAX;
-	float  h= (float) rand()/RAND_MAX*5;
+
 	int vertcount =0;
 	for(int y=0;y<cDivY +1 ;y++)
 	{
-		int pPosY = y* cStepY;
+		
 		for(int x=0;x<cDivX+1;x++)
 		{
-			int pPosX = x* cStepX ;
+			
 	
-			mesh->vertices[vertcount++] =   (float) pPosX  +worldX;
-            mesh->vertices[vertcount++] =terrainFunctions-> getHeightForPos( pPosX  +worldX,(float) pPosY +worldY);
-            mesh->vertices[vertcount++] =  (float) pPosY +worldY;//getHeightForPixelPos( pPosX, pPosY);
+			TerrainVertex * vertex= getVertexForXY(x,y);
+
+			mesh->vertices[vertcount++] = vertex->position.x;
+            mesh->vertices[vertcount++] = vertex->position.y;
+            mesh->vertices[vertcount++] = vertex->position.z;
             
-           ofVec3f n =  terrainFunctions->getNormalforPos((float) pPosX  +worldX, (float) pPosY +worldY);
+         
             
-            mesh->vertices[vertcount++] = n.x;
-            mesh->vertices[vertcount++] =  n.y;
-            mesh->vertices[vertcount++] =n.z;
-            
-			//mesh->vertices[vertcount++] = r;//(float)(pPosX+pixelX)/totalWidth;
-            //mesh->vertices[vertcount++] =g;//(float)(pPosY+pixelY)/totalHeight;
+            mesh->vertices[vertcount++] = vertex->normal.x;
+            mesh->vertices[vertcount++] =  vertex->normal.y;
+            mesh->vertices[vertcount++] = vertex->normal.z;
+	
 
 			vertcount++;
-				vertcount++;
+			vertcount++;
 
 
 
@@ -118,11 +176,22 @@ void Chunk::makeTerrainObjects()
 	}
 	terrainFunctions->stopNewChunk(this);
 }
+TerrainVertex * Chunk::getVertexForXY(int x, int y)
+{
 
+	int pos = (x +1) +(y+1)*(cDivY +3);
+	//cout << "pos "<<pos << "  ->"<< x << ","<<y << endl;
+
+	return  &terrainVertices[pos];
+
+
+
+}
 
 void Chunk::clearCurrent()
 {
 		isReady =false;
+		 terrainVertices.clear();
 		detail1Objects.clear();
 		detail2Objects.clear();
 		detail3Objects.clear();
@@ -251,10 +320,10 @@ void  Chunk::buildFirst()
 
 		float uvXStart =(worldX+halfWorld)/ totalWorld;
 	float uvYStart =(worldY+halfWorld)/ totalWorld;
-	vpX =uvXStart*2048;
-	vpY =uvYStart*2048;
-	vpW = 128;
-	vpH = 128;
+	vpX =uvXStart*2048*2;
+	vpY =uvYStart*2048*2;
+	vpW = 128*2;
+	vpH = 128*2;
 	
 	float uvXStep =width/totalWorld /cDivX;
 	float uvYStep =height/totalWorld /cDivY;
@@ -279,28 +348,25 @@ void  Chunk::buildFirst()
 	
 	for(int y=0;y<cDivY +1 ;y++)
 	{
-		int pPosY = y* cStepY;
+	//	int pPosY = y* cStepY;
 		for(int x=0;x<cDivX+1;x++)
 		{
-			int pPosX = x* cStepX ;
-	
+		
+			TerrainVertex * vertex= getVertexForXY(x,y);
 
-			float pH = terrainFunctions-> getHeightForPos( pPosX  +worldX,(float) pPosY +worldY) ;
-			/*pH += terrainFunctions-> getHeightForPos( pPosX+20  +worldX,(float) pPosY +worldY) ;
-			pH += terrainFunctions-> getHeightForPos( pPosX  +worldX,(float) pPosY+20 +worldY) ;	
-			pH += terrainFunctions-> getHeightForPos( pPosX-20+worldX,(float) pPosY +worldY) ;	
-			pH += terrainFunctions-> getHeightForPos( pPosX +worldX,(float) pPosY-20 +worldY) ;	
-			pH/=5;*/
-			mesh->vertices[vertcount++] =   (float) pPosX  +worldX;
-            mesh->vertices[vertcount++] =pH;
-            mesh->vertices[vertcount++] =  (float) pPosY +worldY;//getHeightForPixelPos( pPosX, pPosY);
+			mesh->vertices[vertcount++] = vertex->position.x;
+            mesh->vertices[vertcount++] = vertex->position.y;
+            mesh->vertices[vertcount++] = vertex->position.z;
             
-           ofVec3f n =  terrainFunctions->getNormalforPos((float) pPosX  +worldX, (float) pPosY +worldY);
+         
             
-            mesh->vertices[vertcount++] = n.x;
-            mesh->vertices[vertcount++] =  n.y;
-            mesh->vertices[vertcount++] =n.z;
-            
+            mesh->vertices[vertcount++] = vertex->normal.x;
+            mesh->vertices[vertcount++] =  vertex->normal.y;
+            mesh->vertices[vertcount++] = vertex->normal.z;
+
+
+
+		
 			mesh->vertices[vertcount++] =uvXStart+x*uvXStep ;
             mesh->vertices[vertcount++] =uvYStart+y*uvYStep;
 	
