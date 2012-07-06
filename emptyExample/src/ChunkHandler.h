@@ -5,6 +5,7 @@
 #include "Chunk.h"
 #include "TerrainFunctions.h"
 #include "TerrainFBO.h"
+
 struct ComparePrio 
 {
   bool operator () ( Chunk * a, Chunk * b )
@@ -37,5 +38,6 @@ public:
 	TerrainFunctions *terrainFunctions;
 
 	TerrainFBO terrainFBO;
+	
 };
 

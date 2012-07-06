@@ -12,7 +12,7 @@ Chunk::Chunk(){
 	isReady =false;
 	terrain = new npMesh();
 	cDivX =1;
-		cDivY =1;
+	cDivY =1;
 }
 
 
@@ -80,14 +80,53 @@ void Chunk::update()
     glBufferSubData(GL_ARRAY_BUFFER,0, mesh->numVertices*mesh->stride* sizeof(float), mesh->vertices);
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+	///
+
+	makeTerrainObjects();
+
+
+
+
 	isReady =true;
 
 }
 
+void Chunk::makeTerrainObjects()
+{
+	
+	float worldX = posX *width;
+	float worldY = posY *height;
+	float cStepY  = (float)height/cDivY;
+	float cStepX  =(float) width/cDivX;
+	terrainFunctions->startNewChunk();
+
+	for(int y=0;y<cDivY +1 ;y++)
+	{
+		int pPosY = y* cStepY;
+		for(int x=0;x<cDivX+1;x++)
+		{
+			int pPosX = x* cStepX ;
+	
+			float 	posX  = (float) pPosX  +worldX;
+			float   posY =  pPosY +worldY;
+			terrainFunctions->getObjectsForPos (posX,posY);
+    
+		}
+	
+	}
+	terrainFunctions->stopNewChunk(this);
+}
 
 
-
-
+void Chunk::clearCurrent()
+{
+		isReady =false;
+		detail1Objects.clear();
+		detail2Objects.clear();
+		detail3Objects.clear();
+}
 
 
 
@@ -100,25 +139,26 @@ void Chunk::setPos(int posCenterX ,int posCenterY)
 	{
 		
 		 posX = posCenterX +numChunksW2-1;
-		isReady =false;
+		 clearCurrent();
+	
 	
 	}else if (posCenterX+numChunksW2<posX)
 	{
 		// xRechts
 		posX = posCenterX -numChunksW2+1;
-		isReady =false;
+		clearCurrent();
 	}
 
 	if (posCenterY-numChunksW2> posY)
 	{
 	
 		 posY = posCenterY +numChunksW2-1;
-		isReady =false;
+		clearCurrent();
 	
 	}else if (posCenterY+numChunksW2<posY)
 	{
 		posY = posCenterY -numChunksW2+1;
-		isReady =false;
+		clearCurrent();
 	}
 	
 
@@ -244,8 +284,15 @@ void  Chunk::buildFirst()
 		{
 			int pPosX = x* cStepX ;
 	
+
+			float pH = terrainFunctions-> getHeightForPos( pPosX  +worldX,(float) pPosY +worldY) ;
+			/*pH += terrainFunctions-> getHeightForPos( pPosX+20  +worldX,(float) pPosY +worldY) ;
+			pH += terrainFunctions-> getHeightForPos( pPosX  +worldX,(float) pPosY+20 +worldY) ;	
+			pH += terrainFunctions-> getHeightForPos( pPosX-20+worldX,(float) pPosY +worldY) ;	
+			pH += terrainFunctions-> getHeightForPos( pPosX +worldX,(float) pPosY-20 +worldY) ;	
+			pH/=5;*/
 			mesh->vertices[vertcount++] =   (float) pPosX  +worldX;
-            mesh->vertices[vertcount++] =terrainFunctions-> getHeightForPos( pPosX  +worldX,(float) pPosY +worldY);
+            mesh->vertices[vertcount++] =pH;
             mesh->vertices[vertcount++] =  (float) pPosY +worldY;//getHeightForPixelPos( pPosX, pPosY);
             
            ofVec3f n =  terrainFunctions->getNormalforPos((float) pPosX  +worldX, (float) pPosY +worldY);
@@ -308,5 +355,8 @@ void  Chunk::buildFirst()
 	mesh->createBuffers(GL_DYNAMIC_DRAW);
 	mesh->objectMatrix.makeIdentityMatrix();
 	mesh->normalMatrix.makeIdentityMatrix();
+
+
+		makeTerrainObjects();
 	isReady =true;
 }

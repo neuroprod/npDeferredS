@@ -4,6 +4,9 @@
 #include "npIncludes.h"
 #include "npMesh.h"
 #include "TerrainFunctions.h"
+#include "ObjectLib.h"
+
+class TerrainFunctions;
 class Chunk
 {
 public:
@@ -17,8 +20,9 @@ public:
 
 	void setPos(int posX ,int posY);
 	void update();
+	void makeTerrainObjects();
 	void buildFirst();
-
+	void clearCurrent();
 
 	int cDivX ;
 	int cDivY ;
@@ -38,13 +42,15 @@ public:
 	int vpH;
 
 	ofVec3f center;
-	vector <npMesh*> objects;
-
+	vector <npMesh*> detail1Objects;
+	vector <npMesh*> detail2Objects;
+	vector <npMesh*> detail3Objects;
+	
 	int detailLevel;
 
 	
 	npMesh * terrain;
 
-	TerrainFunctions *terrainFunctions;
+	TerrainFunctions * terrainFunctions;
 	
 };

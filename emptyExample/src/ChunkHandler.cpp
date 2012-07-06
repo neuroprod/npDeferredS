@@ -19,6 +19,7 @@ void ChunkHandler::setup()
 		for (int x= -numChunksW2;x<numChunksW2;x++)
 		{
 				Chunk * chunk = new Chunk();
+			
 				chunk->posX = x;
 				chunk->posY= y;
 				chunk->numChunksW2 = numChunksW2;
@@ -51,7 +52,7 @@ void ChunkHandler::update(ofVec3f camPos, ofVec3f lookPos)
 
 	
 
-	unsigned updateTime =frameCount%5;
+	unsigned updateTime =frameCount%6;
 
 	if (updateTime ==0)
 	{
@@ -64,7 +65,7 @@ void ChunkHandler::update(ofVec3f camPos, ofVec3f lookPos)
 	
 		checkChunkPositions( chunkPosX, chunkPosY);
 	
-	}if (updateTime ==1)
+	}if (updateTime ==2)
 	{
 		updateChunkPositions();
 		

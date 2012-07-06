@@ -91,6 +91,9 @@
     <ClCompile Include="src\TerrainFBO.cpp">
       <Filter>src\game\terrain</Filter>
     </ClCompile>
+    <ClCompile Include="src\ObjectLib.cpp">
+      <Filter>src\game\terrain</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h">
@@ -196,6 +199,9 @@
       <Filter>src\game\terrain</Filter>
     </ClInclude>
     <ClInclude Include="src\TerrainFBO.h">
+      <Filter>src\game\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObjectLib.h">
       <Filter>src\game\terrain</Filter>
     </ClInclude>
   </ItemGroup>

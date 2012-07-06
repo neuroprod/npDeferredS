@@ -139,6 +139,7 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClCompile Include="src\npProgramLoader.cpp" />
     <ClCompile Include="src\npShadowMapBoneRenderer.cpp" />
     <ClCompile Include="src\npShadowMapMeshRenderer.cpp" />
+    <ClCompile Include="src\ObjectLib.cpp" />
     <ClCompile Include="src\perlin.cpp" />
     <ClCompile Include="src\ShadowMap.cpp" />
     <ClCompile Include="src\npSphere.cpp" />
@@ -180,6 +181,7 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClInclude Include="src\npProgramLoader.h" />
     <ClInclude Include="src\npShadowMapBoneRenderer.h" />
     <ClInclude Include="src\npShadowMapMeshRenderer.h" />
+    <ClInclude Include="src\ObjectLib.h" />
     <ClInclude Include="src\perlin.h" />
     <ClInclude Include="src\ShadowMap.h" />
     <ClInclude Include="src\npSphere.h" />

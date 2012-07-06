@@ -11,7 +11,7 @@ void testApp::setup(){
 	*/
 	ofSetFrameRate(60);
     
-	srand(3);
+
 	terrainFunctions.setup();
 	chunkHandler.terrainFunctions =&terrainFunctions;
 	chunkHandler.setup();
@@ -148,11 +148,11 @@ void testApp::update(){
 			
 			
 					shadowMeshRenderer.draw( chunkHandler.chunks[i]->terrain);
-					for (int j=0;j< chunkHandler.chunks[i]->objects.size();j++)
+					for (int j=0;j< chunkHandler.chunks[i]->detail1Objects.size();j++)
 					{
 				
-					if ( chunkHandler.chunks[i]->detailLevel==1)
-						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->objects[j]);
+				
+						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail1Objects[j]);
 					}
 			
 				 }
@@ -187,24 +187,43 @@ void testApp::update(){
 			}
 		terrainRenderer.stop();
 		glEnable(GL_ALPHA_TEST);
-				glAlphaFunc(GL_GREATER,0.5f);
+		glAlphaFunc(GL_GREATER,0.5f);
 
-		renderTexture.start(camera);
+			renderTexture.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
 				 if(chunkHandler.chunks[i]->detailLevel>0)
 				{
 				
-					for (int j=0;j< chunkHandler.chunks[i]->objects.size();j++)
+					if(chunkHandler.chunks[i]->detailLevel==1)
 					{
+						for (int j=0;j< chunkHandler.chunks[i]->detail1Objects.size();j++)
+						{
 				
 					
-						renderTexture.draw(	chunkHandler.chunks[i]->objects[j]);
+							renderTexture.draw(	chunkHandler.chunks[i]->detail1Objects[j]);
+						}
+					}
+					if(chunkHandler.chunks[i]->detailLevel==2)
+					{
+						for (int j=0;j< chunkHandler.chunks[i]->detail2Objects.size();j++)
+						{
+				
+					
+							renderTexture.draw(	chunkHandler.chunks[i]->detail2Objects[j]);
+						}
+					}	
+					if(chunkHandler.chunks[i]->detailLevel==3)
+					{
+						for (int j=0;j< chunkHandler.chunks[i]->detail3Objects.size();j++)
+						{
+							renderTexture.draw(	chunkHandler.chunks[i]->detail3Objects[j]);
+						}
 					}
 				 }
 			}
-		renderTexture.stop();
-			glDisable(GL_ALPHA_TEST);
+			renderTexture.stop();
+		glDisable(GL_ALPHA_TEST);
 	/*	rendererColor.start(camera);
 	
 		
