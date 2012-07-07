@@ -26,31 +26,7 @@ void testApp::setup(){
 	camera.terrainFunctions  =   &terrainFunctions;
 	ofBackground(0, 0, 0);
    
-    for (int i=0;i<40;i++)
-    {
-    
-        npPointLight *p = new npPointLight();
-        
-		if (i==0)
-		{
-		
-		p->setup(20,(float) rand()/RAND_MAX,(float) rand()/RAND_MAX ,(float) rand()/RAND_MAX ,1);
-		}
-		else
-		{
-		
-		p->setup(5,(float) rand()/RAND_MAX,(float) rand()/RAND_MAX ,(float) rand()/RAND_MAX ,0.2f);
-		}
-	
 
-
-
-      p->setPos (((float) rand()/RAND_MAX -0.5)*20, ((float) rand()/RAND_MAX -0.5)*20, ((float) rand()/RAND_MAX -0.5)*20);
-         //p->setPos (0,0,0);
-        pLights.push_back(p );
-    
-    
-    }
     
   
 		
@@ -65,10 +41,10 @@ void testApp::setup(){
 	terrainRenderer.setup();
 	terrainRenderer.vegMapTexture=chunkHandler.terrainFBO.texture;
 	
-    deferredBuffer.setup(ofGetScreenWidth(),ofGetScreenHeight());
+    deferredBuffer.setup(SCREEN_W,SCREEN_H);
     
   
-    plRenderer.setup(ofGetScreenWidth(),ofGetScreenHeight());
+    plRenderer.setup(SCREEN_W,SCREEN_H);
     plRenderer.depthTexture =deferredBuffer.depthTexture;
     plRenderer.normalTexture=deferredBuffer.normalTexture;
     
@@ -111,9 +87,10 @@ void testApp::update(){
 	
 	float cycleTime =  (currentTime/1000)%60000;
 	dayTime = cycleTime/60000 ;
-
-
-
+	dayTime -=0.5;
+	dayTime *=2;
+	if (dayTime<0)dayTime *=-1;
+	//cout <<dayTime<<endl;
 	//
 	// PRE RENDER UPDATE
 	//
@@ -138,8 +115,8 @@ void testApp::update(){
 	glPolygonOffset(4.2f,1.2f);
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	shadowMap.start();
-	glEnable(GL_ALPHA_TEST);
-		glAlphaFunc(GL_LESS,0.5f);
+	/*glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_LESS,0.1f);
 		shadowMeshRenderer.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
@@ -158,21 +135,21 @@ void testApp::update(){
 				 }
 				 
 		}
-		shadowMeshRenderer.stop();
+		shadowMeshRenderer.stop();*/
 			glDisable(GL_ALPHA_TEST);
 		shadowBoneRenderer.start(camera);
 		shadowBoneRenderer.draw(&girl.charMesh);
 		shadowBoneRenderer.stop();
 
 	shadowMap.stop();
-	glViewport(0,0 , 1920,1080);
+	glViewport(0,0 , SCREEN_W,SCREEN_H);
 	glDisable(GL_POLYGON_OFFSET_FILL);
 	//
     // MAIN DRAW;
 	//
     glEnable(GL_DEPTH_TEST);
   //  glEnable(GL_CULL_FACE);
-	glClearColor(0.8f,0.8f,1.0f,1.0f);
+	glClearColor(0.8f*(1.0-dayTime*0.8 ),0.8f*(1.0-dayTime*0.8),1.0f*(1.0-dayTime*0.8),1.0f);
     deferredBuffer.start();
 		// terain floor
 		terrainRenderer.start(camera);
@@ -255,7 +232,18 @@ void testApp::update(){
     glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE);
 	glCullFace(GL_FRONT);
-	plRenderer.draw(pLights ,camera);
+	plRenderer.start(camera);
+		for (int i=0;i< chunkHandler.chunks.size();i++)
+		{
+			if(chunkHandler.chunks[i]->detailLevel==1)
+				{
+					
+				plRenderer.draw(chunkHandler.chunks[i]->pLights );
+				}
+		
+		}
+			plRenderer.stop();
+	//plRenderer.draw(pLights ,camera);
 	glCullFace(GL_BACK);
     glDisable (GL_BLEND);
     
@@ -267,11 +255,11 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	
-	
-   deferredFinal.draw(&camera, 0);
+	//deferredFinal.colorTexture = chunkHandler.terrainFBO.texture;
+   deferredFinal.draw(&camera, dayTime );
 
    GLErrorCheck::test("draw end");
-// cout << ofGetFrameRate()<<endl ;
+//cout << ofGetFrameRate()<<endl ;
 }
 
 

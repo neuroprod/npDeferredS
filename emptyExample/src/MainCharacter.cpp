@@ -12,7 +12,7 @@ void MainCharacter::setup()
 	rotSpeed =2;
 	walkDir.set(0,0,1);
 	charPos.set(0,0,0);
-	walkspeed =50;
+	walkspeed =15*2;
 	 isMoving =false;
 	 lastDown =-1;
 	 rightIsDown =false;

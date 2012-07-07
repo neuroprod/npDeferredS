@@ -6,6 +6,7 @@
 #include "TerrainFunctions.h"
 #include "ObjectLib.h"
 #include "TerrainVertex.h"
+#include "npPointLight.h"
 class TerrainFunctions;
 class Chunk
 {
@@ -55,5 +56,5 @@ public:
 
 	vector <TerrainVertex > terrainVertices;
 
-	
+	  vector <npPointLight *> pLights;
 };

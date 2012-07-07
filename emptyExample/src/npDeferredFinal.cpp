@@ -28,7 +28,7 @@ enum {
 void npDeferredFinal::setup(string prog)
 {
 	npMaterial mat;
-	mat.loadDiffuse("3DAssets/lambertMap.png");
+	mat.loadDiffuse("3DAssets/lambertMap.png",GL_RGB,false);
 	lambertMap = mat.diffuseTexture;
   
 

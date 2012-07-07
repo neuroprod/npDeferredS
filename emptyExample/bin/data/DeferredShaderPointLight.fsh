@@ -16,7 +16,7 @@ varying float lightSize_var;
 
 void main()
 {
-
+	
         vec3 pos  = persPos_var.xyz /persPos_var.w;
         vec2 uv =  pos.xy *0.5+0.5 ;
   
@@ -43,7 +43,7 @@ void main()
    
 	
 
-        gl_FragColor = vec4(color_var *dist * lambert   ,1.0);
+       gl_FragColor = vec4(color_var *dist * lambert   ,1.0);
 
    
   

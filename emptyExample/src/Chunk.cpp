@@ -72,14 +72,7 @@ void Chunk::update()
 
 			//cout <<vertex->hil;
 
-			if(vertex->hil<0.7)
-			{
-			vertex->color.set(0.37,0.27,0.17);
-			}else
-			{
-			vertex->color.set(0.51,0.66,0.15);
 			
-			}
 		}
 	}
 
@@ -154,22 +147,16 @@ void Chunk::update()
 void Chunk::makeTerrainObjects()
 {
 	
-	float worldX = posX *width;
-	float worldY = posY *height;
-	float cStepY  = (float)height/cDivY;
-	float cStepX  =(float) width/cDivX;
+
 	terrainFunctions->startNewChunk();
 
 	for(int y=0;y<cDivY +1 ;y++)
 	{
-		int pPosY = y* cStepY;
+	
 		for(int x=0;x<cDivX+1;x++)
 		{
-			int pPosX = x* cStepX ;
-	
-			float 	posX  = (float) pPosX  +worldX;
-			float   posY =  pPosY +worldY;
-			terrainFunctions->getObjectsForPos (posX,posY);
+		
+			terrainFunctions->getObjectsForVertex (getVertexForXY( x,  y));
     
 		}
 	
@@ -195,6 +182,7 @@ void Chunk::clearCurrent()
 		detail1Objects.clear();
 		detail2Objects.clear();
 		detail3Objects.clear();
+		pLights.clear();
 }
 
 
@@ -318,15 +306,20 @@ void  Chunk::buildFirst()
 	float cStepY  = (float)height/cDivY;
 	float cStepX  =(float) width/cDivX;
 
-		float uvXStart =(worldX+halfWorld)/ totalWorld;
-	float uvYStart =(worldY+halfWorld)/ totalWorld;
+		float uvXStart =(float)(posX  +numChunksW2)/(numChunksW2*2);
+	float uvYStart =(float)(posY  +numChunksW2)/(numChunksW2*2);
+	float uvXStep =1.0f/(numChunksW2*2*cDivX );
+	float uvYStep =1.0f/(numChunksW2*2*cDivY);
+	cout<<" " <<endl;
+	cout<<"step " <<uvXStep << " "<< uvYStep<<endl;
+	cout <<"start " << uvXStart<<" " <<uvYStart<<endl;
+
 	vpX =uvXStart*2048*2;
 	vpY =uvYStart*2048*2;
 	vpW = 128*2;
 	vpH = 128*2;
 	
-	float uvXStep =width/totalWorld /cDivX;
-	float uvYStep =height/totalWorld /cDivY;
+	
 	
 	terrain =new npMesh();
 	npMesh * mesh = terrain;
@@ -341,7 +334,6 @@ void  Chunk::buildFirst()
 
 		mesh->numIndices2  = (cDivX/4 )* (cDivY/4 ) *6 ;
 	mesh->indices2 =new unsigned int[mesh->numIndices ];
-	
 
 
 	int vertcount =0;

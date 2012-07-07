@@ -54,7 +54,7 @@ void ChunkHandler::update(ofVec3f camPos, ofVec3f lookPos)
 
 	
 
-	unsigned updateTime =frameCount%6;
+	unsigned updateTime =frameCount%4;
 
 	if (updateTime ==0)
 	{

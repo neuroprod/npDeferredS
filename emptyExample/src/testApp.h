@@ -50,7 +50,7 @@ public:
 	TerrainFunctions terrainFunctions;
 
     vector <npMesh *> spheres;
-    vector <npPointLight *> pLights;
+  
 	
 
     MainCharacter girl;

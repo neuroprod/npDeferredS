@@ -20,9 +20,9 @@ public:
     npPointLightRenderer(){}
     void setup(int w,int h );
   
-    void draw( const vector<npPointLight *> &pLights,const npCamera &cam);
-    
- 
+    void draw( const vector<npPointLight *> &pLights);
+     void start( const npCamera &cam);
+    void stop( );
 
     GLuint fbo;	
     GLuint depthBuffer;

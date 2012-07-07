@@ -12,7 +12,7 @@ public:
 	ObjectLib(){};
 	void setup();
 	npMesh *tree1_hr;
-
+	npMesh *grass_hr;
 
 	vector <npMesh *> objects;
 	vector <npMesh *> getGLClones();

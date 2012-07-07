@@ -105,7 +105,7 @@ void GameCamera::update()
 void GameCamera::setup()
 {
 	lookAtPos.set(0,0,0);
-	 perspectiveMatrix.makePerspectiveMatrix(60, (float)ofGetScreenWidth()/(float)ofGetScreenHeight(), 2,1900);
+	perspectiveMatrix.makePerspectiveMatrix(60, (float)SCREEN_W/(float)SCREEN_H, 2,1900);
     perspectiveInvMatrix.makeInvertOf(perspectiveMatrix);
 
 

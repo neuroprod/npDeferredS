@@ -5,6 +5,7 @@
 #include "perlin.h"
 #include "Chunk.h"
 #include "TerrainVertex.h"
+#include "npPointLight.h"
 class Chunk;
 
 class TerrainFunctions {
@@ -30,8 +31,8 @@ public:
 	
 	ObjectLib objectLib;
 	void startNewChunk();
-	void getObjectsForPos(float x, float y); 
+	void getObjectsForVertex( TerrainVertex *vertex);
 	void stopNewChunk(Chunk *chunk);
 	vector <npMesh *> tempObjects;
-
+	 vector <npPointLight *> pLights;
 };

@@ -87,17 +87,9 @@ void npPointLightRenderer::setup(int w,int h )
     
 }
 
-
-
-
-
-void npPointLightRenderer::draw(const vector<npPointLight *> &pLights,const npCamera &cam)
+void npPointLightRenderer::start( const npCamera &cam)
 {
-  
-    
-  
-    
-    glBindFramebuffer(GL_FRAMEBUFFER,fbo );
+	glBindFramebuffer(GL_FRAMEBUFFER,fbo );
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0,width  ,height);
@@ -120,6 +112,33 @@ void npPointLightRenderer::draw(const vector<npPointLight *> &pLights,const npCa
     glEnableVertexAttribArray(ATTRIB_VERTEX);
     glEnableVertexAttribArray(ATTRIB_NORMAL);
     glEnableVertexAttribArray(ATTRIB_COLOR);
+
+}
+void npPointLightRenderer::stop( )
+{
+	glDisableVertexAttribArray(ATTRIB_VERTEX);
+    glDisableVertexAttribArray(ATTRIB_NORMAL);
+    glDisableVertexAttribArray(ATTRIB_COLOR);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  0);
+    glBindBuffer(GL_ARRAY_BUFFER,0);
+    
+    
+     glUseProgram(0);
+    glBindFramebuffer(GL_FRAMEBUFFER,0 );   
+    glDepthMask(GL_TRUE);
+ 
+
+}
+
+
+
+void npPointLightRenderer::draw(const vector<npPointLight *> &pLights)
+{
+  
+    
+  
+    
+   
    
     for (int i=0;i<pLights.size();i++)
     {
@@ -147,17 +166,7 @@ void npPointLightRenderer::draw(const vector<npPointLight *> &pLights,const npCa
     
   
 
-    glDisableVertexAttribArray(ATTRIB_VERTEX);
-    glDisableVertexAttribArray(ATTRIB_NORMAL);
-    glDisableVertexAttribArray(ATTRIB_COLOR);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  0);
-    glBindBuffer(GL_ARRAY_BUFFER,0);
     
-    
-     glUseProgram(0);
-    glBindFramebuffer(GL_FRAMEBUFFER,0 );   
-    glDepthMask(GL_TRUE);
-    glClearColor(0, 0, 0, 1);
 }
 
 

@@ -19,7 +19,7 @@ void npMaterial::loadDiffuse(string fileName,GLenum  type ,bool useMipMap )
 	{
 	glTexImage2D(GL_TEXTURE_2D, 0,  type, dif.width, dif.height, 0,type,GL_UNSIGNED_BYTE,dif.getPixels());
 		glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	
 	}else
 	{

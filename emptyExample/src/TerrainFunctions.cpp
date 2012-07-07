@@ -105,35 +105,124 @@ void TerrainFunctions::startNewChunk()
 
 }
 
-void TerrainFunctions::getObjectsForPos(float x, float y)
+void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex)
 {
 	int r  = rand();
-	if (r%2 ==0)return;
-	r  = rand();
-	float height = getHeightForPos( x,  y);
-	ofVec3f worldPos;
-	worldPos.set(x,height,y);
-
-	float veg  = vegatationPerlin->Get(x/1500.1, y/1500.1)*2;
 	
-	if ( veg>0.2)
+
+	
+
+	
+
+
+	float veg  = (vegatationPerlin->Get(vertex->position.x/1500.1, vertex->position.z/1500.1)+1)*0.5;
+	float veg2  =( vegatationPerlin->Get(vertex->position.x/150.1, vertex->position.z/150.1)+1 )*0.2;
+
+	if(vertex->hil<0.8)
+			{
+			vertex->color.set(0.37,0.27,0.17);
+	}else
 	{
-		if (r%25==1){
-			ofMatrix4x4 objMatrix;
-			objMatrix.makeRotationMatrix(90,ofVec3f(1,0,0) );
-			objMatrix.postMultRotate(  (float)rand()/RAND_MAX *360.0f,0,1,0);
-			float s = (float)rand()/RAND_MAX *0.4 +0.8;
-			objMatrix.postMultScale(ofVec3f(s,s,s));
-
-			objMatrix.postMultTranslate(worldPos);
-				
-				
-				
+			vertex->color.set(0.51,0.66,0.15);
 			
-			tempObjects[0]->objectMatrices.push_back(objMatrix);
-			return;
-		}
+	}
+
+
+	if (veg2<0.2 && vertex->hil>0.7)
+	{
+	float factor =  (veg2*5) ;
+		vertex->color.x *= factor ;
+			vertex->color.y *=factor;
+				vertex->color.z *=factor ;
+				factor =1-factor;
+
+				vertex->color.x += factor*0.7 ;
+			vertex->color.y +=factor *0.8;
+				vertex->color.z +=factor*0 ;
+
+	}
+
+		float vegFactor =1- (veg-0.48f)*8;
+		if ( vegFactor <0.5f)  vegFactor =0.5f;
+		if ( vegFactor >0.8)  vegFactor =0.8;
+		vegFactor+=veg2 ;
+		vertex->color.x*=vegFactor   ;
+					vertex->color.y *=vegFactor ; //*(1.0f-vegFactor );
+					vertex->color.z *=vegFactor ; //*(1.0f-vegFactor );	
+
+
+
+
+	if(vertex->position.y<100   ){
 	
+		
+		
+
+		if ( veg>0.5)
+		{
+
+			
+		
+			
+			if (r%70==1){
+
+
+
+				ofMatrix4x4 objMatrix;
+				objMatrix.makeRotationMatrix(90,ofVec3f(1,0,0) );
+				objMatrix.postMultRotate(  (float)rand()/RAND_MAX *360.0f,0,1,0);
+				float s = (float)rand()/RAND_MAX *0.4 +0.8;
+				objMatrix.postMultScale(ofVec3f(s,s,s));
+
+				objMatrix.postMultTranslate(vertex->position);
+				
+					vertex->color.x =0;
+	vertex->color.y =0;
+			vertex->color.z =0.0;		
+			
+				tempObjects[0]->objectMatrices.push_back(objMatrix);
+				return;
+			}
+	
+	
+		}
+		else
+		{
+
+			if (r%40==1  && 	vertex->hil>0.9 && vertex->position.y<40){
+			ofMatrix4x4 objMatrix;
+				objMatrix.makeRotationMatrix(-90,ofVec3f(1,0,0) );
+				objMatrix.postMultRotate(  (float)rand()/RAND_MAX *360.0f,0,1,0);
+				//float s = (float)rand()/RAND_MAX *0.4 +0.8;
+				//objMatrix.postMultScale(ofVec3f(s,s,s));
+
+				objMatrix.postMultTranslate(vertex->position);
+				
+					
+			
+				tempObjects[1]->objectMatrices.push_back(objMatrix);
+				return;
+			}
+		}
+	}
+	if ( veg>0.5)
+	{
+		 r  = rand();
+		 if (r%70==1)
+		 {
+			npPointLight *p = new npPointLight();
+        
+	
+			p->setup(30,(float) rand()/RAND_MAX,(float) rand()/RAND_MAX ,(float) rand()/RAND_MAX ,0.2f);
+	
+	
+
+
+
+			p->setPos (vertex->position.x,vertex->position.y +5,vertex->position.z);
+      
+			 pLights.push_back(p );
+		 }
 	
 	}
 
@@ -148,7 +237,8 @@ void TerrainFunctions::stopNewChunk(Chunk *chunk)
 		tempObjects[i]->calculateNormalMatrix();
 			chunk->detail1Objects.push_back(tempObjects[i]);
 				chunk->detail2Objects.push_back(tempObjects[i]);
-					chunk->detail3Objects.push_back(tempObjects[i]);
+				if (i==0){
+					chunk->detail3Objects.push_back(tempObjects[i]);}
 		
 		}else
 		{
@@ -156,6 +246,10 @@ void TerrainFunctions::stopNewChunk(Chunk *chunk)
 		
 		}
 	}
+	for (int i =0; i<pLights.size();i++)
+	{
+			chunk->pLights.push_back(pLights[i]);
+	}
 	tempObjects.clear();
-
+	pLights.clear();
 }
