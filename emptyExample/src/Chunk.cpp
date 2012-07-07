@@ -310,9 +310,6 @@ void  Chunk::buildFirst()
 	float uvYStart =(float)(posY  +numChunksW2)/(numChunksW2*2);
 	float uvXStep =1.0f/(numChunksW2*2*cDivX );
 	float uvYStep =1.0f/(numChunksW2*2*cDivY);
-	cout<<" " <<endl;
-	cout<<"step " <<uvXStep << " "<< uvYStep<<endl;
-	cout <<"start " << uvXStart<<" " <<uvYStart<<endl;
 
 	vpX =uvXStart*2048*2;
 	vpY =uvYStart*2048*2;

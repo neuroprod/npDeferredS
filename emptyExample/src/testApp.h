@@ -30,6 +30,8 @@
 #include "ShadowMap.h"
 #include "npShadowMapMeshRenderer.h"
 #include "npShadowMapBoneRenderer.h"
+#include "npDeferredShadowPass.h"
+
 class testApp : public ofBaseApp{
 	
 public:
@@ -81,6 +83,8 @@ public:
 	ofVec2f vecMouseStart;
 	ofVec2f vecMouseMove;
 	bool mouseIsDown;
+
+	npDeferredShadowPass shadowPass;
 };
 
 

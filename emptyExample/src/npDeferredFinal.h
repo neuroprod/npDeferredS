@@ -32,7 +32,7 @@ public:
     
     
     void setup(string prog ="DeferredShaderFinal");
-    void draw(npCamera *cam,float time);
+    void draw(const npCamera &cam,float time);
 
     float *dataFB;
 	GLint uLightDir;

@@ -148,7 +148,7 @@ void npDeferredFinal::setup(string prog)
     dataFB[35] = dataFB[11];
     
 }
-void npDeferredFinal::draw(npCamera *cam,float time){
+void npDeferredFinal::draw(const npCamera &cam,float time){
     
  
  
@@ -181,14 +181,14 @@ void npDeferredFinal::draw(npCamera *cam,float time){
 	glUniform3f(uLightDir,dirLight->dir.x,dirLight->dir.y,dirLight->dir.z);
 	
 	
-	glUniformMatrix4fv(uWorldMatrix, 1, 0, cam->normalWorldMatrix.getPtr());
-	glUniformMatrix4fv(uPerspectiveInvMatrix, 1, 0,   cam->perspectiveInvMatrix.getPtr());
+	glUniformMatrix4fv(uWorldMatrix, 1, 0, cam.normalWorldMatrix.getPtr());
+	glUniformMatrix4fv(uPerspectiveInvMatrix, 1, 0,   cam.perspectiveInvMatrix.getPtr());
 
 	glUniform1f(uTime,time);
 
 	
 	//glUniformMatrix4fv(uWorldMatrixInv, 1, 0,    cam->lightMatrix2.getPtr());
-	glUniformMatrix4fv(uLight1Matrix, 1, 0,    cam->lightMatrix2.getPtr());
+	glUniformMatrix4fv(uLight1Matrix, 1, 0,    cam.lightMatrix2.getPtr());
 
     glEnableVertexAttribArray(ATTRIB_VERTEX_FS);
     glEnableVertexAttribArray(ATTRIB_UV_FS);

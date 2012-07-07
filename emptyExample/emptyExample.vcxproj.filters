@@ -94,6 +94,9 @@
     <ClCompile Include="src\ObjectLib.cpp">
       <Filter>src\game\terrain</Filter>
     </ClCompile>
+    <ClCompile Include="src\npDeferredShadowPass.cpp">
+      <Filter>src\np\deferred</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h">
@@ -207,6 +210,9 @@
     <ClInclude Include="src\TerrainVertex.h">
       <Filter>src\game\terrain</Filter>
     </ClInclude>
+    <ClInclude Include="src\npDeferredShadowPass.h">
+      <Filter>src\np\deferred</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -290,6 +296,12 @@
       <Filter>data\shaders</Filter>
     </None>
     <None Include="bin\data\TerrainShader.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderShadowPass.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderShadowPass.vsh">
       <Filter>data\shaders</Filter>
     </None>
   </ItemGroup>

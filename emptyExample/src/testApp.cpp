@@ -48,8 +48,8 @@ void testApp::setup(){
     plRenderer.depthTexture =deferredBuffer.depthTexture;
     plRenderer.normalTexture=deferredBuffer.normalTexture;
     
-    
-    
+   
+
     deferredFinal.depthTexture =deferredBuffer.depthTexture;
     deferredFinal.normalTexture =deferredBuffer.normalTexture;
     deferredFinal.colorTexture =deferredBuffer.colorTexture;
@@ -65,6 +65,14 @@ void testApp::setup(){
 	
 
 	shadowMap.setup();
+
+	 shadowPass.setup("DeferredShaderShadowPass");
+    
+	shadowPass.depthTexture =deferredBuffer.depthTexture;
+	shadowPass.normalTexture =deferredBuffer.normalTexture;
+	shadowPass.shadowTexture1 =shadowMap.shadowTexture1;
+
+
 	deferredFinal.shadowTexture1 =shadowMap.shadowTexture1;
 	shadowMeshRenderer.setup();
 	shadowBoneRenderer.setup();
@@ -115,7 +123,7 @@ void testApp::update(){
 	glPolygonOffset(4.2f,1.2f);
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	shadowMap.start();
-	/*glEnable(GL_ALPHA_TEST);
+	glEnable(GL_ALPHA_TEST);
 	glAlphaFunc(GL_LESS,0.1f);
 		shadowMeshRenderer.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
@@ -135,7 +143,7 @@ void testApp::update(){
 				 }
 				 
 		}
-		shadowMeshRenderer.stop();*/
+		shadowMeshRenderer.stop();
 			glDisable(GL_ALPHA_TEST);
 		shadowBoneRenderer.start(camera);
 		shadowBoneRenderer.draw(&girl.charMesh);
@@ -256,7 +264,8 @@ void testApp::update(){
 void testApp::draw(){
 	
 	//deferredFinal.colorTexture = chunkHandler.terrainFBO.texture;
-   deferredFinal.draw(&camera, dayTime );
+	  shadowPass.draw(camera );
+ // deferredFinal.draw(camera, dayTime );
 
    GLErrorCheck::test("draw end");
 //cout << ofGetFrameRate()<<endl ;

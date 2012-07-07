@@ -74,7 +74,7 @@ void GameCamera::update()
     normalWorldMatrix.makeRotationMatrix(q);
 
 		
-	lightPerspectivedMatrix1.makeOrthoMatrix(-75,75,-75,75,200,1500);
+	lightPerspectivedMatrix1.makeOrthoMatrix(-75,75,-75,75,250,800);
 	
 	ofVec3f eye;
 	eye =lightDir *-500+camPos+mainCharacter->walkDir *75 ;

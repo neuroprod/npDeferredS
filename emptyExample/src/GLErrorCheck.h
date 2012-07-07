@@ -52,7 +52,7 @@ public:
     static void test(string pos ="") 
     {
     
-		//return;
+		return;
 
         GLenum errCode;
         errCode = glGetError();
