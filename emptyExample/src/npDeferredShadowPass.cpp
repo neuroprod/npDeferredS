@@ -7,6 +7,65 @@ void npDeferredShadowPass::setup(string prog)
   
 
 
+	glGenFramebuffers(1, &fboMain);
+glBindFramebuffer(GL_FRAMEBUFFER, fboMain);
+
+
+    
+
+
+	
+
+    glGenTextures(1, &shadowTexture);
+    glBindTexture(GL_TEXTURE_2D, shadowTexture);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+	glTexImage2D( GL_TEXTURE_2D, 0, GL_LUMINANCE, SCREEN_W , SCREEN_H, 0, GL_LUMINANCE, GL_UNSIGNED_INT, 0 );
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 , GL_TEXTURE_2D,shadowTexture, 0);
+
+
+
+
+
+
+
+GLint status =glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    
+    if(status !=GL_FRAMEBUFFER_COMPLETE)cout << "DEPTH FBO FAILD  ::" << status << endl;
+    
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	npMaterial matN;
 	matN.loadDiffuse("3DAssets/AONoise.png");
 	AONoiseTexture = matN.diffuseTexture;
@@ -124,7 +183,7 @@ glUniform1i(   uAONoiseTexture, 2);
 }
 void npDeferredShadowPass::draw(const npCamera &cam){
     
- 
+		glBindFramebuffer(GL_FRAMEBUFFER,fboMain);
  
     glUseProgram(program);
   
@@ -181,6 +240,6 @@ void npDeferredShadowPass::draw(const npCamera &cam){
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,0);
 
-
+		glBindFramebuffer(GL_FRAMEBUFFER,0);
 
 }

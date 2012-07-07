@@ -34,6 +34,11 @@ public:
 
     GLuint program;
    
+	GLuint shadowTexture;
+  GLuint fboMain;
+  GLuint fboBlur;
+
+
 	enum {
     ATTRIB_VERTEX_FS,
     ATTRIB_UV_FS,

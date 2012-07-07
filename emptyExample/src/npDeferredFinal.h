@@ -39,7 +39,7 @@ public:
 	GLint uWorldMatrix;
 	GLint uWorldMatrixInv;
 	GLint uPerspectiveInvMatrix;
-	GLint uLight1Matrix;
+
 
 
 	GLint uTime;
@@ -49,16 +49,16 @@ public:
     GLint uDepthTexture;
     GLint uPointLightTexture;
 	GLint uLambertMap;
-	GLint uShadowTexture1;
-	GLint uAONoiseTexture;
+	GLint uShadowTexture;
+
 
     GLuint depthTexture;
     GLuint colorTexture;	
     GLuint normalTexture;
     GLuint pointLightTexture;
     GLuint lambertMap;
-	GLuint shadowTexture1;
-	GLuint AONoiseTexture;
+	GLuint shadowTexture;
+
 
     GLuint program;
    

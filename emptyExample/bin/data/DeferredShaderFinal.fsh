@@ -20,8 +20,8 @@ uniform sampler2D pointLightTexture;
 uniform sampler2D colorTexture; 
 uniform sampler2D normalTexture; 
 uniform sampler2D depthTexture; 
-uniform sampler2D shadowTexture1;
-uniform sampler2D AONoiseTexture;
+uniform sampler2D shadowTexture;
+
 
 uniform mat4 perspectiveInvMatrix ;
 //uniform mat4 worldMatrixInv ;
@@ -45,152 +45,63 @@ void main()
 	 else
 	 {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		  float depth = depthScreen*2.0-1.0;
-
-    vec3 col = texture2D(colorTexture, uv_var).xyz;
-    vec3 normal = texture2D(normalTexture, uv_var).xyz*2.0 -1.0;
- 
-   vec3 pLight = texture2D(pointLightTexture, uv_var).xyz;
-	
-
-   ///SSAO
-    vec3 pSphere[10] = vec3[](vec3(-0.010735935, 0.01647018, 0.0062425877),vec3(-0.06533369, 0.3647007, -0.13746321),vec3(-0.6539235, -0.016726388, -0.53000957),vec3(0.40958285, 0.0052428036, -0.5591124),vec3(-0.1465366, 0.09899267, 0.15571679),vec3(-0.44122112, -0.5458797, 0.04912532),vec3(0.03755566, -0.10961345, -0.33040273),vec3(0.019100213, 0.29652783, 0.066237666),vec3(0.8765323, 0.011236004, 0.28265962),vec3(0.29264435, -0.40794238, 0.15964167));
-   vec3 fres = normalize(texture2D(AONoiseTexture,uv_var*vec2(15,8.4375)).xyz);
-     float occluderDepth, depthDifference;
-   vec4 occluderFragment;
-   vec3 ray;
-    float radD = rad/depthScreen;
-
-     float bl = 0.0;
-   for(int i=0; i<10;++i)
-   {
-      // get a vector (randomized inside of a sphere with radius 1.0) from a texture and reflect it
-      ray =radD * reflect(pSphere[i],fres);
- 
-      // get the depth of the occluder fragment
-      occluderFragment = texture2D(depthTexture,uv_var + (sign(dot(ray,normal.xyz) ))*ray.xy);
-    // if depthDifference is negative = occluder is behind current fragment
-      depthDifference = depthScreen-occluderFragment.r;
- 
- 
-      bl += step(falloff,depthDifference);//*(1.0-smoothstep(falloff,strength,depthDifference));//*(1.0-dot(occluderFragment.xyz,normal.zyx))*(1.0-smoothstep(falloff,strength,depthDifference));
-   }
-   bl/=10.0;
-  // bl-=0.5;
-//	bl =min(bl,0.0); 
-   bl =1.0-bl;
-
-	 ///SSAO
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	vec3 pos =vec3(0.0,0.0,0.0);
-	pos.xy = uv_var *2.0 -1.0;
-	pos.z=depth;
-    vec4 worldPos = perspectiveInvMatrix* vec4(pos,1.0);
-
-	vec4 worldTest = worldPos ;
-	 worldPos.xyz/=worldPos.w;
-	
-	
-	 //DROPSHADOW
-	 float shadowTerm =1.0;
-	//MAP 1
-	 if (depth<0.965)
-	 {
-	
-		vec4 lightWorld =light1Matrix* worldTest;
-	
-		lightWorld.xyz/=lightWorld.w;
-	
-		lightWorld /=2.0;
-		lightWorld +=0.5;
-		float zLight =lightWorld.z;
-		vec2 offset =vec2(0.000244,0.000244);
-		
-		for(float x=-0.5; x < 1.0; x+=0.5) 
+		float depth = depthScreen*2.0-1.0;
+		vec3 col = texture2D(colorTexture, uv_var).xyz;
+		vec3 normal =normalize( texture2D(normalTexture, uv_var).xyz*2.0 -1.0);
+		vec3 pLight = texture2D(pointLightTexture, uv_var).xyz;
+		//float shadow = texture2D( shadowTexture,uv_var).x;
+		float shadow =0;
+		for(float x=-2; x < 3.0; x++) 
 		{
-				for(float y=-0.5; y < 1.0; y+=0.5) 
-				{
-					float lightDepth = texture2D( shadowTexture1,lightWorld.xy+vec2(offset.x *x,offset.y *y)).x;
-					if (zLight >lightDepth)
+					for(float y=-2; y < 3.0; y++) 
 					{
-						shadowTerm*=0.95;
+						
+							 shadow+= texture2D( shadowTexture,uv_var +vec2(x*0.00082, y*0.00138)).x;
 					
+						
 					}
-				}
-	
-	
 		}
+		shadow/=25.0;
+		vec3 pos =vec3(0.0,0.0,0.0);
+		pos.xy = uv_var *2.0 -1.0;
+		pos.z=depth;
+		vec4 worldPos = perspectiveInvMatrix* vec4(pos,1.0);
+		worldPos.xyz/=worldPos.w;
+	
+	
+	 
+	
+	
+		vec3 lightDir =normalize(lightDir_var);
+		float lambert =  dot(normal,-lightDir)*0.5+0.5  ;
+		vec3 globalLight = texture2D(lambertTexture,vec2(lambert *shadow ,time*0.9)).xyz;
 
-	}
-	 //MAIN LIGHT
-	// shadowTerm =1.0;
 
-
-
-
-	float lambert = dot(normal,-lightDir_var)*0.5+0.5;
-	vec3 globalLight = texture2D(lambertTexture,vec2( lambert *shadowTerm ,time*0.9)).xyz;
-
-
-	vec3 reflectVec = normalize(reflect( lightDir_var,normal));
-	vec3 eyeVecNormal = normalize(- worldPos.xyz);
-	float specular = pow(max(dot(eyeVecNormal,reflectVec),0.0),8.0)*0.1 ;
-
-	col *=globalLight+(pLight*time);
+		vec3 reflectVec = normalize(reflect( lightDir,normal));
+		vec3 eyeVecNormal = normalize(- worldPos.xyz);
+		float specular = pow(max(dot(eyeVecNormal,reflectVec),0.0),8.0)*0.1 ;
+		col *=globalLight+(pLight*time);
 
 
 		//fogFactor = (end - z) / (end - start) 
-	float fogFactor =pow(1.0- clamp((1.0 - depthScreen) / 0.001,0.0,1.0),2.0);
+		float fogFactor =pow(1.0- clamp((1.0 - depthScreen) / 0.001,0.0,1.0),2.0);
 
 
-   gl_FragColor  =vec4(col+specular,1.0)*(1.0-fogFactor) +(fogFactor)*vec4(0.8,0.8,1.0,1.0)*(1.0-time*0.8 );
+	   gl_FragColor  =vec4(col+specular,1.0)*(1.0-fogFactor) +(fogFactor)*vec4(0.8,0.8,1.0,1.0)*(1.0-time*0.8 );
 
-	//gl_FragColor =vec4(texture2D(normalTexture, uv_var).xyz ,1.0);
-	
-	//gl_FragColor =vec4(col ,1.0);
-//gl_FragColor +=vec4(texture2D(colorTexture, uv_var).xyz,1.0)*0.5;
-	//gl_FragColor =vec4( lightWorld.xy,0.0,1.0);
-	//gl_FragColor  =vec4(pLight ,1.0);
-	//gl_FragColor  = vec4(normal*0.5+0.5,1.0);
-	//gl_FragColor  = vec4(normal,1.0);
-	//gl_FragColor  = vec4( pos,1.0);}
+		//gl_FragColor =vec4(texture2D(normalTexture, uv_var).xyz ,1.0);
+		//gl_FragColor =vec4(shadow*lambert,shadow*lambert,shadow*lambert,1.0);
+		//gl_FragColor =vec4(col ,1.0);
+	//gl_FragColor +=vec4(texture2D(colorTexture, uv_var).xyz,1.0)*0.5;
+		//gl_FragColor =vec4( lightWorld.xy,0.0,1.0);
+		//gl_FragColor  =vec4(pLight ,1.0);
+		//gl_FragColor  = vec4(normal*0.5+0.5,1.0);
+		//gl_FragColor  = vec4(normal,1.0);
+		//gl_FragColor  = vec4( pos,1.0);}
 
 
-   //gl_FragColor =vec4(bl,bl,bl,1.0);
- // gl_FragColor =vec4(fres,1.0);
+		//gl_FragColor =vec4(bl,bl,bl,1.0);
+		// gl_FragColor =vec4(fres,1.0);
  
 
 	 }

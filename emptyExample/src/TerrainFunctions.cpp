@@ -46,17 +46,20 @@ float TerrainFunctions::getHeightForPos(float  x, float z)
 void  TerrainFunctions::getNormalforVertex( TerrainVertex &vertex)
 {
 
-
+		ofVec3f pos1 = vertex.positionT;
+	pos1.x-=0.5;
+		pos1.z-=0.5;
+	pos1.y=getHeightForPos(pos1.x,pos1.z);
 
 	ofVec3f pos2 = vertex.positionT;
-	pos2.x+=1;
+	pos2.x+=0.7;
 	pos2.y=getHeightForPos(pos2.x,pos2.z);
 	ofVec3f pos3= vertex.positionT;
-	pos3.z+=1;
+	pos3.z+=0.7;
 	pos3.y=getHeightForPos(pos3.x,pos3.z);
 
 
-	vertex.normalT = getNormal( vertex.positionT , pos2,pos3 );
+	vertex.normalT = getNormal( pos1, pos2,pos3 );
 
 
 
@@ -67,7 +70,7 @@ ofVec3f TerrainFunctions::getNormalforPos(float x, float z)
 
 	ofVec3f normal;
 	
-	normal= getNormal( ofVec3f(x,getHeightForPos(x,z), z) , ofVec3f(x+0.5,getHeightForPos(x+0.5,z), z)   , ofVec3f(x,getHeightForPos(x,z+0.5),(z+0.5)) );
+	normal= getNormal( ofVec3f(x,getHeightForPos(x,z), z) , ofVec3f(x+1.5,getHeightForPos(x+1.5,z), z)   , ofVec3f(x,getHeightForPos(x,z+1.5),(z+1.5)) );
 	
 
 	return normal;

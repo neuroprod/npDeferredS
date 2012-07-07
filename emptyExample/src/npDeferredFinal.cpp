@@ -30,13 +30,11 @@ void npDeferredFinal::setup(string prog)
 	npMaterial mat;
 	mat.loadDiffuse("3DAssets/lambertMap.png",GL_RGB,false);
 	lambertMap = mat.diffuseTexture;
-  
+	glBindTexture(GL_TEXTURE_2D,lambertMap );
+		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
 
-
-		npMaterial matN;
-	matN.loadDiffuse("3DAssets/AONoise.png");
-	AONoiseTexture = matN.diffuseTexture;
-
+	glBindTexture(GL_TEXTURE_2D,0 );
 	
 
 
@@ -60,12 +58,12 @@ void npDeferredFinal::setup(string prog)
     uNormalTexture= glGetUniformLocation( program, "normalTexture");
     uDepthTexture= glGetUniformLocation( program, "depthTexture");
     uPointLightTexture= glGetUniformLocation( program, "pointLightTexture");
-	 uShadowTexture1= glGetUniformLocation( program, "shadowTexture1");
-	 uAONoiseTexture= glGetUniformLocation( program, "AONoiseTexture");
+	 uShadowTexture= glGetUniformLocation( program, "shadowTexture");
+
 
 	uWorldMatrix =  glGetUniformLocation( program, "worldMatrix");
 	uPerspectiveInvMatrix =  glGetUniformLocation( program, "perspectiveInvMatrix");
-	uLight1Matrix=  glGetUniformLocation( program, "light1Matrix");
+
 	uWorldMatrixInv=  glGetUniformLocation( program, "worldMatrixInv");
 	 uTime  =  glGetUniformLocation( program, "time");
     glUniform1i(  uColorTexture, 0);
@@ -73,8 +71,8 @@ void npDeferredFinal::setup(string prog)
     glUniform1i(  uDepthTexture, 2);
     glUniform1i(  uPointLightTexture, 3);
 	glUniform1i(  uLambertMap, 4);
-	glUniform1i(  uShadowTexture1, 5);
-	glUniform1i(   uAONoiseTexture, 6);
+	glUniform1i(  uShadowTexture, 5);
+
 	
 	glUseProgram(0);
     
@@ -171,11 +169,10 @@ void npDeferredFinal::draw(const npCamera &cam,float time){
 	glBindTexture(GL_TEXTURE_2D,lambertMap);
 
 	glActiveTexture(GL_TEXTURE5);
-	glBindTexture(GL_TEXTURE_2D,shadowTexture1);
+	glBindTexture(GL_TEXTURE_2D,shadowTexture);
 
 	
-	glActiveTexture(GL_TEXTURE6);
-	glBindTexture(GL_TEXTURE_2D,AONoiseTexture);
+	
 
 
 	glUniform3f(uLightDir,dirLight->dir.x,dirLight->dir.y,dirLight->dir.z);
@@ -187,8 +184,7 @@ void npDeferredFinal::draw(const npCamera &cam,float time){
 	glUniform1f(uTime,time);
 
 	
-	//glUniformMatrix4fv(uWorldMatrixInv, 1, 0,    cam->lightMatrix2.getPtr());
-	glUniformMatrix4fv(uLight1Matrix, 1, 0,    cam.lightMatrix2.getPtr());
+
 
     glEnableVertexAttribArray(ATTRIB_VERTEX_FS);
     glEnableVertexAttribArray(ATTRIB_UV_FS);

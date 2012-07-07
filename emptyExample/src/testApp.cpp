@@ -73,7 +73,7 @@ void testApp::setup(){
 	shadowPass.shadowTexture1 =shadowMap.shadowTexture1;
 
 
-	deferredFinal.shadowTexture1 =shadowMap.shadowTexture1;
+	deferredFinal.shadowTexture =shadowPass.shadowTexture;
 	shadowMeshRenderer.setup();
 	shadowBoneRenderer.setup();
 	previousTime=ofGetElapsedTimeMicros();
@@ -255,6 +255,8 @@ void testApp::update(){
 	glCullFace(GL_BACK);
     glDisable (GL_BLEND);
     
+
+	 shadowPass.draw(camera );
 	
 	GLErrorCheck::test("update end");
    
@@ -264,11 +266,11 @@ void testApp::update(){
 void testApp::draw(){
 	
 	//deferredFinal.colorTexture = chunkHandler.terrainFBO.texture;
-	  shadowPass.draw(camera );
- // deferredFinal.draw(camera, dayTime );
+	//shadowPass.draw(camera );
+ deferredFinal.draw(camera, dayTime );
 
    GLErrorCheck::test("draw end");
-//cout << ofGetFrameRate()<<endl ;
+
 }
 
 
