@@ -75,8 +75,9 @@ void GameCamera::update(unsigned long timeStep)
 
 
 	//// SHADOWS
-
+	
 	worldInv  =worldMatrix.getInverse();
+	camDir.y =0;
 	camDir.normalize(); 
 
 	//// SHADOW 1
@@ -98,9 +99,9 @@ void GameCamera::update(unsigned long timeStep)
 
 		//// SHADOW 2
 
-	lightPerspectivedMatrix2.makeOrthoMatrix(-300,300,-300,300,200,1200);
+	lightPerspectivedMatrix2.makeOrthoMatrix(-300,300,-300,300,100,2200);
 
-	eye =lightDir *-500+camPos -camDir*300;
+	eye =lightDir *-1000+camPos-camDir*300;
 	
 	lookat = ofVec3f(0,0,0)+camPos-camDir*300 ;
 	
@@ -113,6 +114,22 @@ void GameCamera::update(unsigned long timeStep)
 	lightWorldMatrix2.makeLookAtViewMatrix (eye,	lookat, up);
 	lightMatrix2 =worldInv*   lightWorldMatrix2	*lightPerspectivedMatrix2;
 
+		//// SHADOW 3
+
+	lightPerspectivedMatrix3.makeOrthoMatrix(-1000,1000,-1000,1000,100,2000);
+
+	eye =lightDir *-1000+camPos-camDir*1000 ;
+	
+	lookat = ofVec3f(0,0,0)+camPos-camDir*1000 ;
+	
+	up =ofVec3f(0,1,0);
+	
+	
+
+
+
+	lightWorldMatrix3.makeLookAtViewMatrix (eye,	lookat, up);
+	lightMatrix3 =worldInv*   lightWorldMatrix3	*lightPerspectivedMatrix3;
 
 
 }

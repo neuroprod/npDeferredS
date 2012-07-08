@@ -21,12 +21,13 @@ uniform sampler2D AONoiseTexture;
 
 uniform sampler2D shadowTexture1;
 uniform sampler2D shadowTexture2;
+uniform sampler2D shadowTexture3;
 
 uniform mat4 perspectiveInvMatrix ;
 
 uniform mat4 light1Matrix ;
 uniform mat4 light2Matrix ;
-
+uniform mat4 light3Matrix ;
 
 varying vec2 uv_var;
 
@@ -90,7 +91,7 @@ void main()
 
 
 		//MAP 2
-		else if (depth<0.990)
+		else if (depth<0.980)
 		{
 	
 			vec4 lightWorld =light2Matrix* worldPos;
@@ -120,7 +121,7 @@ void main()
 		}else
 		{
 		
-		/*vec4 lightWorld =light3Matrix* worldPos;
+		vec4 lightWorld =light3Matrix* worldPos;
 	
 			lightWorld.xyz/=lightWorld.w;
 	
@@ -136,13 +137,13 @@ void main()
 						float lightDepth = texture2D( shadowTexture3,lightWorld.xy+vec2(offset.x *x,offset.y *y)).x;
 						if (zLight >lightDepth)
 						{
-							shadowTerm-=0.15;
+							shadowTerm-=0.05;
 					
 						}
 					}
 	
 	
-			}*/
+			}
 		}
 
 

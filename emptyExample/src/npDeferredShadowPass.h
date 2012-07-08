@@ -19,6 +19,7 @@ public:
 	GLint uPerspectiveInvMatrix;
 	GLint uLight1Matrix;
 	GLint uLight2Matrix;
+	GLint uLight3Matrix;
 
 
 
@@ -26,12 +27,14 @@ public:
     GLint uDepthTexture;
 	GLint uShadowTexture1;
 	GLint uShadowTexture2;
+	GLint uShadowTexture3;
 	GLint uAONoiseTexture;
 
     GLuint depthTexture;
     GLuint normalTexture;
 	GLuint shadowTexture1;
 	GLuint shadowTexture2;
+	GLuint shadowTexture3;
 	GLuint AONoiseTexture;
 
     GLuint program;

@@ -29,10 +29,15 @@ void npShadowMapMeshRenderer::start(const npCamera &cam,int map)
 	{
     glUniformMatrix4fv(uLightProjectionMatrix , 1, 0,   cam.lightMatrix1.getPtr());
 	}
-	else
+	else if(map==2)
 	{
 	
 	 glUniformMatrix4fv(uLightProjectionMatrix , 1, 0,   cam.lightMatrix2.getPtr());
+	}
+	else 
+	{
+	
+	 glUniformMatrix4fv(uLightProjectionMatrix , 1, 0,   cam.lightMatrix3.getPtr());
 	}
 	
 	glUniformMatrix4fv(uWorldMatrix , 1, 0,   cam.worldMatrix.getPtr());

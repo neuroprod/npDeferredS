@@ -30,6 +30,9 @@ public:
 	ofMatrix4x4 lightPerspectivedMatrix2;
 	ofMatrix4x4 lightWorldMatrix2;
 
+	ofMatrix4x4 lightPerspectivedMatrix3;
+	ofMatrix4x4 lightWorldMatrix3;
+
 	ofMatrix4x4 mouseMatrix;
 
 

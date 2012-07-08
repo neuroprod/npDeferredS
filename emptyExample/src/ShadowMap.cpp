@@ -14,6 +14,11 @@ fbo2.setup(2048,2048);
 
 shadowTexture2 =fbo2.texture;
 
+fbo3.setup(2048,2048);
+
+
+shadowTexture3 =fbo3.texture;
+
 };
 void ShadowMap::start1( )
 {
@@ -47,4 +52,21 @@ void ShadowMap::stop2()
 {
 
 	fbo2.stop();
+};
+
+void ShadowMap::start3( )
+{
+
+
+	fbo3.start();
+};
+
+
+
+
+
+void ShadowMap::stop3()
+{
+
+	fbo3.stop();
 };

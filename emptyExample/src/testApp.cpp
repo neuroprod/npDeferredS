@@ -71,7 +71,8 @@ void testApp::setup(){
 	shadowPass.depthTexture =deferredBuffer.depthTexture;
 	shadowPass.normalTexture =deferredBuffer.normalTexture;
 	shadowPass.shadowTexture1 =shadowMap.shadowTexture1;
-		shadowPass.shadowTexture2 =shadowMap.shadowTexture2;
+	shadowPass.shadowTexture2 =shadowMap.shadowTexture2;
+	shadowPass.shadowTexture3 =shadowMap.shadowTexture3;
 
 	deferredFinal.shadowTexture =shadowPass.shadowTexture;
 	shadowMeshRenderer.setup();
@@ -128,6 +129,8 @@ void testApp::update(){
 	glEnable(GL_ALPHA_TEST);
 	
 		glAlphaFunc(GL_LESS,0.9f);
+
+//MAP 1
 		shadowMap.start1();
 		shadowMeshRenderer.start(camera,1);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
@@ -148,13 +151,13 @@ void testApp::update(){
 				 
 		}
 		shadowMeshRenderer.stop();
-			glDisable(GL_ALPHA_TEST);
+		
 		shadowBoneRenderer.start(camera);
 		shadowBoneRenderer.draw(&girl.charMesh);
 		shadowBoneRenderer.stop();
 
 	shadowMap.stop1();
-	//glPolygonOffset(8.2f,3.2f);
+//MAP 2
 	shadowMap.start2();
 		shadowMeshRenderer.start(camera,2);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
@@ -170,7 +173,7 @@ void testApp::update(){
 				
 						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail1Objects[j]);
 					}
-				for (int j=0;j< chunkHandler.chunks[i]->detail2Objects.size();j++)
+					for (int j=0;j< chunkHandler.chunks[i]->detail2Objects.size();j++)
 					{
 				
 				
@@ -180,13 +183,46 @@ void testApp::update(){
 				 
 		}
 		shadowMeshRenderer.stop();
-			glDisable(GL_ALPHA_TEST);
+			
 		
 	shadowMap.stop2();
+//MAP 3
+		shadowMap.start3();
+		shadowMeshRenderer.start(camera,3);
+			for (int i=0;i< chunkHandler.chunks.size();i++)
+			{
+				 if(chunkHandler.chunks[i]->detailLevel>0)
+				{
+			
+			
+					shadowMeshRenderer.draw( chunkHandler.chunks[i]->terrain);
+					for (int j=0;j< chunkHandler.chunks[i]->detail3Objects.size();j++)
+					{
+				
+				
+					shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail3Objects[j]);
+					}
+					for (int j=0;j< chunkHandler.chunks[i]->detail2Objects.size();j++)
+					{
+				
+				
+						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail2Objects[j]);
+					}
+					for (int j=0;j< chunkHandler.chunks[i]->detail1Objects.size();j++)
+					{
+				
+				
+						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail1Objects[j]);
+					}
+				 }
+				 
+		}
+		shadowMeshRenderer.stop();
+		
+		
+	shadowMap.stop3();
 
-
-
-
+	glDisable(GL_ALPHA_TEST);
 	glViewport(0,0 , SCREEN_W,SCREEN_H);
 	glDisable(GL_POLYGON_OFFSET_FILL);
 	//
@@ -302,7 +338,7 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	
-	//deferredFinal.colorTexture = chunkHandler.terrainFBO.texture;
+	//deferredFinal.shadowTexture =shadowMap.shadowTexture3;
 
 deferredFinal.draw(camera, dayTime);//dayTime
 
