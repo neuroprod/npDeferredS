@@ -13,14 +13,14 @@ public:
 
 	npDepthFBO fbo1;
 	GLuint shadowTexture1;
+
+	npDepthFBO fbo2;
+	GLuint shadowTexture2;
 	void setup();
-	void start( );
+	void start1( );
+	void stop1();
 
-
-
-
-
-	void stop();
-
+	void start2( );
+	void stop2();
 
 };

@@ -22,12 +22,20 @@ void npShadowMapMeshRenderer::setup()
 }
 
 
-void npShadowMapMeshRenderer::start(const npCamera &cam)
+void npShadowMapMeshRenderer::start(const npCamera &cam,int map)
 {
     glUseProgram(program);
-
+	if (map==1)
+	{
     glUniformMatrix4fv(uLightProjectionMatrix , 1, 0,   cam.lightMatrix1.getPtr());
-	  glUniformMatrix4fv(uWorldMatrix , 1, 0,   cam.worldMatrix.getPtr());
+	}
+	else
+	{
+	
+	 glUniformMatrix4fv(uLightProjectionMatrix , 1, 0,   cam.lightMatrix2.getPtr());
+	}
+	
+	glUniformMatrix4fv(uWorldMatrix , 1, 0,   cam.worldMatrix.getPtr());
     glEnableVertexAttribArray(ATTRIB_VERTEX);
    glEnableVertexAttribArray(ATTRIB_UV);
     

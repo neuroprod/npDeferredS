@@ -11,7 +11,7 @@ const float strength = 0.90;
 
 const float falloff = 0.0002;
 const float rad = 0.01;
-//#define SAMPLES 10 // 10 is good
+
 const float invSamples = -1.38/10.0;
 
 

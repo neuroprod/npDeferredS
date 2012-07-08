@@ -95,19 +95,20 @@ GLint status =glCheckFramebufferStatus(GL_FRAMEBUFFER);
 	 uAONoiseTexture= glGetUniformLocation( program, "AONoiseTexture");
 	 
 	 uShadowTexture1= glGetUniformLocation( program, "shadowTexture1");
+	 	 uShadowTexture2= glGetUniformLocation( program, "shadowTexture2");
 
 
 
 	uPerspectiveInvMatrix =  glGetUniformLocation( program, "perspectiveInvMatrix");
 	uLight1Matrix=  glGetUniformLocation( program, "light1Matrix");
-
+	uLight2Matrix=  glGetUniformLocation( program, "light2Matrix");
 
 
     glUniform1i(  uNormalTexture, 0);
     glUniform1i(  uDepthTexture, 1);
 glUniform1i(   uAONoiseTexture, 2);
 	glUniform1i(  uShadowTexture1, 3);
-	
+	glUniform1i(  uShadowTexture2, 4);
 	
 	glUseProgram(0);
     
@@ -203,7 +204,9 @@ void npDeferredShadowPass::draw(const npCamera &cam){
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_2D,shadowTexture1);
 
-	
+		glActiveTexture(GL_TEXTURE4);
+	glBindTexture(GL_TEXTURE_2D,shadowTexture2);
+
 	
 
 
@@ -211,8 +214,8 @@ void npDeferredShadowPass::draw(const npCamera &cam){
 	
 	
 	glUniformMatrix4fv(uPerspectiveInvMatrix, 1, 0,   cam.perspectiveInvMatrix.getPtr());
-	glUniformMatrix4fv(uLight1Matrix, 1, 0,    cam.lightMatrix2.getPtr());
-
+	glUniformMatrix4fv(uLight1Matrix, 1, 0,    cam.lightMatrix1.getPtr());
+	glUniformMatrix4fv(uLight2Matrix, 1, 0,    cam.lightMatrix2.getPtr());
     glEnableVertexAttribArray(ATTRIB_VERTEX_FS);
     glEnableVertexAttribArray(ATTRIB_UV_FS);
 	

@@ -20,12 +20,12 @@ uniform sampler2D AONoiseTexture;
 
 
 uniform sampler2D shadowTexture1;
-
+uniform sampler2D shadowTexture2;
 
 uniform mat4 perspectiveInvMatrix ;
 
 uniform mat4 light1Matrix ;
-
+uniform mat4 light2Matrix ;
 
 
 varying vec2 uv_var;
@@ -57,7 +57,7 @@ void main()
 		//DROPSHADOW
 		float shadowTerm =1.0;
 		//MAP 1
-		if (depth<0.965)
+		if (depth<0.93)
 		{
 	
 			vec4 lightWorld =light1Matrix* worldPos;
@@ -67,7 +67,7 @@ void main()
 			lightWorld /=2.0;
 			lightWorld +=0.5;
 			float zLight =lightWorld.z;
-			vec2 offset =vec2(0.000244,0.000244);
+			vec2 offset =vec2(0.000488,0.000488);
 		
 			for(float x=-0.5; x < 1.0; x+=0.5) 
 			{
@@ -85,6 +85,84 @@ void main()
 			}
 
 		}
+
+
+
+
+		//MAP 2
+		else if (depth<0.990)
+		{
+	
+			vec4 lightWorld =light2Matrix* worldPos;
+	
+			lightWorld.xyz/=lightWorld.w;
+	
+			lightWorld /=2.0;
+			lightWorld +=0.5;
+			float zLight =lightWorld.z;
+			vec2 offset =vec2(0.000488,0.000488);
+		
+			for(float x=-0.5; x < 1.0; x+=0.5) 
+			{
+					for(float y=-0.5; y < 1.0; y+=0.5) 
+					{
+						float lightDepth = texture2D( shadowTexture2,lightWorld.xy+vec2(offset.x *x,offset.y *y)).x;
+						if (zLight >lightDepth)
+						{
+							shadowTerm-=0.05;
+					
+						}
+					}
+	
+	
+			}
+
+		}else
+		{
+		
+		/*vec4 lightWorld =light3Matrix* worldPos;
+	
+			lightWorld.xyz/=lightWorld.w;
+	
+			lightWorld /=2.0;
+			lightWorld +=0.5;
+			float zLight =lightWorld.z;
+			vec2 offset =vec2(0.000488,0.000488);
+		
+			for(float x=-0.5; x < 1.0; x+=0.5) 
+			{
+					for(float y=-0.5; y < 1.0; y+=0.5) 
+					{
+						float lightDepth = texture2D( shadowTexture3,lightWorld.xy+vec2(offset.x *x,offset.y *y)).x;
+						if (zLight >lightDepth)
+						{
+							shadowTerm-=0.15;
+					
+						}
+					}
+	
+	
+			}*/
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 		vec3 pSphere[10] = vec3[](vec3(-0.010735935, 0.01647018, 0.0062425877),vec3(-0.06533369, 0.3647007, -0.13746321),vec3(-0.6539235, -0.016726388, -0.53000957),vec3(0.40958285, 0.0052428036, -0.5591124),vec3(-0.1465366, 0.09899267, 0.15571679),vec3(-0.44122112, -0.5458797, 0.04912532),vec3(0.03755566, -0.10961345, -0.33040273),vec3(0.019100213, 0.29652783, 0.066237666),vec3(0.8765323, 0.011236004, 0.28265962),vec3(0.29264435, -0.40794238, 0.15964167));

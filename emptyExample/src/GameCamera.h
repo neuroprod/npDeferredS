@@ -13,7 +13,7 @@ public:
 
 	void setMouse(bool mouseIsDown,float moveX,float moveY);
 
-	void update();
+	void update(unsigned long timeStep);
 	void setup();
 	MainCharacter * mainCharacter;
 
@@ -27,13 +27,16 @@ public:
 	ofMatrix4x4 lightPerspectivedMatrix1;
 	ofMatrix4x4 lightWorldMatrix1;
 
+	ofMatrix4x4 lightPerspectivedMatrix2;
+	ofMatrix4x4 lightWorldMatrix2;
+
 	ofMatrix4x4 mouseMatrix;
 
 
 
 	ofMatrix4x4 currentRotation;
 	ofQuaternion currentQuaternation;
-
+	float testtime;
 
 	TerrainFunctions *terrainFunctions;
 };

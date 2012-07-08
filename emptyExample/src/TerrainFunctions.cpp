@@ -167,7 +167,7 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex)
 			
 		
 			
-			if (r%70==1){
+			if (r%270==1){
 
 
 
@@ -213,7 +213,7 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex)
 		 r  = rand();
 		 if (r%70==1)
 		 {
-			npPointLight *p = new npPointLight();
+		/*	npPointLight *p = new npPointLight();
         
 	
 			p->setup(30,(float) rand()/RAND_MAX,(float) rand()/RAND_MAX ,(float) rand()/RAND_MAX ,0.2f);
@@ -224,7 +224,7 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex)
 
 			p->setPos (vertex->position.x,vertex->position.y +5,vertex->position.z);
       
-			 pLights.push_back(p );
+			 pLights.push_back(p );*/
 		 }
 	
 	}

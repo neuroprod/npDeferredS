@@ -71,7 +71,7 @@ void testApp::setup(){
 	shadowPass.depthTexture =deferredBuffer.depthTexture;
 	shadowPass.normalTexture =deferredBuffer.normalTexture;
 	shadowPass.shadowTexture1 =shadowMap.shadowTexture1;
-
+		shadowPass.shadowTexture2 =shadowMap.shadowTexture2;
 
 	deferredFinal.shadowTexture =shadowPass.shadowTexture;
 	shadowMeshRenderer.setup();
@@ -109,7 +109,7 @@ void testApp::update(){
 
 	camera.lightDir = dirLight.dir;
 	camera.setMouse(mouseIsDown,vecMouseMove.x,vecMouseMove.y);
-	camera.update();
+	camera.update(timeStep);
 	chunkHandler.update(camera.lookAtPos,camera.camPos);
 	
 	//
@@ -124,11 +124,12 @@ void testApp::update(){
 	 glEnable(GL_DEPTH_TEST);
 	glPolygonOffset(4.2f,1.2f);
 	glEnable(GL_POLYGON_OFFSET_FILL);
-	shadowMap.start();
+	
 	glEnable(GL_ALPHA_TEST);
 	
 		glAlphaFunc(GL_LESS,0.9f);
-		shadowMeshRenderer.start(camera);
+		shadowMap.start1();
+		shadowMeshRenderer.start(camera,1);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
 				 if(chunkHandler.chunks[i]->detailLevel==1)
@@ -152,7 +153,40 @@ void testApp::update(){
 		shadowBoneRenderer.draw(&girl.charMesh);
 		shadowBoneRenderer.stop();
 
-	shadowMap.stop();
+	shadowMap.stop1();
+	//glPolygonOffset(8.2f,3.2f);
+	shadowMap.start2();
+		shadowMeshRenderer.start(camera,2);
+			for (int i=0;i< chunkHandler.chunks.size();i++)
+			{
+				 if(chunkHandler.chunks[i]->detailLevel==1 || chunkHandler.chunks[i]->detailLevel==2)
+				{
+			
+			
+					shadowMeshRenderer.draw( chunkHandler.chunks[i]->terrain);
+					for (int j=0;j< chunkHandler.chunks[i]->detail1Objects.size();j++)
+					{
+				
+				
+						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail1Objects[j]);
+					}
+				for (int j=0;j< chunkHandler.chunks[i]->detail2Objects.size();j++)
+					{
+				
+				
+						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail2Objects[j]);
+					}
+				 }
+				 
+		}
+		shadowMeshRenderer.stop();
+			glDisable(GL_ALPHA_TEST);
+		
+	shadowMap.stop2();
+
+
+
+
 	glViewport(0,0 , SCREEN_W,SCREEN_H);
 	glDisable(GL_POLYGON_OFFSET_FILL);
 	//

@@ -26,7 +26,7 @@ void GameCamera::setMouse(bool mouseIsDown,float moveX,float moveY)
 }
 
 
-void GameCamera::update()
+void GameCamera::update(unsigned long timeStep)
 {
 	lookAtPos  =  mainCharacter->charPos;
 
@@ -73,37 +73,52 @@ void GameCamera::update()
 	q.inverse();
     normalWorldMatrix.makeRotationMatrix(q);
 
-		
-	lightPerspectivedMatrix1.makeOrthoMatrix(-75,75,-75,75,250,800);
-	
+
+	//// SHADOWS
+
+	worldInv  =worldMatrix.getInverse();
+	camDir.normalize(); 
+
+	//// SHADOW 1
+
+	lightPerspectivedMatrix1.makeOrthoMatrix(-60,60,-60,60,250,800);
 	ofVec3f eye;
-	eye =lightDir *-500+camPos+mainCharacter->walkDir *75 ;
+	eye =lightDir *-500+camPos-camDir*60 ;
 	ofVec3f lookat;
-	lookat = ofVec3f(0,0,0)+camPos+mainCharacter->walkDir *75;
+	lookat = ofVec3f(0,0,0)+camPos-camDir*60 ;
 	ofVec3f up;
 	up =ofVec3f(0,1,0);
 	
+	
 
-	  ofQuaternion qw = worldMatrix.getRotate();
-	  //qw.inverse();
-	 ofMatrix4x4 worldRot;
-	 worldRot.makeRotationMatrix(qw);
-	  worldInv  =worldMatrix.getInverse();
-
-	  ofMatrix4x4 worldTrans;
-	  worldTrans.makeTranslationMatrix(worldMatrix.getTranslation());
 
 
 	lightWorldMatrix1.makeLookAtViewMatrix (eye,	lookat, up);
-	lightMatrix1 =worldInv*  lightWorldMatrix1	* lightPerspectivedMatrix1;
+	lightMatrix1 =worldInv*   lightWorldMatrix1	*lightPerspectivedMatrix1;
 
+		//// SHADOW 2
+
+	lightPerspectivedMatrix2.makeOrthoMatrix(-300,300,-300,300,200,1200);
+
+	eye =lightDir *-500+camPos -camDir*300;
+	
+	lookat = ofVec3f(0,0,0)+camPos-camDir*300 ;
+	
+	up =ofVec3f(0,1,0);
+	
 	
 
-	lightMatrix2 = worldInv*  lightWorldMatrix1* 	 lightPerspectivedMatrix1;
+
+
+	lightWorldMatrix2.makeLookAtViewMatrix (eye,	lookat, up);
+	lightMatrix2 =worldInv*   lightWorldMatrix2	*lightPerspectivedMatrix2;
+
+
 
 }
 void GameCamera::setup()
 {
+	 testtime=0;
 	lookAtPos.set(0,0,0);
 	perspectiveMatrix.makePerspectiveMatrix(60, (float)SCREEN_W/(float)SCREEN_H, 2,1900);
     perspectiveInvMatrix.makeInvertOf(perspectiveMatrix);
