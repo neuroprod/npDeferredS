@@ -236,17 +236,19 @@ void TerrainFunctions::stopNewChunk(Chunk *chunk)
 	{
 		if (	tempObjects[i]->objectMatrices.size()>0)
 		{
-		tempObjects[i]->isMultiObject =true;
-		tempObjects[i]->calculateNormalMatrix();
-			chunk->detail1Objects.push_back(tempObjects[i]);
-				chunk->detail2Objects.push_back(tempObjects[i]);
-				if (i==0){
-					chunk->detail3Objects.push_back(tempObjects[i]);}
+			tempObjects[i]->isMultiObject =true;
+			tempObjects[i]->calculateNormalMatrix();
+			chunk->detail1Objects.push_back( tempObjects[i]);
+			chunk->detail2Objects.push_back(tempObjects[i]);
+			if (i==0)
+			{
+				chunk->detail3Objects.push_back(tempObjects[i]);
+			}
 		
 		}else
 		{
 			delete tempObjects[i];
-		
+			tempObjects[i] =NULL;
 		}
 	}
 	for (int i =0; i<pLights.size();i++)

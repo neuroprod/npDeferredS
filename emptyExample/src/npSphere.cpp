@@ -138,10 +138,11 @@ void npSphere::setup(npMaterial mat, float _radius  ,int _segmentsW ,int _segmen
     
     
     createBuffers();
+	delete [ ] indices;
+	indices =NULL;
 
-
-
-
+	delete []vertices;
+	vertices =NULL;
 
 
 

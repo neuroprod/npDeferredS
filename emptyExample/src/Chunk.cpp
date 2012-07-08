@@ -13,6 +13,7 @@ Chunk::Chunk(){
 	terrain = new npMesh();
 	cDivX =1;
 	cDivY =1;
+	
 }
 
 
@@ -177,8 +178,28 @@ TerrainVertex * Chunk::getVertexForXY(int x, int y)
 
 void Chunk::clearCurrent()
 {
+
 		isReady =false;
-		 terrainVertices.clear();
+		terrainVertices.clear();
+	for(int i=0;i<detail1Objects.size();i++){
+			
+		//npMesh **p  =&detail1Objects[i];
+		//	npMesh p = *detail1Objects[i] ; 
+			
+		delete detail1Objects[i];
+		detail1Objects[i] =NULL;
+
+		}
+		for(int i=0;i<detail2Objects.size();i++){
+			//delete detail2Objects[i];
+			//detail2Objects[i] =NULL;
+		}
+		for(int i=0;i<detail3Objects.size();i++){
+			//delete detail3Objects[i];
+		//	detail3Objects[i] =NULL;
+		}
+		for(int i=0;i<pLights.size();i++)delete pLights[i];
+		
 		detail1Objects.clear();
 		detail2Objects.clear();
 		detail3Objects.clear();
@@ -243,7 +264,7 @@ void Chunk::calculateDetail(const ofVec3f &camPos,const ofVec3f &lookDir)
 	
 	 float dot = lookDir.dot( dirChunk);
 	 updatePrio = 1/dist ;
-	 if( dot < 0)updatePrio*=-1; 
+	 if( dot < 0)updatePrio=(1.0 -updatePrio) *-1; 
 
 	if (dist< width*1.5)updatePrio =2;
 	if (isReady ==false)
@@ -306,8 +327,8 @@ void  Chunk::buildFirst()
 	float cStepY  = (float)height/cDivY;
 	float cStepX  =(float) width/cDivX;
 
-		float uvXStart =(float)(posX  +numChunksW2)/(numChunksW2*2);
-	float uvYStart =(float)(posY  +numChunksW2)/(numChunksW2*2);
+		float uvXStart =(float)(posXStart  +numChunksW2)/(numChunksW2*2);
+	float uvYStart =(float)(posYStart  +numChunksW2)/(numChunksW2*2);
 	float uvXStep =1.0f/(numChunksW2*2*cDivX );
 	float uvYStep =1.0f/(numChunksW2*2*cDivY);
 

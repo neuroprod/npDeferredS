@@ -24,6 +24,8 @@ void ChunkHandler::setup()
 			
 				chunk->posX = x;
 				chunk->posY= y;
+				chunk-> posXStart =x;
+				chunk-> posYStart =y;
 				chunk->numChunksW2 = numChunksW2;
 				chunk->width  =  chunkSize;
 				chunk->height  =  chunkSize;
@@ -31,6 +33,7 @@ void ChunkHandler::setup()
 				chunk->cDivY  =  chunkParts;
 				chunk->terrainFunctions  =terrainFunctions;
 				chunks.push_back(chunk);
+		
 		}
 	}
 
@@ -91,10 +94,11 @@ void ChunkHandler::updateChunkPositions()
 	
 		if (!chunks[i]->isReady)
 		{
+			
 			chunks[i]->update();
 			 terrainFBO.draw(chunks[i]);
 
-		return;
+			return;
 		
 		}
 	

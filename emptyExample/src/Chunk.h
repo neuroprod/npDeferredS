@@ -33,6 +33,10 @@ public:
 	int posY;
 	float updatePrio ;
 
+	int posXStart;
+	int	posYStart;
+
+
 	int numChunksW2; 
 
 	bool isReady;

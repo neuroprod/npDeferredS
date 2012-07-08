@@ -17,12 +17,24 @@ class npMesh :public npObject3D
 
 public:
     
-    npMesh():vertices(NULL),indices(NULL),indices2(NULL) ,stride(8),numVertices(-1), numIndices2(0){}
+    npMesh():vertices(NULL),indices(NULL),indices2(NULL) ,stride(8),numVertices(-1), numIndices2(0)
+	{
+	vertexBuffer =0;
+	indexBuffer =0;
+		indexBuffer2 =0;
+	}
     virtual ~npMesh()
     {
         delete[] vertices;
         delete[] indices;
 		  delete[] indices2;
+
+		//if (vertexBuffer!=0) glDeleteBuffers(1 ,&vertexBuffer);
+	//	if (indexBuffer!=0) 	glDeleteBuffers(1 ,&indexBuffer);
+	//	if (indexBuffer2!=0) 	glDeleteBuffers(1 ,&indexBuffer);
+	
+		//cout<<endl << "delete oldOpjects" << endl;
+
     
     }
 	npMesh * getGLCopy();

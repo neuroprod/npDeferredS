@@ -35,7 +35,7 @@ public:
     GLuint fbo;
 	GLuint mfbo;
     GLuint texture;
-
+	  GLuint colorTexture;
 	int numSamples;
     int w;
     int h;
