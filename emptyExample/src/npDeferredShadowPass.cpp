@@ -185,7 +185,7 @@ glUniform1i(   uAONoiseTexture, 2);
 void npDeferredShadowPass::draw(const npCamera &cam){
     
 		glBindFramebuffer(GL_FRAMEBUFFER,fboMain);
- 
+  
     glUseProgram(program);
   
    

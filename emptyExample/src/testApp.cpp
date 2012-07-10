@@ -128,7 +128,7 @@ void testApp::update(){
 	
 	glEnable(GL_ALPHA_TEST);
 	
-		glAlphaFunc(GL_LESS,0.9f);
+			glAlphaFunc(GL_GREATER,0.5f);
 
 //MAP 1
 		shadowMap.start1();
@@ -151,11 +151,12 @@ void testApp::update(){
 				 
 		}
 		shadowMeshRenderer.stop();
-		
+			glDisable(GL_ALPHA_TEST);
 		shadowBoneRenderer.start(camera);
 		shadowBoneRenderer.draw(&girl.charMesh);
 		shadowBoneRenderer.stop();
-
+			
+	glEnable(GL_ALPHA_TEST);
 	shadowMap.stop1();
 //MAP 2
 	shadowMap.start2();
@@ -317,6 +318,7 @@ void testApp::update(){
     glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE);
 	glCullFace(GL_FRONT);
+	glEnable(GL_CULL_FACE);
 	plRenderer.start(camera);
 		for (int i=0;i< chunkHandler.chunks.size();i++)
 		{
@@ -329,7 +331,7 @@ void testApp::update(){
 			}
 		}
 	plRenderer.stop();
-
+	glDisable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
     glDisable (GL_BLEND);
     
@@ -343,7 +345,7 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	
-	//deferredFinal.shadowTexture =shadowMap.shadowTexture3;
+	//deferredFinal.shadowTexture =shadowMap.fbo1.colorTexture;
 
 deferredFinal.draw(camera, dayTime);//dayTime
 

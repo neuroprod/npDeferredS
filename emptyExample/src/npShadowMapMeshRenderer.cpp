@@ -14,9 +14,9 @@ void npShadowMapMeshRenderer::setup()
     uObjectMatrix = glGetUniformLocation(program,"objectMatrix");
 	uWorldMatrix = glGetUniformLocation(program,"worldMatrix");
     uLightProjectionMatrix = glGetUniformLocation(program,"lightProjectionMatrix");
-	
+	uTexture = glGetUniformLocation(program,"textureDiffuse");
 
- 
+ 	 glUniform1i(uTexture,0);
 
     glUseProgram(0);
 }
@@ -74,14 +74,14 @@ void npShadowMapMeshRenderer::draw(const npMultiMesh &multiMesh)
 {
 	npMesh * mesh   = multiMesh.mesh;
 
-	 glActiveTexture(GL_TEXTURE0);
+
 	glBindTexture(GL_TEXTURE_2D,mesh->material.diffuseTexture);
 
     glBindBuffer(GL_ARRAY_BUFFER,mesh->vertexBuffer);
  
 	
     glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, sizeof(float) * mesh->stride,(GLvoid*) (sizeof(float) * 0));
-    glVertexAttribPointer(ATTRIB_UV,2, GL_FLOAT, GL_FALSE, sizeof(float) * mesh->stride,(GLvoid*) (sizeof(float) *6));
+    glVertexAttribPointer(ATTRIB_UV,2, GL_FLOAT, GL_FALSE, sizeof(float) * mesh->stride,(GLvoid*) (sizeof(float) *9));
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  mesh->indexBuffer);
 
 

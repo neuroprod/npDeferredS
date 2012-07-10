@@ -19,7 +19,7 @@ public:
 
 	npDepthFBO fbo3;
 	GLuint shadowTexture3;
-
+	
 	void setup();
 	void start1( );
 	void stop1();

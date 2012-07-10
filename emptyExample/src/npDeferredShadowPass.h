@@ -42,6 +42,7 @@ public:
 	GLuint shadowTexture;
   GLuint fboMain;
   GLuint fboBlur;
+ 
 
 
 	enum {
