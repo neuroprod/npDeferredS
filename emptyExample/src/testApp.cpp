@@ -232,7 +232,7 @@ void testApp::update(){
    
 	glClearColor(0.8f*(1.0-dayTime*0.8 ),0.8f*(1.0-dayTime*0.8),1.0f*(1.0-dayTime*0.8),1.0f);
     deferredBuffer.start();
-	   cout << "update4"<<endl;
+	
 		terrainRenderer.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
@@ -321,13 +321,14 @@ void testApp::update(){
 		for (int i=0;i< chunkHandler.chunks.size();i++)
 		{
 			if(chunkHandler.chunks[i]->detailLevel==1 || chunkHandler.chunks[i]->detailLevel==2)
-				{
-					
-			plRenderer.draw(chunkHandler.chunks[i]->pLights );
+			{
+				for (int j=0;j< chunkHandler.chunks[i]->pLights.size();j++)
+				{	
+					plRenderer.draw(chunkHandler.chunks[i]->pLights[j] );
 				}
-		
+			}
 		}
-			plRenderer.stop();
+	plRenderer.stop();
 
 	glCullFace(GL_BACK);
     glDisable (GL_BLEND);

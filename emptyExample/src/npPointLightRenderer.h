@@ -12,6 +12,7 @@
 
 #include "npIncludes.h"
 #include "npPointLight.h"
+#include "npMultiPointLight.h"
 #include "npCamera.h"
 class npPointLightRenderer
 {
@@ -21,6 +22,7 @@ public:
     void setup(int w,int h );
   
     void draw( const vector<npPointLight *> &pLights);
+	 void draw( const npMultiPointLight &pLights);
      void start( const npCamera &cam);
     void stop( );
 

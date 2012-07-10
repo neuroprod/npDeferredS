@@ -2,7 +2,7 @@
 
 #include "npIncludes.h"
 #include "npMesh.h"
-#include "npMultiMesh.h"
+#include "npPointLight.h"
 #include "npAssimpLoader.h"
 
 
@@ -18,7 +18,7 @@ public:
 	npMesh *grass_hr;
 
 	vector <npMesh *> objects;
-	
+	vector <npPointLight *> pointLights;
 	
 
 };

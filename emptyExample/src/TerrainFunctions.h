@@ -5,7 +5,7 @@
 #include "Chunk.h"
 #include "ObjectLib.h"
 #include "perlin.h"
-
+#include "npMultiPointLight.h"
 #include "npMultiMesh.h"
 #include "TerrainVertex.h"
 #include "npPointLight.h"

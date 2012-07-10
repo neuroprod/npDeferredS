@@ -113,6 +113,15 @@ void TerrainFunctions::startNewObjectsForChunk(Chunk *chunk)
 
 		chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[0]));
 	chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[1]));
+
+	for (int i=0;i<objectLib.pointLights.size();i++)
+	{
+		chunk->pLights.push_back(npMultiPointLight(objectLib.pointLights[i]));
+	
+	}
+
+
+
 }
 
 void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
@@ -211,8 +220,8 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 				objMatrix.postMultTranslate(vertex->position);
 				
 					
-			chunk->detail1Objects[1].objectMatrices.push_back(objMatrix);
-					chunk->detail2Objects[1].objectMatrices.push_back(objMatrix);
+				chunk->detail1Objects[1].objectMatrices.push_back(objMatrix);
+				chunk->detail2Objects[1].objectMatrices.push_back(objMatrix);
 						
 				return;
 			}
@@ -223,18 +232,17 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 		 r  = rand();
 		 if (r%70==1)
 		 {
-		/*	npPointLight *p = new npPointLight();
-        
-	
-			p->setup(30,(float) rand()/RAND_MAX,(float) rand()/RAND_MAX ,(float) rand()/RAND_MAX ,0.2f);
-	
-	
+		
+			int pIndex =  rand()%chunk->pLights.size();
+			ofMatrix4x4 objMatrix;
+			ofVec3f center =vertex->position +ofVec4f(0,5,0);
 
+			objMatrix.makeTranslationMatrix( center);
+			chunk->pLights[pIndex ].objectMatrices.push_back(objMatrix);
 
-
-			p->setPos (vertex->position.x,vertex->position.y +5,vertex->position.z);
+			chunk->pLights[pIndex ].objectCenters.push_back(center);
+	
       
-			 pLights.push_back(p );*/
 		 }
 	
 	}
@@ -258,7 +266,15 @@ chunk->detail3Objects[i].calculateNormalMatrices();
 
 	}
 
-	
+	for (int i=0;i<chunk->pLights.size();i++)
+	{
+		if (chunk->pLights[i].objectMatrices.size()==0)
+		{
+			chunk->pLights.erase(chunk->pLights.begin()+i);
+			i--;
+		}
+
+	}
 
 	/*	chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[0]));
 	chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[1]));

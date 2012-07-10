@@ -129,7 +129,30 @@ void npPointLightRenderer::stop( )
  
 
 }
+void npPointLightRenderer::draw( const npMultiPointLight &pLights)
+{
 
+	
+        
+      
+        glUniform1f(uLightSize,pLights.pLight->lightSize );
+       // glUniformMatrix4fv(uNormalMatrix, 1, 0,  pLights[i]->rangeSphere.normalMatrix.getPtr());
+        
+        glBindBuffer(GL_ARRAY_BUFFER,pLights.pLight->rangeSphere.vertexBuffer);
+    
+	
+        glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9,(GLvoid*) (sizeof(float) * 0));
+        glVertexAttribPointer(ATTRIB_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9,(GLvoid*) (sizeof(float) *3 ));
+        glVertexAttribPointer(ATTRIB_COLOR, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9,(GLvoid*) (sizeof(float) * 6));
+    
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pLights.pLight->rangeSphere.indexBuffer);
+		for (int i =0;i< pLights.objectMatrices.size();i++){
+      glUniform3f(uCenter,pLights.objectCenters[i].x,pLights.objectCenters[i].y,pLights.objectCenters[i].z);
+			glUniformMatrix4fv(uObjectMatrix, 1, 0, pLights.objectMatrices[i].getPtr());
+				glDrawElements(GL_TRIANGLES,pLights.pLight->rangeSphere.numIndices , GL_UNSIGNED_INT, (void*)0);
+		}
+
+}
 
 
 void npPointLightRenderer::draw(const vector<npPointLight *> &pLights)

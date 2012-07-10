@@ -8,6 +8,8 @@
 
 #include "TerrainVertex.h"
 #include "npPointLight.h"
+#include "npMultiPointLight.h"
+
 
 class TerrainFunctions;
 
@@ -58,7 +60,7 @@ public:
 	vector <npMultiMesh> detail1ObjectsTrans;
 	vector <npMultiMesh> detail2ObjectsTrans;
 	vector <npMultiMesh> detail3ObjectsTrans;
-
+	 vector <npMultiPointLight > pLights;
 
 
 	int detailLevel;
@@ -70,5 +72,5 @@ public:
 
 	vector <TerrainVertex > terrainVertices;
 
-	  vector <npPointLight *> pLights;
+	 
 };
