@@ -1,12 +1,18 @@
 #pragma once
 
 #include "npIncludes.h"
+
+#include "Chunk.h"
 #include "ObjectLib.h"
 #include "perlin.h"
-#include "Chunk.h"
+
+#include "npMultiMesh.h"
 #include "TerrainVertex.h"
 #include "npPointLight.h"
+
 class Chunk;
+class ObjectLib;
+
 
 class TerrainFunctions {
 public:
@@ -30,9 +36,11 @@ public:
 	Perlin *vegatationPerlin;
 	
 	ObjectLib objectLib;
-	void startNewChunk();
-	void getObjectsForVertex( TerrainVertex *vertex);
-	void stopNewChunk(Chunk *chunk);
-	vector <npMesh *> tempObjects;
-	 vector <npPointLight *> pLights;
+
+
+	void startNewObjectsForChunk(Chunk *chunk);
+	void getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk);
+	void stopNewObjectsForChunk(Chunk *chunk);
+
+	
 };

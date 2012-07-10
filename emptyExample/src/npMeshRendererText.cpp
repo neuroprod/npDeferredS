@@ -67,31 +67,55 @@ void npMeshRendererText::draw(const npMesh *mesh)
     
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  mesh->indexBuffer);
-	if (mesh->isMultiObject)
-	{
 
-		for(int i=0; i<mesh->objectMatrices.size();i++ ){
-
-			glUniformMatrix4fv(uObjectMatrix, 1, 0, mesh->objectMatrices[i].getPtr());
-			glUniformMatrix4fv(uNormalMatrix, 1, 0,   mesh->normalMatrices[i].getPtr());
-    
-			glDrawElements(GL_TRIANGLES,mesh->numIndices , GL_UNSIGNED_INT, (void*)0);
-		}
-	
-	
-	}else
-	{
 	
 	  glUniformMatrix4fv(uObjectMatrix, 1, 0,  mesh->objectMatrix.getPtr());
     glUniformMatrix4fv(uNormalMatrix, 1, 0,   mesh->normalMatrix.getPtr());
     
     glDrawElements(GL_TRIANGLES,mesh->numIndices , GL_UNSIGNED_INT, (void*)0);
-	}
+	
   
 
 
 
 }
+void  npMeshRendererText::draw(const npMultiMesh &multiMesh)
+{
+	npMesh *mesh = multiMesh.mesh;
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, mesh->material.normalTexture);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mesh->material.diffuseTexture);
+
+
+    glBindBuffer(GL_ARRAY_BUFFER,mesh->vertexBuffer);
+    
+	
+    glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 11,(GLvoid*) (sizeof(float) * 0));
+    glVertexAttribPointer(ATTRIB_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 11,(GLvoid*) (sizeof(float) *3 ));
+	glVertexAttribPointer(ATTRIB_TANGENT, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 11,(GLvoid*) (sizeof(float) *6 ));
+    glVertexAttribPointer(ATTRIB_UV, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 11,(GLvoid*) (sizeof(float) * 9));
+    
+    
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  mesh->indexBuffer);
+	
+	for(int i=0; i<multiMesh.objectMatrices.size();i++ ){
+
+			glUniformMatrix4fv(uObjectMatrix, 1, 0, multiMesh.objectMatrices[i].getPtr());
+			glUniformMatrix4fv(uNormalMatrix, 1, 0,   multiMesh.normalMatrices[i].getPtr());
+			glDrawElements(GL_TRIANGLES,mesh->numIndices , GL_UNSIGNED_INT, (void*)0);
+	}
+	
+	
+	
+
+
+
+}
+
+
+
 void npMeshRendererText::stop()
 {
     glDisableVertexAttribArray(ATTRIB_VERTEX);

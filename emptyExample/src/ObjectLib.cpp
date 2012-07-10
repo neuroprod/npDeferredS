@@ -12,7 +12,7 @@ void ObjectLib::setup()
 	objects.push_back(tree1_hr);
 	}
 
-		{
+	{
 	npAssimpLoader loader;
 	loader.load(ofToDataPath("3DAssets/grass.dae"));
 	tree1_hr = loader.meshes[0];
@@ -23,17 +23,11 @@ void ObjectLib::setup()
 	
 	
 }
-
-vector <npMesh *> ObjectLib::getGLClones()
+/*
+void  ObjectLib::getMultiMeshes(Chunk *chunk)
 {
 
-
-	vector <npMesh *> clones;
-	for (int i=0;i<objects.size();i++)
-	{
-		clones.push_back(objects[i]->getGLCopy());
-		
-	}
-
-	return clones;
-}
+	chunk->detail1Objects.push_back(npMultiMesh(objects[0]));
+	chunk->detail1Objects.push_back(npMultiMesh(objects[1]));
+	*/
+//}

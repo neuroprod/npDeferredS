@@ -3,8 +3,9 @@
 
 void MainCharacter::setup()
 {
-
-	aLoader.load(ofToDataPath("3DAssets/vrouwAnimeTest2.dae"));
+	
+	//	aLoader.load(ofToDataPath("3DAssets/vrouwAnimeTest2.dae"));
+aLoader.load(ofToDataPath("3DAssets/girlWalk.dae"));
 	charMesh  = *aLoader.boneMeshes[0];
 	charMesh.setPos(0,0,0);
 	charMesh.material.loadDiffuse("3DAssets/vrouwFinal.png");
@@ -12,7 +13,7 @@ void MainCharacter::setup()
 	rotSpeed =2;
 	walkDir.set(0,0,1);
 	charPos.set(0,0,0);
-	walkspeed =15*10;
+	walkspeed =15;
 	 isMoving =false;
 	 lastDown =-1;
 	 rightIsDown =false;

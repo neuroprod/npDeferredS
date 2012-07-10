@@ -149,7 +149,7 @@ void Chunk::makeTerrainObjects()
 {
 	
 
-	terrainFunctions->startNewChunk();
+	terrainFunctions->startNewObjectsForChunk(this);
 
 	for(int y=0;y<cDivY +1 ;y++)
 	{
@@ -157,12 +157,12 @@ void Chunk::makeTerrainObjects()
 		for(int x=0;x<cDivX+1;x++)
 		{
 		
-			terrainFunctions->getObjectsForVertex (getVertexForXY( x,  y));
+			terrainFunctions->getObjectsForVertex (getVertexForXY( x,  y),this);
     
 		}
 	
 	}
-	terrainFunctions->stopNewChunk(this);
+	terrainFunctions->stopNewObjectsForChunk(this);
 }
 TerrainVertex * Chunk::getVertexForXY(int x, int y)
 {
@@ -181,28 +181,17 @@ void Chunk::clearCurrent()
 
 		isReady =false;
 		terrainVertices.clear();
-	for(int i=0;i<detail1Objects.size();i++){
-			
-		//npMesh **p  =&detail1Objects[i];
-		//	npMesh p = *detail1Objects[i] ; 
-			
-		delete detail1Objects[i];
-		detail1Objects[i] =NULL;
 
-		}
-		for(int i=0;i<detail2Objects.size();i++){
-			//delete detail2Objects[i];
-			//detail2Objects[i] =NULL;
-		}
-		for(int i=0;i<detail3Objects.size();i++){
-			//delete detail3Objects[i];
-		//	detail3Objects[i] =NULL;
-		}
-		for(int i=0;i<pLights.size();i++)delete pLights[i];
 		
 		detail1Objects.clear();
 		detail2Objects.clear();
 		detail3Objects.clear();
+
+
+		detail1ObjectsTrans.clear();
+		detail2ObjectsTrans.clear();
+		detail3ObjectsTrans.clear();
+
 		pLights.clear();
 }
 

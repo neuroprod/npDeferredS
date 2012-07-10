@@ -24,7 +24,7 @@ void npAssimpLoader::load(string fileName)
 	
 	}else
 	{
-	cout << "didn't load "<<fileName;
+	cout << "didn't load "<<fileName <<" "<< aiGetErrorString();
 	
 	}
 

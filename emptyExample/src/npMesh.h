@@ -37,7 +37,7 @@ public:
 
     
     }
-	npMesh * getGLCopy();
+	
     void createBuffers(GLenum type =GL_STATIC_DRAW);
     void setMaterial (npMaterial  mat){material =mat;};
    

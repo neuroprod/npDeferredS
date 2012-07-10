@@ -47,15 +47,15 @@ void  TerrainFunctions::getNormalforVertex( TerrainVertex &vertex)
 {
 
 		ofVec3f pos1 = vertex.positionT;
-	pos1.x-=0.5;
-		pos1.z-=0.5;
+	pos1.x-=0.5f;
+		pos1.z-=0.5f;
 	pos1.y=getHeightForPos(pos1.x,pos1.z);
 
 	ofVec3f pos2 = vertex.positionT;
-	pos2.x+=0.7;
+	pos2.x+=0.7f;
 	pos2.y=getHeightForPos(pos2.x,pos2.z);
 	ofVec3f pos3= vertex.positionT;
-	pos3.z+=0.7;
+	pos3.z+=0.7f;
 	pos3.y=getHeightForPos(pos3.x,pos3.z);
 
 
@@ -101,20 +101,27 @@ ofVec3f  TerrainFunctions::getNormal(const ofVec3f &p1,const ofVec3f &p2,const o
 
 
 
-void TerrainFunctions::startNewChunk()
+void TerrainFunctions::startNewObjectsForChunk(Chunk *chunk)
 {
-	tempObjects =objectLib.getGLClones();
+	//objectLib.getMultiMeshes(chunk);
 
+	chunk->detail1Objects.push_back(npMultiMesh(objectLib.objects[0]));
+	chunk->detail1Objects.push_back(npMultiMesh(objectLib.objects[1]));
 
+		chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[0]));
+	chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[1]));
+
+		chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[0]));
+	chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[1]));
 }
 
-void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex)
+void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 {
 	int r  = rand();
 	
 
 	
-
+	
 	
 
 
@@ -123,35 +130,35 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex)
 
 	if(vertex->hil<0.8)
 			{
-			vertex->color.set(0.37,0.27,0.17);
+			vertex->color.set(0.37f,0.27f,0.17f);
 	}else
 	{
-			vertex->color.set(0.51,0.66,0.15);
+			vertex->color.set(0.51f,0.66f,0.15f);
 			
 	}
 
 
 	if (veg2<0.2 && vertex->hil>0.7)
 	{
-	float factor =  (veg2*5) ;
-		vertex->color.x *= factor ;
+			float factor =  (veg2*5) ;
+			vertex->color.x *= factor ;
 			vertex->color.y *=factor;
-				vertex->color.z *=factor ;
-				factor =1-factor;
+			vertex->color.z *=factor ;
+			factor =1-factor;
 
-				vertex->color.x += factor*0.7 ;
-			vertex->color.y +=factor *0.8;
-				vertex->color.z +=factor*0 ;
+			vertex->color.x += factor*0.7f;
+			vertex->color.y +=factor *0.8f;
+			vertex->color.z +=factor*0 ;
 
 	}
 
-		float vegFactor =1- (veg-0.48f)*8;
+		float vegFactor =1- (veg-0.48f)*8.0f;
 		if ( vegFactor <0.5f)  vegFactor =0.5f;
-		if ( vegFactor >0.8)  vegFactor =0.8;
+		if ( vegFactor >0.8)  vegFactor =0.8f;
 		vegFactor+=veg2 ;
 		vertex->color.x*=vegFactor   ;
-					vertex->color.y *=vegFactor ; //*(1.0f-vegFactor );
-					vertex->color.z *=vegFactor ; //*(1.0f-vegFactor );	
+		vertex->color.y *=vegFactor ; //*(1.0f-vegFactor );
+		vertex->color.z *=vegFactor ; //*(1.0f-vegFactor );	
 
 
 
@@ -179,11 +186,13 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex)
 
 				objMatrix.postMultTranslate(vertex->position);
 				
-					vertex->color.x =0;
-	vertex->color.y =0;
-			vertex->color.z =0.0;		
+				vertex->color.x =0;
+				vertex->color.y =0;
+				vertex->color.z =0.0;		
 			
-				tempObjects[0]->objectMatrices.push_back(objMatrix);
+				chunk->detail1Objects[0].objectMatrices.push_back(objMatrix);
+					chunk->detail2Objects[0].objectMatrices.push_back(objMatrix);
+						chunk->detail3Objects[0].objectMatrices.push_back(objMatrix);
 				return;
 			}
 	
@@ -193,7 +202,7 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex)
 		{
 
 			if (r%40==1  && 	vertex->hil>0.9 && vertex->position.y<40){
-			ofMatrix4x4 objMatrix;
+				ofMatrix4x4 objMatrix;
 				objMatrix.makeRotationMatrix(-90,ofVec3f(1,0,0) );
 				objMatrix.postMultRotate(  (float)rand()/RAND_MAX *360.0f,0,1,0);
 				//float s = (float)rand()/RAND_MAX *0.4 +0.8;
@@ -202,8 +211,9 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex)
 				objMatrix.postMultTranslate(vertex->position);
 				
 					
-			
-				tempObjects[1]->objectMatrices.push_back(objMatrix);
+			chunk->detail1Objects[1].objectMatrices.push_back(objMatrix);
+					chunk->detail2Objects[1].objectMatrices.push_back(objMatrix);
+						
 				return;
 			}
 		}
@@ -230,9 +240,34 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex)
 	}
 
 }
-void TerrainFunctions::stopNewChunk(Chunk *chunk)
+void TerrainFunctions::stopNewObjectsForChunk(Chunk *chunk)
 {
-	for (int i =0; i<tempObjects.size();i++)
+	for (int i=0;i<chunk->detail1Objects.size();i++)
+	{
+chunk->detail1Objects[i].calculateNormalMatrices();
+
+	}
+		for (int i=0;i<chunk->detail2Objects.size();i++)
+	{
+chunk->detail2Objects[i].calculateNormalMatrices();
+
+	}
+	for (int i=0;i<chunk->detail3Objects.size();i++)
+	{
+chunk->detail3Objects[i].calculateNormalMatrices();
+
+	}
+
+	
+
+	/*	chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[0]));
+	chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[1]));
+
+		chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[0]));
+	chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[1]));
+	// clean?
+
+	/*for (int i =0; i<tempObjects.size();i++)
 	{
 		if (	tempObjects[i]->objectMatrices.size()>0)
 		{
@@ -256,5 +291,5 @@ void TerrainFunctions::stopNewChunk(Chunk *chunk)
 			chunk->pLights.push_back(pLights[i]);
 	}
 	tempObjects.clear();
-	pLights.clear();
+	pLights.clear();*/
 }

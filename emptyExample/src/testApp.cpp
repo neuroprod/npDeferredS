@@ -89,7 +89,7 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-	
+	 
 	currentTime =ofGetElapsedTimeMicros();
 	 timeStep =currentTime -previousTime;   
 	previousTime  = currentTime;
@@ -99,7 +99,7 @@ void testApp::update(){
 	dayTime -=0.5;
 	dayTime *=2;
 	if (dayTime<0)dayTime *=-1;
-	dayTime =0;
+	//dayTime =0;
 	//cout <<dayTime<<endl;
 	//
 	// PRE RENDER UPDATE
@@ -232,7 +232,7 @@ void testApp::update(){
    
 	glClearColor(0.8f*(1.0-dayTime*0.8 ),0.8f*(1.0-dayTime*0.8),1.0f*(1.0-dayTime*0.8),1.0f);
     deferredBuffer.start();
-		// terain floor
+	   cout << "update4"<<endl;
 		terrainRenderer.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
@@ -246,7 +246,7 @@ void testApp::update(){
 		terrainRenderer.stop();
 		glEnable(GL_ALPHA_TEST);
 		glAlphaFunc(GL_GREATER,0.5f);
-
+		
 			renderTexture.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
@@ -271,6 +271,7 @@ void testApp::update(){
 							renderTexture.draw(	chunkHandler.chunks[i]->detail2Objects[j]);
 						}
 					}	
+				
 					if(chunkHandler.chunks[i]->detailLevel==3)
 					{
 						for (int j=0;j< chunkHandler.chunks[i]->detail3Objects.size();j++)
@@ -282,6 +283,7 @@ void testApp::update(){
 			}
 			renderTexture.stop();
 		glDisable(GL_ALPHA_TEST);
+	
 	/*	rendererColor.start(camera);
 	
 		
@@ -301,6 +303,8 @@ void testApp::update(){
 		}
 		rendererColor.stop();
 		*/
+
+		
 		boneMeshRenderer.start(camera);
 			boneMeshRenderer.draw(&girl.charMesh);
 		boneMeshRenderer.stop();
@@ -319,7 +323,7 @@ void testApp::update(){
 			if(chunkHandler.chunks[i]->detailLevel==1 || chunkHandler.chunks[i]->detailLevel==2)
 				{
 					
-				plRenderer.draw(chunkHandler.chunks[i]->pLights );
+			plRenderer.draw(chunkHandler.chunks[i]->pLights );
 				}
 		
 		}
@@ -332,7 +336,7 @@ void testApp::update(){
 	 shadowPass.draw(camera );
 	
 	GLErrorCheck::test("update end");
-   
+ 
 }
 
 //--------------------------------------------------------------

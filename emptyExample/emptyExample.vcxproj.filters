@@ -97,6 +97,9 @@
     <ClCompile Include="src\npDeferredShadowPass.cpp">
       <Filter>src\np\deferred</Filter>
     </ClCompile>
+    <ClCompile Include="src\npMultiMesh.cpp">
+      <Filter>src\np\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h">
@@ -212,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="src\npDeferredShadowPass.h">
       <Filter>src\np\deferred</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npMultiMesh.h">
+      <Filter>src\np\objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

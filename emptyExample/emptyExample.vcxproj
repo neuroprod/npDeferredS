@@ -135,6 +135,7 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClCompile Include="src\npMesh.cpp" />
     <ClCompile Include="src\npMeshRendererColor.cpp" />
     <ClCompile Include="src\npMeshRendererText.cpp" />
+    <ClCompile Include="src\npMultiMesh.cpp" />
     <ClCompile Include="src\npPointLight.cpp" />
     <ClCompile Include="src\npPointLightRenderer.cpp" />
     <ClCompile Include="src\npProgramLoader.cpp" />
@@ -177,6 +178,7 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClInclude Include="src\npMesh.h" />
     <ClInclude Include="src\npMeshRendererColor.h" />
     <ClInclude Include="src\npMeshRendererText.h" />
+    <ClInclude Include="src\npMultiMesh.h" />
     <ClInclude Include="src\npObject3D.h" />
     <ClInclude Include="src\npPointLight.h" />
     <ClInclude Include="src\npPointLightRenderer.h" />

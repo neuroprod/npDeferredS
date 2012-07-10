@@ -3,6 +3,7 @@
 
 #include "npIncludes.h"
 #include "npMesh.h"
+#include "npMultiMesh.h"
 #include "npCamera.h"
 
 class npShadowMapMeshRenderer
@@ -18,6 +19,7 @@ public:
     
     void start(const npCamera &cam,int map);
     void draw(const npMesh *mesh);
+	void draw(const npMultiMesh &multiMesh);
     void stop();
     
    

@@ -11,7 +11,7 @@
 class npObject3D
 {
     public:
-    npObject3D(){isMultiObject =false;detailLevel=1;};
+    npObject3D(){};
     
     
     
@@ -20,30 +20,16 @@ class npObject3D
     float x;
     float y;
     float z;
-    bool isMultiObject;
-    int detailLevel ;
-	vector<ofMatrix4x4 > objectMatrices;
+ 
 	
-	vector<ofMatrix4x4 > normalMatrices;
 
     void calculateNormalMatrix()
     {
-		normalMatrices.clear();
-		if (isMultiObject)
-		{
-			for(int i=0;i< objectMatrices.size();i++)
-			{
-				ofQuaternion q = objectMatrices[i].getRotate();
-				q.inverse();
-				normalMatrix.makeRotationMatrix(q);
-				normalMatrices.push_back( normalMatrix);
-			}
-		}else{
-
+	
         ofQuaternion q = objectMatrix.getRotate();
         q.inverse();
         normalMatrix.makeRotationMatrix(q);
-		}
+		
         
     }
     void setPos(float _x, float _y,float _z)

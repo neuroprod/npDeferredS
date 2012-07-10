@@ -26,7 +26,7 @@ void npBoneMesh::prepBones()
 void npBoneMesh::update(){
 
 	//rootBone
-	time+=0.08f;
+	time+=0.05f;
 	if (time> bones[1]->animations[0].totalTime)time =0;
 
 	for (int i=0;i< bones.size();i++)
@@ -70,12 +70,37 @@ void npBoneMesh::update(){
 			
 			
 			
-			
+			ofVec3f translation(0,0,0);
 			
 			
 			if (bones[i]->animations[0].translations.size()>0)
 			{
-				bones[i]->animeMatrix.postMultTranslate(	bones[i]->animations[0].translations[0].pos);
+				if (bones[i]->animations[0].translations.size() ==1)
+				{
+				translation = bones[i]->animations[0].translations[0].pos;
+				}else
+				{
+					for (int j=1; j<bones[i]->animations[0].translations.size() ;j++)
+					{
+						if (bones[i]->animations[0].translations[j].time >time)
+						{
+						
+						
+							float time1  = bones[i]->animations[0].translations[j-1].time ;
+							float timeTotal  = bones[i]->animations[0].translations[j].time -time1 ;
+							float timeCurrent = time-time1;
+							float timeslerp = timeCurrent /timeTotal;
+						
+					
+						translation = bones[i]->animations[0].translations[j-1].pos *(1.0f -timeslerp) +bones[i]->animations[0].translations[j].pos *(timeslerp);
+
+							break;
+						}
+				
+					}
+				}
+				bones[i]->animeMatrix.postMultTranslate(translation);
+				
 			
 			}
 		
@@ -106,6 +131,9 @@ void npBoneMesh::setMatrixes()
 {
 	
 	int count =0;
+
+	
+	//objectMatrix =  bones[0]->finalMatrix;
 	for (int i=1;i< 23;i++)
 	{
 		

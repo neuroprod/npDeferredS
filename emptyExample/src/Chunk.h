@@ -3,11 +3,15 @@
 
 #include "npIncludes.h"
 #include "npMesh.h"
+#include "npMultiMesh.h"
 #include "TerrainFunctions.h"
-#include "ObjectLib.h"
+
 #include "TerrainVertex.h"
 #include "npPointLight.h"
+
 class TerrainFunctions;
+
+
 class Chunk
 {
 public:
@@ -47,10 +51,16 @@ public:
 	int vpH;
 
 	ofVec3f center;
-	vector <npMesh*> detail1Objects;
-	vector <npMesh*> detail2Objects;
-	vector <npMesh*> detail3Objects;
+	vector <npMultiMesh> detail1Objects;
+	vector <npMultiMesh> detail2Objects;
+	vector <npMultiMesh> detail3Objects;
 	
+	vector <npMultiMesh> detail1ObjectsTrans;
+	vector <npMultiMesh> detail2ObjectsTrans;
+	vector <npMultiMesh> detail3ObjectsTrans;
+
+
+
 	int detailLevel;
 
 	

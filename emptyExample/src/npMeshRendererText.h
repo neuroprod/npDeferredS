@@ -11,6 +11,7 @@
 
 #include "npIncludes.h"
 #include "npMesh.h"
+#include "npMultiMesh.h"
 #include "npCamera.h"
 
 class npMeshRendererText
@@ -26,6 +27,7 @@ public:
     
     void start(const npCamera &cam);
     void draw(const npMesh *mesh);
+	 void draw(const npMultiMesh &multiMesh);
     void stop();
     
    
