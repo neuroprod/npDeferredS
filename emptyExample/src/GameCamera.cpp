@@ -31,7 +31,7 @@ void GameCamera::update(unsigned long timeStep)
 	lookAtPos  =  mainCharacter->charPos;
 
 
-	ofVec3f camTarget = mainCharacter->walkDir*20 ;
+	ofVec3f camTarget = mainCharacter->walkDir*100 ;
 	camTarget.y-=5;
 
 
@@ -52,7 +52,7 @@ void GameCamera::update(unsigned long timeStep)
 	 currentQuaternation =  currentQuaternationTemp;
 	
 
-	camDir =  currentRotation *ofVec3f(0,0,15);
+	camDir =  currentRotation *ofVec3f(0,0,10);
 	camPos =camDir +lookAtPos;
 
 	float terHeight = terrainFunctions->getHeightForPos(camPos.x,camPos.z);

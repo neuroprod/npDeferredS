@@ -5,14 +5,16 @@ void TerrainFunctions::setup()
 {
 
 	objectLib.setup();
-	srand(3);
-	heightPerlin1 = new Perlin(5,1,1,122335);
+	srand(100);
+
 	
-	heightPerlin2= new Perlin(3,1,1,1223);
-	typePerlin= new Perlin(8,1,1,1243);	
+	heightPerlin1 = new Perlin(5,1,1,54);
+	
+	heightPerlin2= new Perlin(3,1,1,81);
+	typePerlin= new Perlin(8,1,1,21);	
 
 
-	vegatationPerlin =new Perlin(5,1,1,125523);
+	vegatationPerlin =new Perlin(5,1,1,123);
 }
 
 float TerrainFunctions::getHeightForPos(float  x, float z)
@@ -107,9 +109,12 @@ void TerrainFunctions::startNewObjectsForChunk(Chunk *chunk)
 
 	chunk->detail1Objects.push_back(npMultiMesh(objectLib.objects[0]));
 	chunk->detail1Objects.push_back(npMultiMesh(objectLib.objects[1]));
+		chunk->detail1Objects.push_back(npMultiMesh(objectLib.objects[2]));
 
 		chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[0]));
 	chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[1]));
+	chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[2]));
+
 
 		chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[0]));
 	chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[1]));
@@ -183,13 +188,15 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 			
 		
 			
-			if (r%270==1){
+			if (r%100==2){
 
 
 
 				ofMatrix4x4 objMatrix;
-				objMatrix.makeRotationMatrix(90,ofVec3f(1,0,0) );
-				objMatrix.postMultRotate(  (float)rand()/RAND_MAX *360.0f,0,1,0);
+			//objMatrix.makeLookAtViewMatrix(vertex->normal,ofVec3f(0,0,0), ofVec3f(0,0,1));
+		objMatrix.rotate(90,1,0,0);
+			objMatrix.rotate((float)rand()/RAND_MAX*360,0,1,0);
+		
 				float s = (float)rand()/RAND_MAX *0.4 +0.8;
 				objMatrix.postMultScale(ofVec3f(s,s,s));
 
@@ -210,12 +217,12 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 		else
 		{
 
-			if (r%40==1  && 	vertex->hil>0.9 && vertex->position.y<40){
+			if (r%30==3 &&vertex->hil>0.9 && vertex->position.y<40){
 				ofMatrix4x4 objMatrix;
-				objMatrix.makeRotationMatrix(-90,ofVec3f(1,0,0) );
-				objMatrix.postMultRotate(  (float)rand()/RAND_MAX *360.0f,0,1,0);
-				//float s = (float)rand()/RAND_MAX *0.4 +0.8;
-				//objMatrix.postMultScale(ofVec3f(s,s,s));
+				objMatrix.makeLookAtViewMatrix(ofVec3f(0,0.0,0),vertex->normal, ofVec3f(0,0.0,-1));
+				objMatrix.rotate(  180.0f,1,0,0);
+				float s = (float)rand()/RAND_MAX *2.4 +1;
+				objMatrix.postMultScale(ofVec3f(s,s,s));
 
 				objMatrix.postMultTranslate(vertex->position);
 				
@@ -226,11 +233,26 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 				return;
 			}
 		}
+		if (r%400==2 &&vertex->hil>0.9 && vertex->position.y<40){
+				ofMatrix4x4 objMatrix;
+				objMatrix.makeLookAtViewMatrix(ofVec3f(0,0.0,0),vertex->normal, ofVec3f(0,0.0,-1));
+				objMatrix.rotate(  180.0f,1,0,0);
+				float s = (float)rand()/RAND_MAX *2.4 +1;
+				objMatrix.postMultScale(ofVec3f(s,s,s));
+
+				objMatrix.postMultTranslate(vertex->position);
+				
+					
+				chunk->detail1Objects[1].objectMatrices.push_back(objMatrix);
+				chunk->detail2Objects[1].objectMatrices.push_back(objMatrix);
+						
+				return;
+			}
 	}
 	if ( veg>0.5)
 	{
 		 r  = rand();
-		 if (r%70==1)
+		 if (r%70==3)
 		 {
 		
 			int pIndex =  rand()%chunk->pLights.size();
@@ -241,11 +263,35 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 			chunk->pLights[pIndex ].objectMatrices.push_back(objMatrix);
 
 			chunk->pLights[pIndex ].objectCenters.push_back(center);
-	
+	return;
       
 		 }
 	
 	}
+	 if (r%700==2)
+	 {
+	 
+	 		ofMatrix4x4 objMatrix;
+				//objMatrix.makeRotationMatrix(-90,ofVec3f(1,0,0) );
+				
+			objMatrix.makeLookAtViewMatrix(ofVec3f(0,0,0),vertex->normal, ofVec3f(0,0,-1));
+				
+				
+				objMatrix.rotate(  (float)rand()/RAND_MAX *360.0f,0,1,0);
+				float s = (float)rand()/RAND_MAX *0.5 +1.5;
+
+
+				
+				objMatrix.postMultScale(ofVec3f(s,s,s));
+
+				objMatrix.postMultTranslate(vertex->position);
+				
+					
+				chunk->detail1Objects[2].objectMatrices.push_back(objMatrix);
+				chunk->detail2Objects[2].objectMatrices.push_back(objMatrix);
+	 
+	 
+	 }
 
 }
 void TerrainFunctions::stopNewObjectsForChunk(Chunk *chunk)

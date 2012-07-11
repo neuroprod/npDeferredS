@@ -83,6 +83,7 @@ void testApp::setup(){
 
 	GLErrorCheck::test("setup end");
 	cout << "setupDone"<< endl;
+	srand(10);
 }
 
 
@@ -94,12 +95,12 @@ void testApp::update(){
 	 timeStep =currentTime -previousTime;   
 	previousTime  = currentTime;
 	
-	float cycleTime =  (currentTime/1000)%60000;
-	dayTime = cycleTime/60000 ;
+	float cycleTime =  (currentTime/1000)%20000;
+	dayTime = cycleTime/20000 ;
 	dayTime -=0.5;
 	dayTime *=2;
 	if (dayTime<0)dayTime *=-1;
-	//dayTime =0;
+	
 	//cout <<dayTime<<endl;
 	//
 	// PRE RENDER UPDATE

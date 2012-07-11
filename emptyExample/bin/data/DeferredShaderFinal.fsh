@@ -89,7 +89,7 @@ void main()
 
 	   gl_FragColor  =vec4(col+specular,1.0)*(1.0-fogFactor) +(fogFactor)*vec4(0.8,0.8,1.0,1.0)*(1.0-time*0.8 );
 
-		//gl_FragColor =vec4(texture2D(shadowTexture, uv_var).xyz ,1.0);
+		//gl_FragColor =vec4(globalLight ,1.0);
 		//gl_FragColor =vec4(shadow*lambert,shadow*lambert,shadow*lambert,1.0);
 		//gl_FragColor =vec4(col ,1.0);
 	// gl_FragColor  *=0.9;

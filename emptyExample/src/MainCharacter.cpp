@@ -11,9 +11,9 @@ aLoader.load(ofToDataPath("3DAssets/girlWalk.dae"));
 	charMesh.material.loadDiffuse("3DAssets/vrouwFinal.png");
 	walkDirRot =0;
 	rotSpeed =2;
-	walkDir.set(0,0,1);
-	charPos.set(0,0,0);
-	walkspeed =15;
+	walkDir.set(0.5288,0,0.707257);
+	charPos.set(-285,4,-244);
+	walkspeed =15*15;
 	 isMoving =false;
 	 lastDown =-1;
 	 rightIsDown =false;
@@ -62,6 +62,7 @@ void MainCharacter::update(unsigned long timeStep)
 	charMesh.objectMatrix.postMultTranslate(charPos);
 	//	charMesh.objectMatrix.preMultScale(ofVec3f(5,5,5));
 	charMesh.calculateNormalMatrix();
+	cout <<charPos <<" " <<walkDir<< endl;
 }
 
 
