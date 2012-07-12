@@ -50,18 +50,10 @@ void main()
 		vec3 normal =normalize( texture2D(normalTexture, uv_var).xyz*2.0 -1.0);
 		vec3 pLight = texture2D(pointLightTexture, uv_var).xyz;
 		//float shadow = texture2D( shadowTexture,uv_var).x;
-		float shadow =0;
-		for(float x=-1; x < 2.0; x++) 
-		{
-					for(float y=-1; y < 2.0; y++) 
-					{
-						
-							 shadow+= texture2D( shadowTexture,uv_var +vec2(x*0.00082, y*0.00138)).x;
+		float  shadow= texture2D( shadowTexture,uv_var).x;
 					
-						
-					}
-		}
-		shadow/=9.0;
+		
+	
 		vec3 pos =vec3(0.0,0.0,0.0);
 		pos.xy = uv_var *2.0 -1.0;
 		pos.z=depth;

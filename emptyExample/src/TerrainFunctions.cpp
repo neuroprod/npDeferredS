@@ -189,7 +189,7 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 			
 		
 			
-			if (r%100==2){
+			if (r%120==2){
 
 
 
@@ -207,8 +207,8 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 				vertex->color.y =0;
 				vertex->color.z =0.0;		
 			
-				chunk->detail1Objects[0].objectMatrices.push_back(objMatrix);
-					chunk->detail2Objects[0].objectMatrices.push_back(objMatrix);
+			chunk->detail1Objects[0].objectMatrices.push_back(objMatrix);
+				chunk->detail2Objects[0].objectMatrices.push_back(objMatrix);
 						//chunk->detail3Objects[0].objectMatrices.push_back(objMatrix);
 				return;
 			}else if ((r%4==3 && veg2<0.1)||r%100==3  ){
@@ -240,7 +240,7 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 		else
 		{
 
-			if (r%30==3 &&vertex->hil>0.9 && vertex->position.y<40){
+			if (r%70==3 &&vertex->hil>0.9 && vertex->position.y<40){
 				ofMatrix4x4 objMatrix;
 				objMatrix.makeLookAtViewMatrix(ofVec3f(0,0.0,0),vertex->normal, ofVec3f(0,0.0,-1));
 				objMatrix.rotate(  180.0f,1,0,0);
@@ -275,12 +275,12 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 	if ( veg>0.5)
 	{
 		 r  = rand();
-		 if (r%150==3)
+		 if (r%350==3)
 		 {
 		
 			int pIndex =  rand()%chunk->pLights.size();
 			ofMatrix4x4 objMatrix;
-			ofVec3f center =vertex->position +ofVec4f(0,5,0);
+			ofVec3f center =vertex->position +ofVec4f(0,8,0);
 
 			objMatrix.makeTranslationMatrix( center);
 			chunk->pLights[pIndex ].objectMatrices.push_back(objMatrix);

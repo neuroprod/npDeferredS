@@ -12,8 +12,8 @@ aLoader.load(ofToDataPath("3DAssets/girlWalk.dae"));
 	walkDirRot =0;
 	rotSpeed =2;
 	walkDir.set(0.5288,0,0.707257);
-	charPos.set(-285,4,-244);
-	walkspeed =15*15;
+	charPos.set(0,0,0);
+	walkspeed =15;
 	 isMoving =false;
 	 lastDown =-1;
 	 rightIsDown =false;
@@ -24,7 +24,7 @@ void MainCharacter::update(unsigned long timeStep)
 	
 	
 	
-	charMesh.update();
+	charMesh.update((float)timeStep/400000);
 
 	if (lastDown >-1)
 	{

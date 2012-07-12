@@ -11,7 +11,7 @@ public:
 
 	void prepBones();
 	void setMatrixes();
-	void update();
+	void update(float timeStep);
 
 
 	vector < npBone *> bones;

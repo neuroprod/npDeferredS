@@ -130,9 +130,9 @@ void testApp::update(){
 	//
     // SHADOW MAP DRAW;
 	//
-	glDisable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 	 glEnable(GL_DEPTH_TEST);
-	glPolygonOffset(2.2f,0.3f);
+	glPolygonOffset(4.2f,1.3f);
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	
 	glEnable(GL_ALPHA_TEST);
@@ -172,7 +172,7 @@ void testApp::update(){
 		shadowMeshRenderer.start(camera,2);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
-				 if(chunkHandler.chunks[i]->detailLevel==1 || chunkHandler.chunks[i]->detailLevel==2)
+				 if(chunkHandler.chunks[i]->detailLevel==1 )
 				{
 			
 			
@@ -183,12 +183,20 @@ void testApp::update(){
 				
 						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail1Objects[j]);
 					}
+					
+				 }
+				  if(chunkHandler.chunks[i]->detailLevel==2 )
+				{
+			
+			
+					shadowMeshRenderer.draw( chunkHandler.chunks[i]->terrain);
 					for (int j=0;j< chunkHandler.chunks[i]->detail2Objects.size();j++)
 					{
 				
 				
 						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail2Objects[j]);
 					}
+					
 				 }
 				 
 		}
@@ -203,29 +211,32 @@ void testApp::update(){
 		shadowMeshRenderer.start(camera,3);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
-				 if(chunkHandler.chunks[i]->detailLevel>0)
+				 if(chunkHandler.chunks[i]->detailLevel==2)
 				{
 			
 			
 					shadowMeshRenderer.draw( chunkHandler.chunks[i]->terrain);
-					for (int j=0;j< chunkHandler.chunks[i]->detail3Objects.size();j++)
-					{
-				
-				
-					shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail3Objects[j]);
-					}
+					
 					for (int j=0;j< chunkHandler.chunks[i]->detail2Objects.size();j++)
 					{
 				
 				
 						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail2Objects[j]);
 					}
-					for (int j=0;j< chunkHandler.chunks[i]->detail1Objects.size();j++)
+					
+				 }	 if(chunkHandler.chunks[i]->detailLevel==3)
+				{
+			
+			
+					shadowMeshRenderer.draw( chunkHandler.chunks[i]->terrain);
+					
+					for (int j=0;j< chunkHandler.chunks[i]->detail3Objects.size();j++)
 					{
 				
 				
-						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail1Objects[j]);
+						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail2Objects[j]);
 					}
+					
 				 }
 				 
 		}
@@ -364,6 +375,8 @@ void testApp::draw(){
 deferredFinal.draw(camera, dayTime,colorFactor);//dayTime
 
    GLErrorCheck::test("draw end");
+
+   cout << ofGetFrameRate()<< endl;
 
 }
 

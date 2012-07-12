@@ -14,7 +14,7 @@ fbo2.setup(2048,2048);
 
 shadowTexture2 =fbo2.texture;
 
-fbo3.setup(2048,2048);
+fbo3.setup(2048/2,2048/2);
 
 
 shadowTexture3 =fbo3.texture;
