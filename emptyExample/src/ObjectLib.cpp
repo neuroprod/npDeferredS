@@ -5,7 +5,7 @@ void ObjectLib::setup()
 {
 	{
 	npAssimpLoader loader;
-	loader.load(ofToDataPath("3DAssets/treeTest.dae"));
+	loader.load(ofToDataPath("3DAssets/treeTest2.dae"));
 	tree1_hr = loader.meshes[0];
 	tree1_hr->material.loadDiffuse("3DAssets/tree1.png",GL_RGBA);
 	tree1_hr->material.loadNormal("3DAssets/tree1_n.png",GL_RGB );
@@ -28,7 +28,14 @@ void ObjectLib::setup()
 	tree1_hr->material.loadNormal("3DAssets/rocks1_n.png",GL_RGB );
 	objects.push_back(tree1_hr);
 	}
-
+		{
+	npAssimpLoader loader;
+	loader.load(ofToDataPath("3DAssets/plant1.dae"));
+	tree1_hr = loader.meshes[0];
+	tree1_hr->material.loadDiffuse("3DAssets/rocks1.png",GL_RGB);
+	tree1_hr->material.loadNormal("3DAssets/rocks1_n.png",GL_RGB );
+	objects.push_back(tree1_hr);
+	}
 	for (int i =0;i<20;i++)
 	{
 		npPointLight *p = new npPointLight();

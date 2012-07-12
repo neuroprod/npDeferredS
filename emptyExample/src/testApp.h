@@ -78,7 +78,7 @@ public:
 	unsigned long timeStep;
 
 	float dayTime;
-
+	float colorFactor;
 
 	ofVec2f vecMouseStart;
 	ofVec2f vecMouseMove;

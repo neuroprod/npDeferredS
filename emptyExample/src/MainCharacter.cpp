@@ -62,7 +62,7 @@ void MainCharacter::update(unsigned long timeStep)
 	charMesh.objectMatrix.postMultTranslate(charPos);
 	//	charMesh.objectMatrix.preMultScale(ofVec3f(5,5,5));
 	charMesh.calculateNormalMatrix();
-	cout <<charPos <<" " <<walkDir<< endl;
+	//cout <<charPos <<" " <<walkDir<< endl;
 }
 
 

@@ -110,11 +110,12 @@ void TerrainFunctions::startNewObjectsForChunk(Chunk *chunk)
 	chunk->detail1Objects.push_back(npMultiMesh(objectLib.objects[0]));
 	chunk->detail1Objects.push_back(npMultiMesh(objectLib.objects[1]));
 		chunk->detail1Objects.push_back(npMultiMesh(objectLib.objects[2]));
+		chunk->detail1Objects.push_back(npMultiMesh(objectLib.objects[3]));
 
 		chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[0]));
 	chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[1]));
 	chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[2]));
-
+	chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[3]));
 
 		chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[0]));
 	chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[1]));
@@ -194,7 +195,7 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 
 				ofMatrix4x4 objMatrix;
 			//objMatrix.makeLookAtViewMatrix(vertex->normal,ofVec3f(0,0,0), ofVec3f(0,0,1));
-		objMatrix.rotate(90,1,0,0);
+		objMatrix.rotate(-90,1,0,0);
 			objMatrix.rotate((float)rand()/RAND_MAX*360,0,1,0);
 		
 				float s = (float)rand()/RAND_MAX *0.4 +0.8;
@@ -208,7 +209,29 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 			
 				chunk->detail1Objects[0].objectMatrices.push_back(objMatrix);
 					chunk->detail2Objects[0].objectMatrices.push_back(objMatrix);
-						chunk->detail3Objects[0].objectMatrices.push_back(objMatrix);
+						//chunk->detail3Objects[0].objectMatrices.push_back(objMatrix);
+				return;
+			}else if ((r%4==3 && veg2<0.1)||r%100==3  ){
+
+
+
+				ofMatrix4x4 objMatrix;
+			//objMatrix.makeLookAtViewMatrix(vertex->normal,ofVec3f(0,0,0), ofVec3f(0,0,1));
+		objMatrix.rotate(-90,1,0,0);
+			objMatrix.rotate((float)rand()/RAND_MAX*360,0,1,0);
+		
+				float s = (float)rand()/RAND_MAX *0.4 +0.8;
+				objMatrix.postMultScale(ofVec3f(s,s,s));
+
+				objMatrix.postMultTranslate(vertex->position);
+				
+				vertex->color.x *=0.8;
+				vertex->color.y *=0.8;
+				vertex->color.z *=0.8;	
+			
+				chunk->detail1Objects[3].objectMatrices.push_back(objMatrix);
+					chunk->detail2Objects[3].objectMatrices.push_back(objMatrix);
+						//chunk->detail3Objects[0].objectMatrices.push_back(objMatrix);
 				return;
 			}
 	
@@ -221,7 +244,7 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 				ofMatrix4x4 objMatrix;
 				objMatrix.makeLookAtViewMatrix(ofVec3f(0,0.0,0),vertex->normal, ofVec3f(0,0.0,-1));
 				objMatrix.rotate(  180.0f,1,0,0);
-				float s = (float)rand()/RAND_MAX *2.4 +1;
+				float s =  1;
 				objMatrix.postMultScale(ofVec3f(s,s,s));
 
 				objMatrix.postMultTranslate(vertex->position);
@@ -252,7 +275,7 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 	if ( veg>0.5)
 	{
 		 r  = rand();
-		 if (r%70==3)
+		 if (r%150==3)
 		 {
 		
 			int pIndex =  rand()%chunk->pLights.size();

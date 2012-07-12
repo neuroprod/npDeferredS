@@ -28,7 +28,7 @@ uniform mat4 perspectiveInvMatrix ;
 uniform mat4 light1Matrix ;
 
 uniform float time ;
-
+uniform float colorFactor ;
 varying vec2 uv_var;
 varying vec3 lightDir_var;
 
@@ -51,9 +51,9 @@ void main()
 		vec3 pLight = texture2D(pointLightTexture, uv_var).xyz;
 		//float shadow = texture2D( shadowTexture,uv_var).x;
 		float shadow =0;
-		for(float x=-2; x < 3.0; x++) 
+		for(float x=-1; x < 2.0; x++) 
 		{
-					for(float y=-2; y < 3.0; y++) 
+					for(float y=-1; y < 2.0; y++) 
 					{
 						
 							 shadow+= texture2D( shadowTexture,uv_var +vec2(x*0.00082, y*0.00138)).x;
@@ -61,7 +61,7 @@ void main()
 						
 					}
 		}
-		shadow/=25.0;
+		shadow/=9.0;
 		vec3 pos =vec3(0.0,0.0,0.0);
 		pos.xy = uv_var *2.0 -1.0;
 		pos.z=depth;
@@ -80,14 +80,14 @@ void main()
 		vec3 reflectVec = normalize(reflect( lightDir,normal));
 		vec3 eyeVecNormal = normalize(- worldPos.xyz);
 		float specular = pow(max(dot(eyeVecNormal,reflectVec),0.0),8.0)*0.1 ;
-		col *=globalLight+(pLight*time);
+		col *=globalLight+(pLight*(1.0-colorFactor));
 
 
 		//fogFactor = (end - z) / (end - start) 
 		float fogFactor =pow(1.0- clamp((1.0 - depthScreen) / 0.001,0.0,1.0),2.0);
 
 
-	   gl_FragColor  =vec4(col+specular,1.0)*(1.0-fogFactor) +(fogFactor)*vec4(0.8,0.8,1.0,1.0)*(1.0-time*0.8 );
+	   gl_FragColor  =vec4(col+specular,1.0)*(1.0-fogFactor) +(fogFactor)*vec4(0.8,0.8,1.0,1.0)*(colorFactor );
 
 		//gl_FragColor =vec4(globalLight ,1.0);
 		//gl_FragColor =vec4(shadow*lambert,shadow*lambert,shadow*lambert,1.0);

@@ -31,8 +31,8 @@ void npDeferredFinal::setup(string prog)
 	mat.loadDiffuse("3DAssets/lambertMap.png",GL_RGB,false);
 	lambertMap = mat.diffuseTexture;
 	glBindTexture(GL_TEXTURE_2D,lambertMap );
-		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-	glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+		//glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
+	//glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
 
 	glBindTexture(GL_TEXTURE_2D,0 );
 	
@@ -66,6 +66,9 @@ void npDeferredFinal::setup(string prog)
 
 	uWorldMatrixInv=  glGetUniformLocation( program, "worldMatrixInv");
 	 uTime  =  glGetUniformLocation( program, "time");
+	 uColorFactor  =  glGetUniformLocation( program, "colorFactor");
+
+
     glUniform1i(  uColorTexture, 0);
     glUniform1i(  uNormalTexture, 1);
     glUniform1i(  uDepthTexture, 2);
@@ -146,7 +149,7 @@ void npDeferredFinal::setup(string prog)
     dataFB[35] = dataFB[11];
     
 }
-void npDeferredFinal::draw(const npCamera &cam,float time){
+void npDeferredFinal::draw(const npCamera &cam,float time ,float colorFactor){
     
  
  
@@ -182,7 +185,7 @@ void npDeferredFinal::draw(const npCamera &cam,float time){
 	glUniformMatrix4fv(uPerspectiveInvMatrix, 1, 0,   cam.perspectiveInvMatrix.getPtr());
 
 	glUniform1f(uTime,time);
-
+	glUniform1f(uColorFactor,colorFactor);
 	
 
 

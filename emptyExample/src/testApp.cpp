@@ -97,9 +97,16 @@ void testApp::update(){
 	
 	float cycleTime =  (currentTime/1000)%20000;
 	dayTime = cycleTime/20000 ;
-	dayTime -=0.5;
-	dayTime *=2;
-	if (dayTime<0)dayTime *=-1;
+	
+
+
+
+
+	 colorFactor = 1;
+	if (dayTime>0.30 && dayTime<0.70)colorFactor  =0;
+	if (dayTime>0.20 && dayTime<0.30)colorFactor  =1.0f-((dayTime-0.20)*10);
+		if (dayTime>0.70 && dayTime<0.80)colorFactor  =(dayTime-0.70)*10;
+	glClearColor(0.46f* colorFactor,0.800f*colorFactor,1.0f*colorFactor,1.0f);
 	
 	//cout <<dayTime<<endl;
 	//
@@ -123,6 +130,7 @@ void testApp::update(){
 	//
     // SHADOW MAP DRAW;
 	//
+	glEnable(GL_CULL_FACE);
 	 glEnable(GL_DEPTH_TEST);
 	glPolygonOffset(4.2f,1.2f);
 	glEnable(GL_POLYGON_OFFSET_FILL);
@@ -230,9 +238,9 @@ void testApp::update(){
 	//
     // MAIN DRAW;
 	//
+	glEnable(GL_CULL_FACE);
    
    
-	glClearColor(0.8f*(1.0-dayTime*0.8 ),0.8f*(1.0-dayTime*0.8),1.0f*(1.0-dayTime*0.8),1.0f);
     deferredBuffer.start();
 	
 		terrainRenderer.start(camera);
@@ -248,7 +256,7 @@ void testApp::update(){
 		terrainRenderer.stop();
 		glEnable(GL_ALPHA_TEST);
 		glAlphaFunc(GL_GREATER,0.5f);
-		
+	
 			renderTexture.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
@@ -257,6 +265,7 @@ void testApp::update(){
 				
 					if(chunkHandler.chunks[i]->detailLevel==1)
 					{
+						glDisable(GL_CULL_FACE);
 						for (int j=0;j< chunkHandler.chunks[i]->detail1Objects.size();j++)
 						{
 				
@@ -266,6 +275,7 @@ void testApp::update(){
 					}
 					if(chunkHandler.chunks[i]->detailLevel==2)
 					{
+						glEnable(GL_CULL_FACE);
 						for (int j=0;j< chunkHandler.chunks[i]->detail2Objects.size();j++)
 						{
 				
@@ -348,7 +358,7 @@ void testApp::draw(){
 	
 	//deferredFinal.shadowTexture =shadowMap.fbo1.colorTexture;
 
-deferredFinal.draw(camera, dayTime);//dayTime
+deferredFinal.draw(camera, dayTime,colorFactor);//dayTime
 
    GLErrorCheck::test("draw end");
 

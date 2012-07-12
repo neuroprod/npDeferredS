@@ -32,7 +32,7 @@ public:
     
     
     void setup(string prog ="DeferredShaderFinal");
-    void draw(const npCamera &cam,float time);
+    void draw(const npCamera &cam,float time,float colorFactor);
 
     float *dataFB;
 	GLint uLightDir;
@@ -43,7 +43,7 @@ public:
 
 
 	GLint uTime;
-
+	GLint  uColorFactor;
 	GLint uColorTexture;
     GLint uNormalTexture;
     GLint uDepthTexture;
