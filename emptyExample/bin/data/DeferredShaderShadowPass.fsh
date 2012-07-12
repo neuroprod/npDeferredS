@@ -68,11 +68,11 @@ void main()
 			lightWorld /=2.0;
 			lightWorld +=0.5;
 			float zLight =lightWorld.z;
-			vec2 offset =vec2(0.000488,0.000488);
+			vec2 offset =vec2(0.000244,0.000244);
 		
-			for(float x=-0.5; x < 1.0; x+=0.5) 
+			for(float x=-1.0; x < 2.0; x+=1.0) 
 			{
-					for(float y=-0.5; y < 1.0; y+=0.5) 
+					for(float y=-1.0; y < 2.0; y+=2.0) 
 					{
 						float lightDepth = texture2D( shadowTexture1,lightWorld.xy+vec2(offset.x *x,offset.y *y)).x;
 						if (zLight >lightDepth)
@@ -101,11 +101,10 @@ void main()
 			lightWorld /=2.0;
 			lightWorld +=0.5;
 			float zLight =lightWorld.z;
-			vec2 offset =vec2(0.000488,0.000488);
-		
-			for(float x=-0.5; x < 1.0; x+=0.5) 
+			vec2 offset =vec2(0.000244,0.000244);
+		for(float x=-1.0; x < 2.0; x+=1.0) 
 			{
-					for(float y=-0.5; y < 1.0; y+=0.5) 
+					for(float y=-1.0; y < 2.0; y+=2.0) 
 					{
 						float lightDepth = texture2D( shadowTexture2,lightWorld.xy+vec2(offset.x *x,offset.y *y)).x;
 						if (zLight >lightDepth)
@@ -128,11 +127,11 @@ void main()
 			lightWorld /=2.0;
 			lightWorld +=0.5;
 			float zLight =lightWorld.z;
-			vec2 offset =vec2(0.000488,0.000488);
+			vec2 offset =vec2(0.000244,0.000244);
 		
-			for(float x=-0.5; x < 1.0; x+=0.5) 
+			for(float x=-1.0; x < 2.0; x+=1.0) 
 			{
-					for(float y=-0.5; y < 1.0; y+=0.5) 
+					for(float y=-1.0; y < 2.0; y+=2.0) 
 					{
 						float lightDepth = texture2D( shadowTexture3,lightWorld.xy+vec2(offset.x *x,offset.y *y)).x;
 						if (zLight >lightDepth)
@@ -207,5 +206,5 @@ void main()
 	 }// end background if
 
 
-		//gl_FragColor =vec4(texture2D(shadowTexture1, uv_var).xyz ,1.0);
+		//gl_FragColor =vec4(texture2D(shadowTexture3, uv_var).xyz ,1.0);
 }

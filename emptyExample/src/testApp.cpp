@@ -130,9 +130,9 @@ void testApp::update(){
 	//
     // SHADOW MAP DRAW;
 	//
-	glEnable(GL_CULL_FACE);
+	glDisable(GL_CULL_FACE);
 	 glEnable(GL_DEPTH_TEST);
-	glPolygonOffset(4.2f,1.2f);
+	glPolygonOffset(2.2f,0.3f);
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	
 	glEnable(GL_ALPHA_TEST);
@@ -192,7 +192,9 @@ void testApp::update(){
 				 }
 				 
 		}
+	
 		shadowMeshRenderer.stop();
+		
 			
 		
 	shadowMap.stop2();
@@ -227,6 +229,7 @@ void testApp::update(){
 				 }
 				 
 		}
+			
 		shadowMeshRenderer.stop();
 		
 		
