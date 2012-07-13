@@ -44,7 +44,7 @@ void main()
 	
 
        gl_FragColor = vec4(color_var *dist * lambert   ,1.0);
-
+	   
    
   
 }

@@ -77,25 +77,26 @@ void main()
 
 		//fogFactor = (end - z) / (end - start) 
 		float fogFactor =pow(1.0- clamp((1.0 - depthScreen) / 0.001,0.0,1.0),2.0);
-
-
+		
 	   gl_FragColor  =vec4(col+specular,1.0)*(1.0-fogFactor) +(fogFactor)*vec4(0.8,0.8,1.0,1.0)*(colorFactor );
 
 		//gl_FragColor =vec4(globalLight ,1.0);
-	//	gl_FragColor =vec4(shadow,shadow,shadow,1.0);
+		//gl_FragColor =vec4((fogFactor)*vec3(0.8,0.8,1.0) ,1.0);
 		//gl_FragColor =vec4(col ,1.0);
 	// gl_FragColor  *=0.9;
 	//gl_FragColor +=vec4(texture2D(colorTexture, uv_var).xyz,1.0)*0.1;
 		//gl_FragColor =vec4( lightWorld.xy,0.0,1.0);
 		//gl_FragColor  =vec4(pLight ,1.0);
-		//gl_FragColor  = vec4(normal*0.5+0.5,1.0);
-		//gl_FragColor  = vec4(normal,1.0);
+		///gl_FragColor  = vec4(col,1.0);
+	//	gl_FragColor  = vec4( lambert, lambert, lambert,1.0);
 		//gl_FragColor  = vec4( pos,1.0);}
 
 
-		//gl_FragColor =vec4(bl,bl,bl,1.0);
+		//gl_FragColor =vec4(lambert *shadow,lambert *shadow,lambert *shadow,1.0);
 		// gl_FragColor =vec4(fres,1.0);
  
 
 	 }
+
+	// gl_FragColor  = texture2D(colorTexture, uv_var);
 }

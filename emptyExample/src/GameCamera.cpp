@@ -84,9 +84,9 @@ void GameCamera::update(unsigned long timeStep)
 
 	lightPerspectivedMatrix1.makeOrthoMatrix(-35,35,-35,35,250,800);
 	ofVec3f eye;
-	eye =lightDir *-500+camPos-camDir*40 ;
+	eye =lightDir *-500+camPos-camDir*35 ;
 	ofVec3f lookat;
-	lookat = ofVec3f(0,0,0)+camPos-camDir*40 ;
+	lookat = ofVec3f(0,0,0)+camPos-camDir*35 ;
 	ofVec3f up;
 	up =ofVec3f(0,1,0);
 	
@@ -99,11 +99,11 @@ void GameCamera::update(unsigned long timeStep)
 
 		//// SHADOW 2
 
-	lightPerspectivedMatrix2.makeOrthoMatrix(-150,150,-150,150,100,2200);
+	lightPerspectivedMatrix2.makeOrthoMatrix(-200,200,-200,200,100,2200);
 
-	eye =lightDir *-1000+camPos-camDir*100;
+	eye =lightDir *-500+camPos-camDir*200;
 	
-	lookat = ofVec3f(0,0,0)+camPos-camDir*100 ;
+	lookat = ofVec3f(0,0,0)+camPos-camDir*200 ;
 	
 	up =ofVec3f(0,1,0);
 	
@@ -116,11 +116,11 @@ void GameCamera::update(unsigned long timeStep)
 
 		//// SHADOW 3
 
-	lightPerspectivedMatrix3.makeOrthoMatrix(-1000,1000,-1000,1000,100,2000);
+	lightPerspectivedMatrix3.makeOrthoMatrix(-800,800,-800,800,100,4000);
 
-	eye =lightDir *-1000+camPos-camDir*1000 ;
+	eye =lightDir *-2000+camPos-camDir*1000;
 	
-	lookat = ofVec3f(0,0,0)+camPos-camDir*1000 ;
+	lookat = ofVec3f(0,0,0)+camPos-camDir*1000;
 	
 	up =ofVec3f(0,1,0);
 	

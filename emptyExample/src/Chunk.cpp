@@ -316,7 +316,8 @@ void  Chunk::buildFirst()
 	float cStepY  = (float)height/cDivY;
 	float cStepX  =(float) width/cDivX;
 
-		float uvXStart =(float)((posXStart ) +numChunksW2)/(numChunksW2*2);
+		float uvXStart =(float)((posXStart
+			) +numChunksW2)/(numChunksW2*2);
 	float uvYStart =(float)((posYStart)  +numChunksW2)/(numChunksW2*2);
 	float uvXStep =1.0f/(numChunksW2*2*cDivX );
 	float uvYStep =1.0f/(numChunksW2*2*cDivY);

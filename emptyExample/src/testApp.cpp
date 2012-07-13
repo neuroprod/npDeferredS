@@ -107,7 +107,7 @@ void testApp::update(){
 	if (dayTime>0.20 && dayTime<0.30)colorFactor  =1.0f-((dayTime-0.20)*10);
 		if (dayTime>0.70 && dayTime<0.80)colorFactor  =(dayTime-0.70)*10;
 	glClearColor(0.46f* colorFactor,0.800f*colorFactor,1.0f*colorFactor,1.0f);
-	
+	//glClearColor(0.0f* colorFactor,0.000f*colorFactor,0.0f*colorFactor,1.0f);
 	//cout <<dayTime<<endl;
 	//
 	// PRE RENDER UPDATE
@@ -130,7 +130,7 @@ void testApp::update(){
 	//
     // SHADOW MAP DRAW;
 	//
-	glEnable(GL_CULL_FACE);
+	
 	 glEnable(GL_DEPTH_TEST);
 	glPolygonOffset(4.2f,1.3f);
 	glEnable(GL_POLYGON_OFFSET_FILL);
@@ -211,6 +211,22 @@ void testApp::update(){
 		shadowMeshRenderer.start(camera,3);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
+
+						 if(chunkHandler.chunks[i]->detailLevel==1)
+				{
+			
+			
+					shadowMeshRenderer.draw( chunkHandler.chunks[i]->terrain);
+					
+					for (int j=0;j< chunkHandler.chunks[i]->detail3Objects.size();j++)
+					{
+				
+				
+						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail3Objects[j]);
+					}
+					
+				 }	
+
 				 if(chunkHandler.chunks[i]->detailLevel==2)
 				{
 			
@@ -234,7 +250,7 @@ void testApp::update(){
 					{
 				
 				
-						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail2Objects[j]);
+						shadowMeshRenderer.draw(	chunkHandler.chunks[i]->detail3Objects[j]);
 					}
 					
 				 }
@@ -376,7 +392,7 @@ deferredFinal.draw(camera, dayTime,colorFactor);//dayTime
 
    GLErrorCheck::test("draw end");
 
-   cout << ofGetFrameRate()<< endl;
+ //  cout << ofGetFrameRate()<< endl;
 
 }
 

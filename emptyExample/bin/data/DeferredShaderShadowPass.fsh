@@ -77,7 +77,7 @@ void main()
 						float lightDepth = texture2D( shadowTexture1,lightWorld.xy+vec2(offset.x *x,offset.y *y)).x;
 						if (zLight >lightDepth)
 						{
-							shadowTerm-=0.05;
+							shadowTerm-=0.10;
 					
 						}
 					}
@@ -91,7 +91,7 @@ void main()
 
 
 		//MAP 2
-		else if (depth<0.980)
+		else if (depth<0.985)
 		{
 	
 			vec4 lightWorld =light2Matrix* worldPos;
@@ -109,7 +109,7 @@ void main()
 						float lightDepth = texture2D( shadowTexture2,lightWorld.xy+vec2(offset.x *x,offset.y *y)).x;
 						if (zLight >lightDepth)
 						{
-							shadowTerm-=0.05;
+							shadowTerm-=0.10;
 					
 						}
 					}
@@ -136,7 +136,7 @@ void main()
 						float lightDepth = texture2D( shadowTexture3,lightWorld.xy+vec2(offset.x *x,offset.y *y)).x;
 						if (zLight >lightDepth)
 						{
-							shadowTerm-=0.05;
+							shadowTerm-=0.10;
 					
 						}
 					}
@@ -192,7 +192,7 @@ void main()
 
 
 
-		 shadowTerm*=1.0-(bl/15.0);
+		 shadowTerm*=1.0-(bl/10.0);
 
 
 
@@ -206,5 +206,5 @@ void main()
 	 }// end background if
 
 
-		//gl_FragColor =vec4(texture2D(shadowTexture3, uv_var).xyz ,1.0);
+		//gl_FragColor =vec4(texture2D(shadowTexture1, uv_var).xyz ,1.0);
 }

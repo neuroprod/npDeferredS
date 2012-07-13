@@ -116,9 +116,11 @@ void TerrainFunctions::startNewObjectsForChunk(Chunk *chunk)
 	chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[1]));
 	chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[2]));
 	chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[3]));
+		chunk->detail2Objects.push_back(npMultiMesh(objectLib.objects[4]));
 
-		chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[0]));
-	chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[1]));
+		//chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[0]));
+	//chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[1]));
+		chunk->detail3Objects.push_back(npMultiMesh(objectLib.objects[4]));
 
 	for (int i=0;i<objectLib.pointLights.size();i++)
 	{
@@ -208,8 +210,15 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 				vertex->color.z =0.0;		
 			
 			chunk->detail1Objects[0].objectMatrices.push_back(objMatrix);
-				chunk->detail2Objects[0].objectMatrices.push_back(objMatrix);
-						//chunk->detail3Objects[0].objectMatrices.push_back(objMatrix);
+				
+			
+			
+			
+			
+			
+			
+			chunk->detail2Objects[4].objectMatrices.push_back(objMatrix);
+					chunk->detail3Objects[0].objectMatrices.push_back(objMatrix);
 				return;
 			}else if ((r%4==3 && veg2<0.1)||r%100==3  ){
 
@@ -275,7 +284,7 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 	if ( veg>0.5)
 	{
 		 r  = rand();
-		 if (r%350==3)
+		 if (r%250==4)
 		 {
 		
 			int pIndex =  rand()%chunk->pLights.size();
