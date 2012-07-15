@@ -18,7 +18,7 @@ void main()
   
   
 
-	uv_var  =vec2(0.0,position.y*-0.5 +0.5 );
+	uv_var  =vec2(0.1,(position.y*0.5 +0.5)*-0.9);
 
 
 

@@ -277,14 +277,14 @@ void testApp::update(){
 	//
 
    
-   
+   	glEnable(GL_CULL_FACE);
     deferredBuffer.start();
 
-	glDisable(GL_CULL_FACE);
+	
 	glDisable(GL_DEPTH_TEST);
 	skyBox.draw(camera);
 	glEnable(GL_DEPTH_TEST);
-		glEnable(GL_CULL_FACE);
+	
 		terrainRenderer.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{

@@ -103,6 +103,9 @@
     <ClCompile Include="src\SkyColorBox.cpp">
       <Filter>src\game\sky</Filter>
     </ClCompile>
+    <ClCompile Include="src\SkyBoxElements.cpp">
+      <Filter>src\game\sky</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h">
@@ -231,6 +234,9 @@
     <ClInclude Include="src\SkyColorBox.h">
       <Filter>src\game\sky</Filter>
     </ClInclude>
+    <ClInclude Include="src\SkyBoxElements.h">
+      <Filter>src\game\sky</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -329,6 +335,12 @@
       <Filter>data\shaders</Filter>
     </None>
     <None Include="bin\data\SkyBoxColorShader.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\SkyBoxTextureShader.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\SkyBoxTextureShader.vsh">
       <Filter>data\shaders</Filter>
     </None>
   </ItemGroup>

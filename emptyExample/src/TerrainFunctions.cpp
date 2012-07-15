@@ -150,8 +150,8 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 			vertex->color.set(0.37f,0.27f,0.17f);
 	}else
 	{
-			vertex->color.set(0.51f,0.66f,0.15f);
-			
+			//vertex->color.set(0.51f,0.66f,0.15f);
+				vertex->color.set(0.44f,0.78f,0.08f); 
 	}
 
 

@@ -142,6 +142,6 @@ void GameCamera::setup()
 	lookAtPos.set(0,0,0);
 	perspectiveMatrix.makePerspectiveMatrix(60, (float)SCREEN_W/(float)SCREEN_H, 2,1900);
     perspectiveInvMatrix.makeInvertOf(perspectiveMatrix);
-	skyBoxPerspectiveMatrix.makePerspectiveMatrix(60, (float)SCREEN_W/(float)SCREEN_H, 0.1,2);
+	skyBoxPerspectiveMatrix.makePerspectiveMatrix(60, (float)SCREEN_W/(float)SCREEN_H, 0.01,2);
 
 }
