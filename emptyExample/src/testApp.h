@@ -32,6 +32,9 @@
 #include "npShadowMapBoneRenderer.h"
 #include "npDeferredShadowPass.h"
 
+
+#include "SkyBox.h"
+
 class testApp : public ofBaseApp{
 	
 public:
@@ -85,6 +88,9 @@ public:
 	bool mouseIsDown;
 
 	npDeferredShadowPass shadowPass;
+
+
+	SkyBox skyBox;
 };
 
 

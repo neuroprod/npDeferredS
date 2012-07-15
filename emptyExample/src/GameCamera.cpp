@@ -132,6 +132,9 @@ void GameCamera::update(unsigned long timeStep)
 	lightMatrix3 =worldInv*   lightWorldMatrix3	*lightPerspectivedMatrix3;
 
 
+
+	// SKYBOX
+	skyBoxMatrix = normalWorldMatrix* skyBoxPerspectiveMatrix;
 }
 void GameCamera::setup()
 {
@@ -139,6 +142,6 @@ void GameCamera::setup()
 	lookAtPos.set(0,0,0);
 	perspectiveMatrix.makePerspectiveMatrix(60, (float)SCREEN_W/(float)SCREEN_H, 2,1900);
     perspectiveInvMatrix.makeInvertOf(perspectiveMatrix);
-
+	skyBoxPerspectiveMatrix.makePerspectiveMatrix(60, (float)SCREEN_W/(float)SCREEN_H, 0.1,2);
 
 }

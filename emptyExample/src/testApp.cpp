@@ -9,7 +9,7 @@ void testApp::setup(){
 	cout <<"maxTexture units " <<units<< endl;
 
 	*/
-	ofSetFrameRate(60);
+	ofSetFrameRate(30);
     
 
 	terrainFunctions.setup();
@@ -77,13 +77,20 @@ void testApp::setup(){
 	deferredFinal.shadowTexture =shadowPass.shadowTexture;
 	shadowMeshRenderer.setup();
 	shadowBoneRenderer.setup();
+
+
+	skyBox.setup();
+
+
+
+
 	previousTime=ofGetElapsedTimeMicros();
 	currentTime =ofGetElapsedTimeMicros();
 
 
 	GLErrorCheck::test("setup end");
 	cout << "setupDone"<< endl;
-	srand(10);
+	
 }
 
 
@@ -95,8 +102,8 @@ void testApp::update(){
 	 timeStep =currentTime -previousTime;   
 	previousTime  = currentTime;
 	
-	float cycleTime =  (currentTime/1000)%20000;
-	dayTime = cycleTime/20000 ;
+	float cycleTime =  (currentTime/1000)%60000;
+	dayTime = cycleTime/60000.0f ;
 	
 
 
@@ -268,11 +275,16 @@ void testApp::update(){
 	//
     // MAIN DRAW;
 	//
-	glEnable(GL_CULL_FACE);
+
    
    
     deferredBuffer.start();
-	
+
+	glDisable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+	skyBox.draw(camera);
+	glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
 		terrainRenderer.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
@@ -326,25 +338,6 @@ void testApp::update(){
 			renderTexture.stop();
 		glDisable(GL_ALPHA_TEST);
 	
-	/*	rendererColor.start(camera);
-	
-		
-
-	for (int i=0;i< chunkHandler.chunks.size();i++)
-		{
-				 if(chunkHandler.chunks[i]->detailLevel>0)
-				{
-				
-					for (int j=0;j< chunkHandler.chunks[i]->objects.size();j++)
-					{
-					
-						rendererColor.draw(chunkHandler.chunks[i]->objects[j]);
-					}
-				 }
-	
-		}
-		rendererColor.stop();
-		*/
 
 		
 		boneMeshRenderer.start(camera);

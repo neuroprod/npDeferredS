@@ -11,9 +11,13 @@ aLoader.load(ofToDataPath("3DAssets/girlWalk.dae"));
 	charMesh.material.loadDiffuse("3DAssets/vrouwFinal.png");
 	walkDirRot =0;
 	rotSpeed =2;
-	walkDir.set(-0.085,0,0.996);
-	charPos.set(98.99,77.23,189.178);
-	walkspeed =15;
+	//walkDir.set(-0.085,0,0.996);
+	//charPos.set(98.99,77.23,189.178);
+
+		walkDir.set(-0.085,0,0.996);
+	charPos.set(0,0,0);
+
+	walkspeed =15*3;
 	 isMoving =false;
 	 lastDown =-1;
 	 rightIsDown =false;
@@ -24,7 +28,7 @@ void MainCharacter::update(unsigned long timeStep)
 	
 	
 	
-	charMesh.update((float)timeStep/400000);
+	charMesh.update((float)timeStep/300000);
 
 	if (lastDown >-1)
 	{

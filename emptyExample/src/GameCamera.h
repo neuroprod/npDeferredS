@@ -42,4 +42,7 @@ public:
 	float testtime;
 
 	TerrainFunctions *terrainFunctions;
+
+	ofMatrix4x4 skyBoxPerspectiveMatrix;
+	ofMatrix4x4 skyBoxMatrix;
 };

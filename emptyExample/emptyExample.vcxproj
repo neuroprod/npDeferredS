@@ -144,6 +144,8 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClCompile Include="src\perlin.cpp" />
     <ClCompile Include="src\ShadowMap.cpp" />
     <ClCompile Include="src\npSphere.cpp" />
+    <ClCompile Include="src\SkyBox.cpp" />
+    <ClCompile Include="src\SkyColorBox.cpp" />
     <ClCompile Include="src\TerrainFBO.cpp" />
     <ClCompile Include="src\TerrainFunctions.cpp" />
     <ClCompile Include="src\TerrainRenderer.cpp" />
@@ -191,6 +193,8 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClInclude Include="src\npSphere.h" />
     <ClInclude Include="src\npTextFileLoader.h" />
     <ClInclude Include="src\npTimer.h" />
+    <ClInclude Include="src\Skybox.h" />
+    <ClInclude Include="src\SkyColorBox.h" />
     <ClInclude Include="src\TerrainFBO.h" />
     <ClInclude Include="src\TerrainFunctions.h" />
     <ClInclude Include="src\TerrainRenderer.h" />
@@ -216,6 +220,8 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <None Include="bin\data\ShadowShaderBones.vsh" />
     <None Include="bin\data\ShadowShaderMesh.fsh" />
     <None Include="bin\data\ShadowShaderMesh.vsh" />
+    <None Include="bin\data\SkyBoxColorShader.fsh" />
+    <None Include="bin\data\SkyBoxColorShader.vsh" />
     <None Include="bin\data\TerrainShader.fsh" />
     <None Include="bin\data\TerrainShader.vsh" />
   </ItemGroup>

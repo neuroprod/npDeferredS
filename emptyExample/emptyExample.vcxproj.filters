@@ -97,6 +97,12 @@
     <ClCompile Include="src\npDeferredShadowPass.cpp">
       <Filter>src\np\deferred</Filter>
     </ClCompile>
+    <ClCompile Include="src\SkyBox.cpp">
+      <Filter>src\game\sky</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SkyColorBox.cpp">
+      <Filter>src\game\sky</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h">
@@ -219,6 +225,12 @@
     <ClInclude Include="src\npMultiPointLight.h">
       <Filter>src\np\objects</Filter>
     </ClInclude>
+    <ClInclude Include="src\Skybox.h">
+      <Filter>src\game\sky</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SkyColorBox.h">
+      <Filter>src\game\sky</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -247,6 +259,9 @@
     </Filter>
     <Filter Include="src\game\terrain">
       <UniqueIdentifier>{fe981ff5-b3e7-4d15-8eea-bbc91ee3adc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\game\sky">
+      <UniqueIdentifier>{314a9546-2d8d-41ca-97d3-2f3e3bff13a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +323,12 @@
       <Filter>data\shaders</Filter>
     </None>
     <None Include="bin\data\DeferredShaderShadowPass.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\SkyBoxColorShader.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\SkyBoxColorShader.vsh">
       <Filter>data\shaders</Filter>
     </None>
   </ItemGroup>
