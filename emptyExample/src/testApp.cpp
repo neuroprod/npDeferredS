@@ -59,7 +59,7 @@ void testApp::setup(){
  
    
 	dirLight.lookAt.set(0,0,0);
-	dirLight.pos.set(750,750,0);
+	dirLight.pos.set(1,0.8,0);
 
 	deferredFinal.dirLight =&dirLight;
 	
@@ -78,7 +78,7 @@ void testApp::setup(){
 	shadowMeshRenderer.setup();
 	shadowBoneRenderer.setup();
 
-
+	skyBox.light  =&dirLight;
 	skyBox.setup();
 
 
@@ -102,8 +102,8 @@ void testApp::update(){
 	 timeStep =currentTime -previousTime;   
 	previousTime  = currentTime;
 	
-	float cycleTime =  (currentTime/1000)%60000;
-	dayTime = cycleTime/60000.0f ;
+	float cycleTime =  (currentTime/1000)%10000;
+	dayTime = cycleTime/10000.0f ;
 	
 
 
@@ -113,7 +113,7 @@ void testApp::update(){
 	if (dayTime>0.30 && dayTime<0.70)colorFactor  =0;
 	if (dayTime>0.20 && dayTime<0.30)colorFactor  =1.0f-((dayTime-0.20)*10);
 		if (dayTime>0.70 && dayTime<0.80)colorFactor  =(dayTime-0.70)*10;
-	glClearColor(0.46f* colorFactor,0.800f*colorFactor,1.0f*colorFactor,1.0f);
+	//glClearColor(0.46f* colorFactor,0.800f*colorFactor,1.0f*colorFactor,1.0f);
 	//glClearColor(0.0f* colorFactor,0.000f*colorFactor,0.0f*colorFactor,1.0f);
 	//cout <<dayTime<<endl;
 	//
@@ -121,6 +121,8 @@ void testApp::update(){
 	//
 	//
 	girl.update(timeStep);
+		dirLight.pos.x = sin(dayTime*3.14*2);
+	dirLight.pos.z = cos(dayTime*3.14*2);
 	dirLight.update();
 
 	camera.lightDir = dirLight.dir;
@@ -277,21 +279,21 @@ void testApp::update(){
 	//
 
    
-   	glEnable(GL_CULL_FACE);
+ 
     deferredBuffer.start();
 
-	
+	  	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
-	skyBox.draw(camera);
+	skyBox.draw(camera, dayTime );
 	glEnable(GL_DEPTH_TEST);
-	
+	  	glEnable(GL_CULL_FACE);
 		terrainRenderer.start(camera);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
 				
 				if (chunkHandler.chunks[i]->detailLevel!=0)
 				{
-					terrainRenderer.draw( chunkHandler.chunks[i]->terrain,chunkHandler.chunks[i]->detailLevel);
+				terrainRenderer.draw( chunkHandler.chunks[i]->terrain,chunkHandler.chunks[i]->detailLevel);
 				}
 				
 			}

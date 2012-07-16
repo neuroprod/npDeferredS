@@ -3,6 +3,7 @@
 #include "npIncludes.h"
 #include "GameCamera.h"
 #include "npMaterial.h"
+#include "npDirectionalLight.h"
 class  SkyBoxElements
 {
 public:
@@ -20,4 +21,6 @@ public:
 
 	npMaterial sunMaterial;
 	GLfloat * sunVertices;
+	int count;
+	npDirectionalLight *light;
 };

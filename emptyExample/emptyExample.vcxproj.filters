@@ -23,7 +23,7 @@
       <Filter>src\np\objects</Filter>
     </ClCompile>
     <ClCompile Include="src\npProgramLoader.cpp">
-      <Filter>src\np\utils</Filter>
+      <Filter>src\np\objects\utils</Filter>
     </ClCompile>
     <ClCompile Include="src\npPointLightRenderer.cpp">
       <Filter>src\np\deferred</Filter>
@@ -35,7 +35,7 @@
       <Filter>src\np\deferred</Filter>
     </ClCompile>
     <ClCompile Include="src\npAssimpLoader.cpp">
-      <Filter>src\np\utils</Filter>
+      <Filter>src\np\objects\utils</Filter>
     </ClCompile>
     <ClCompile Include="src\npBone.cpp">
       <Filter>src\np\objects</Filter>
@@ -121,7 +121,7 @@
       <Filter>src\np</Filter>
     </ClInclude>
     <ClInclude Include="src\GLErrorCheck.h">
-      <Filter>src\np\utils</Filter>
+      <Filter>src\np\objects\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\npCamera.h">
       <Filter>src\np\objects</Filter>
@@ -142,13 +142,13 @@
       <Filter>src\np\objects</Filter>
     </ClInclude>
     <ClInclude Include="src\npProgramLoader.h">
-      <Filter>src\np\utils</Filter>
+      <Filter>src\np\objects\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\npTimer.h">
-      <Filter>src\np\utils</Filter>
+      <Filter>src\np\objects\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\npTextFileLoader.h">
-      <Filter>src\np\utils</Filter>
+      <Filter>src\np\objects\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\npPointLightRenderer.h">
       <Filter>src\np\deferred</Filter>
@@ -160,7 +160,7 @@
       <Filter>src\np\deferred</Filter>
     </ClInclude>
     <ClInclude Include="src\npAssimpLoader.h">
-      <Filter>src\np\utils</Filter>
+      <Filter>src\np\objects\utils</Filter>
     </ClInclude>
     <ClInclude Include="src\npBone.h">
       <Filter>src\np\objects</Filter>
@@ -248,9 +248,6 @@
     <Filter Include="src\np\deferred">
       <UniqueIdentifier>{fbaab865-d3d7-486b-a80c-1a174cffa6ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\np\utils">
-      <UniqueIdentifier>{dcdb91bb-553b-410d-9dd7-5dafa9d0ede8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\np\objects">
       <UniqueIdentifier>{ab41280b-a81e-46da-aa9f-d176b909bb5f}</UniqueIdentifier>
     </Filter>
@@ -268,6 +265,9 @@
     </Filter>
     <Filter Include="src\game\sky">
       <UniqueIdentifier>{314a9546-2d8d-41ca-97d3-2f3e3bff13a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\np\objects\utils">
+      <UniqueIdentifier>{dcdb91bb-553b-410d-9dd7-5dafa9d0ede8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

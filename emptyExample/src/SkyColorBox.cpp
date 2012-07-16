@@ -12,6 +12,7 @@ void SkyColorBox::setup(){
 	pLoader.linkProgram();
     glUseProgram(program);
      uPerspectiveMatrix = glGetUniformLocation(program,"perspectiveMatrix");
+	    uTime = glGetUniformLocation(program,"time");
   glUseProgram(0);
 GLfloat vertices[] = {
 	  -1.0,  1.0,  1.0,  
@@ -53,7 +54,7 @@ GLfloat vertices[] = {
 
 void SkyColorBox::update(){}
 
-void SkyColorBox::draw(const GameCamera &camera){
+void SkyColorBox::draw(const GameCamera &camera,const float &time){
 
 	glBindTexture(GL_TEXTURE_2D, skyMaterial.diffuseTexture);
 	
@@ -65,7 +66,7 @@ void SkyColorBox::draw(const GameCamera &camera){
 
 
 	 glUniformMatrix4fv( uPerspectiveMatrix, 1, 0, camera.skyBoxMatrix.getPtr());
-	
+	 glUniform1f(uTime,time);
 
 	 glBindBuffer(GL_ARRAY_BUFFER,cube_vertices);
 	

@@ -4,6 +4,7 @@
 #include "SkyColorBox.h"
 #include "SkyBoxElements.h"
 #include "GameCamera.h"
+#include "npDirectionalLight.h"
 class SkyBox
 {
 public:
@@ -13,8 +14,9 @@ public:
 
 	void update();
 
-	void draw(const GameCamera &camera);
+	void draw(const GameCamera &camera,const float &time);
 
 	SkyColorBox colorBox;
 	SkyBoxElements elementBox;
+	npDirectionalLight *light;
 };

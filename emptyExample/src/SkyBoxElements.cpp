@@ -42,19 +42,26 @@ void SkyBoxElements::setup(){
 	sunVertices[13] = -1;
 	sunVertices[14] = 1;
 	sunVertices[15] = 0;
-
+	count =0;
 
 }
 
 void SkyBoxElements::update(){}
 
 void SkyBoxElements::draw(const GameCamera &camera){
-
+	count++;
 	 glEnable(GL_BLEND);
-	 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	ofMatrix4x4	objectMatrix;
-	objectMatrix.makeTranslationMatrix(0.0,0.0,0.5);
-objectMatrix.rotate(-40,1,0,0);
+	ofVec4f p= light->pos;
+	p.normalize();
+	objectMatrix.makeLookAtMatrix(p,ofVec3f(0,0,0),ofVec3f(0,1,0.0));
+	
+ //objectMatrix= objectMatrix*objectMatrix;
+		//cout << tempMatrix<< endl<<  endl;
+	cout << objectMatrix<< endl;
+	cout <<"dir:"<<light->pos<< endl;
+	cout <<endl<< endl;
 	glBindTexture(GL_TEXTURE_2D, sunMaterial.diffuseTexture);
 	
 	 glUseProgram(program);

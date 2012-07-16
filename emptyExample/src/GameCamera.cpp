@@ -135,6 +135,7 @@ void GameCamera::update(unsigned long timeStep)
 
 	// SKYBOX
 	skyBoxMatrix = normalWorldMatrix* skyBoxPerspectiveMatrix;
+	//skyBoxMatrix =  skyBoxPerspectiveMatrix;
 }
 void GameCamera::setup()
 {
