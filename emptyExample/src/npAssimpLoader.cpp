@@ -4,6 +4,39 @@
 #include "aiPostProcess.h"
 #include "npBoneAnimation.h"
 
+
+void npAssimpLoader::addAnimation(string fileName)
+{
+	    unsigned int flags = aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_Triangulate | aiProcess_FlipUVs| aiProcess_ImproveCacheLocality | aiProcess_OptimizeGraph |aiProcess_OptimizeMeshes | aiProcess_JoinIdenticalVertices |
+			aiProcess_RemoveRedundantMaterials|aiProcess_CalcTangentSpace ;
+	
+    scene = aiImportFile(fileName.c_str(), flags);
+	if(scene)
+	{
+	for (unsigned int i = 0; i < scene->mNumMeshes; ++i)
+	{
+		
+		aiMesh* mesh = scene->mMeshes[i];
+			 
+		if (mesh->HasBones())
+		{	 
+				
+				 getAnime();
+		}
+	}
+	
+	}else
+	{
+	cout << "didn't load "<<fileName <<" "<< aiGetErrorString();
+	
+	}
+
+
+	
+
+}
+
+
 void npAssimpLoader::load(string fileName)
 {
 

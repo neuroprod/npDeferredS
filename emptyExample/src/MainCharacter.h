@@ -31,7 +31,7 @@ public :
 	bool rightIsDown;
 
 	TerrainFunctions * terrainFunctions;
-
+	float walkSlerp;
 	enum
 	{
 	     FORWARD_DOWN,FORWARD_UP,

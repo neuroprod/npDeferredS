@@ -27,5 +27,6 @@ public:
 	vector < npBoneMesh *> boneMeshes;
 	vector < npMesh *>meshes;
 	
+	void addAnimation(string fileName);
 };
 

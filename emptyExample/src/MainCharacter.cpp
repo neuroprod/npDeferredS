@@ -5,7 +5,9 @@ void MainCharacter::setup()
 {
 	
 	//	aLoader.load(ofToDataPath("3DAssets/vrouwAnimeTest2.dae"));
-aLoader.load(ofToDataPath("3DAssets/girlWalk.dae"));
+aLoader.load(ofToDataPath("3DAssets/girlStop.dae"));
+aLoader.addAnimation(ofToDataPath("3DAssets/girlWalk.dae"));
+
 	charMesh  = *aLoader.boneMeshes[0];
 	charMesh.setPos(0,0,0);
 	charMesh.material.loadDiffuse("3DAssets/vrouwFinal.png");
@@ -17,18 +19,19 @@ aLoader.load(ofToDataPath("3DAssets/girlWalk.dae"));
 		walkDir.set(-0.085,0,0.996);
 	charPos.set(0,0,0);
 
-	walkspeed =15*10;
+	walkspeed =15;
 	 isMoving =false;
 	 lastDown =-1;
 	 rightIsDown =false;
 	 leftIsDown =false;
+	  walkSlerp=0;
 }
 void MainCharacter::update(unsigned long timeStep)
 {
 	
 	
 	
-	charMesh.update((float)timeStep/300000);
+	charMesh.update((float)timeStep/300000 ,walkSlerp,0,1);
 
 	if (lastDown >-1)
 	{
@@ -45,7 +48,7 @@ void MainCharacter::update(unsigned long timeStep)
 	
 	
 		walkDir.set(sin(walkDirRot),0,cos (walkDirRot));
-
+		walkSlerp =0.5;
 
 		walkDir.normalize();
 	
@@ -55,8 +58,12 @@ void MainCharacter::update(unsigned long timeStep)
 	if (isMoving){
 	charPos  +=walkDir*(walkspeed* (float)timeStep/1000000);
 
-	
-	
+	walkSlerp +=0.2;
+	if (walkSlerp>1)walkSlerp =1;
+	}else
+	{
+	walkSlerp -=0.1;
+	if (walkSlerp<0)walkSlerp =0;
 	}
 	
 

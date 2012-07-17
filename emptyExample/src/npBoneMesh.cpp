@@ -23,11 +23,14 @@ void npBoneMesh::prepBones()
 
 	time =0;
 }
-void npBoneMesh::update(float timeStep){
+void npBoneMesh::update(float timeStep,float _animeSlerp,int ani1,int ani2){
 
+	int anime1 =ani1;
+	int anime2 =ani2;
+	float animeSlerp =_animeSlerp;
 	//rootBone
 	time+=timeStep;
-	if (time> bones[1]->animations[0].totalTime)time =0;
+	if (time> bones[1]->animations[1].totalTime)time =0;
 
 	for (int i=0;i< bones.size();i++)
 	{
@@ -36,27 +39,27 @@ void npBoneMesh::update(float timeStep){
 		if (bones[i]->animations.size()>0)
 		{
 			
-
 			ofQuaternion quat;
-			 quat.set(1,0,0,0);
-			if (bones[i]->animations[0].rotations.size() ==1)
+			ofQuaternion quat1;
+			 quat1.set(1,0,0,0);
+			if (bones[i]->animations[anime1].rotations.size() ==1)
 			{
-				quat = bones[i]->animations[0].rotations[0].quat;
+				quat1 = bones[i]->animations[anime1].rotations[0].quat;
 			}
 			else
 			{
-				for (int j=1; j<bones[i]->animations[0].rotations.size() ;j++)
+				for (int j=1; j<bones[i]->animations[anime1].rotations.size() ;j++)
 				{
-					if (bones[i]->animations[0].rotations[j].time >time)
+					if (bones[i]->animations[anime1].rotations[j].time >time)
 					{
 						
 						
-						float time1  = bones[i]->animations[0].rotations[j-1].time ;
-						float timeTotal  = bones[i]->animations[0].rotations[j].time -time1 ;
+						float time1  = bones[i]->animations[anime1].rotations[j-1].time ;
+						float timeTotal  = bones[i]->animations[anime1].rotations[j].time -time1 ;
 						float timeCurrent = time-time1;
 						float timeslerp = timeCurrent /timeTotal;
 						
-						quat.slerp(timeslerp , bones[i]->animations[0].rotations[j-1].quat, bones[i]->animations[0].rotations[j].quat);
+						quat1.slerp(timeslerp , bones[i]->animations[anime1].rotations[j-1].quat, bones[i]->animations[anime1].rotations[j].quat);
 					
 						break;
 					}
@@ -65,40 +68,100 @@ void npBoneMesh::update(float timeStep){
 			
 			}
 
+			ofQuaternion quat2;
+			 quat2.set(1,0,0,0);
+			if (bones[i]->animations[anime2].rotations.size() ==1)
+			{
+				quat2 = bones[i]->animations[anime2].rotations[0].quat;
+			}
+			else
+			{
+				for (int j=1; j<bones[i]->animations[anime2].rotations.size() ;j++)
+				{
+					if (bones[i]->animations[anime2].rotations[j].time >time)
+					{
+						
+						
+						float time1  = bones[i]->animations[anime2].rotations[j-1].time ;
+						float timeTotal  = bones[i]->animations[anime2].rotations[j].time -time1 ;
+						float timeCurrent = time-time1;
+						float timeslerp = timeCurrent /timeTotal;
+						
+						quat2.slerp(timeslerp , bones[i]->animations[anime2].rotations[j-1].quat, bones[i]->animations[anime2].rotations[j].quat);
+					
+						break;
+					}
+				
+				}
+			
+			}
+
+
+			quat.slerp(animeSlerp , quat1, quat2);
+
 			bones[i]->animeMatrix.makeRotationMatrix(quat);
 
 			
 			
 			
 			ofVec3f translation(0,0,0);
-			
-			
+			ofVec3f translation1(0,0,0);
+			ofVec3f translation2(0,0,0);
 			if (bones[i]->animations[0].translations.size()>0)
 			{
-				if (bones[i]->animations[0].translations.size() ==1)
+				if (bones[i]->animations[anime1].translations.size() ==1)
 				{
-				translation = bones[i]->animations[0].translations[0].pos;
+				translation1 = bones[i]->animations[anime1].translations[0].pos;
 				}else
 				{
-					for (int j=1; j<bones[i]->animations[0].translations.size() ;j++)
+					for (int j=1; j<bones[i]->animations[anime1].translations.size() ;j++)
 					{
-						if (bones[i]->animations[0].translations[j].time >time)
+						if (bones[i]->animations[anime1].translations[j].time >time)
 						{
 						
 						
-							float time1  = bones[i]->animations[0].translations[j-1].time ;
-							float timeTotal  = bones[i]->animations[0].translations[j].time -time1 ;
+							float time1  = bones[i]->animations[anime1].translations[j-1].time ;
+							float timeTotal  = bones[i]->animations[anime1].translations[j].time -time1 ;
 							float timeCurrent = time-time1;
 							float timeslerp = timeCurrent /timeTotal;
 						
 					
-						translation = bones[i]->animations[0].translations[j-1].pos *(1.0f -timeslerp) +bones[i]->animations[0].translations[j].pos *(timeslerp);
+						translation1 = bones[i]->animations[anime1].translations[j-1].pos *(1.0f -timeslerp) +bones[i]->animations[anime1].translations[j].pos *(timeslerp);
 
 							break;
 						}
 				
 					}
 				}
+
+
+				if (bones[i]->animations[anime2].translations.size() ==1)
+				{
+				translation2= bones[i]->animations[anime2].translations[0].pos;
+				}else
+				{
+					for (int j=1; j<bones[i]->animations[anime2].translations.size() ;j++)
+					{
+						if (bones[i]->animations[anime2].translations[j].time >time)
+						{
+						
+						
+							float time1  = bones[i]->animations[anime2].translations[j-1].time ;
+							float timeTotal  = bones[i]->animations[anime2].translations[j].time -time1 ;
+							float timeCurrent = time-time1;
+							float timeslerp = timeCurrent /timeTotal;
+						
+					
+						translation2 = bones[i]->animations[anime2].translations[j-1].pos *(1.0f -timeslerp) +bones[i]->animations[anime2].translations[j].pos *(timeslerp);
+
+							break;
+						}
+				
+					}
+				}
+
+				translation= translation1 *(1.0f -animeSlerp) +translation2 *(animeSlerp);
+
 				bones[i]->animeMatrix.postMultTranslate(translation);
 				
 			
