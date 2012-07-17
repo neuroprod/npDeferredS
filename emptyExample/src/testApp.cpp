@@ -9,7 +9,7 @@ void testApp::setup(){
 	cout <<"maxTexture units " <<units<< endl;
 
 	*/
-	ofSetFrameRate(30);
+	ofSetFrameRate(60);
     
 
 	terrainFunctions.setup();
@@ -102,8 +102,8 @@ void testApp::update(){
 	 timeStep =currentTime -previousTime;   
 	previousTime  = currentTime;
 	
-	float cycleTime =  (currentTime/1000)%10000;
-	dayTime = cycleTime/10000.0f ;
+	float cycleTime =  (currentTime/1000)%60000;
+	dayTime = cycleTime/60000.0f ;
 	
 
 

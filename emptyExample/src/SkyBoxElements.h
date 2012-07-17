@@ -4,6 +4,8 @@
 #include "GameCamera.h"
 #include "npMaterial.h"
 #include "npDirectionalLight.h"
+#include "SkyBoxStars.h"
+
 class  SkyBoxElements
 {
 public:
@@ -13,7 +15,7 @@ public:
 
 	void update();
 
-	void draw(const GameCamera &camera);
+	void draw(const GameCamera &camera,const float &time);
 	GLint program ;
 	
 	GLint   uPerspectiveMatrix;
@@ -21,6 +23,13 @@ public:
 
 	npMaterial sunMaterial;
 	GLfloat * sunVertices;
-	int count;
+
+
+	
+	SkyBoxStars stars;
+	npMaterial starsMaterial;
+
+
+
 	npDirectionalLight *light;
 };

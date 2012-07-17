@@ -19,5 +19,5 @@ void SkyBox::draw(const GameCamera &camera,const float &time){
 
 	colorBox.draw(camera,time);
 	
-	elementBox.draw(camera);
+	elementBox.draw(camera,time);
 }

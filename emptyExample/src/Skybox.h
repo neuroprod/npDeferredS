@@ -19,4 +19,6 @@ public:
 	SkyColorBox colorBox;
 	SkyBoxElements elementBox;
 	npDirectionalLight *light;
+	
+
 };
