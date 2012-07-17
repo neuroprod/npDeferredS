@@ -73,6 +73,7 @@ void npBoneMesh::update(float timeStep,float _animeSlerp,int ani1,int ani2){
 			if (bones[i]->animations[anime2].rotations.size() ==1)
 			{
 				quat2 = bones[i]->animations[anime2].rotations[0].quat;
+				
 			}
 			else
 			{
@@ -98,7 +99,7 @@ void npBoneMesh::update(float timeStep,float _animeSlerp,int ani1,int ani2){
 
 
 			quat.slerp(animeSlerp , quat1, quat2);
-
+			if (i==4) quat.makeRotate(0,ofVec3f(0,1,0));
 			bones[i]->animeMatrix.makeRotationMatrix(quat);
 
 			

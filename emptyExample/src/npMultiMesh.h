@@ -7,11 +7,23 @@ class npMultiMesh
 {
 public: 
 	npMultiMesh(){};
-	npMultiMesh(npMesh *_mesh){ mesh =_mesh;};
+	npMultiMesh(npMesh *_mesh){ mesh =_mesh;combinedMesh=NULL;isCombinedMesh =false;};
+	~npMultiMesh(){if (isCombinedMesh) {
+
+
+	glDeleteBuffers(1 ,&combinedMesh->vertexBuffer);
+		glDeleteBuffers(1 ,&combinedMesh->indexBuffer);
+	delete combinedMesh;
+	combinedMesh =NULL;
+	isCombinedMesh =false;
+	} };
+
 	npMesh *mesh;
+	npMesh *combinedMesh;
 	vector <ofMatrix4x4> objectMatrices;
 	vector <ofMatrix4x4> normalMatrices;
-
+	void makeOneMesh();
+	
 	void calculateNormalMatrices()
     {
 		normalMatrices.clear();
@@ -26,5 +38,5 @@ public:
 		}
         
     }
-
+	bool isCombinedMesh;
 };

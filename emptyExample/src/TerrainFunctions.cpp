@@ -249,7 +249,7 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 		else
 		{
 
-			if (r%70==3 &&vertex->hil>0.9 && vertex->position.y<40){
+			if (r%10==3 ){
 				ofMatrix4x4 objMatrix;
 				objMatrix.makeLookAtViewMatrix(ofVec3f(0,0.0,0),vertex->normal, ofVec3f(0,0.0,-1));
 				objMatrix.rotate(  180.0f,1,0,0);

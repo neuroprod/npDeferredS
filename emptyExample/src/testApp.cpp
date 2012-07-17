@@ -387,7 +387,7 @@ deferredFinal.draw(camera, dayTime,colorFactor);//dayTime
 
    GLErrorCheck::test("draw end");
 
-  //cout << ofGetFrameRate()<< endl;
+  cout << ofGetFrameRate()<< endl;
 
 }
 

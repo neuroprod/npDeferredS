@@ -72,6 +72,11 @@ void npShadowMapMeshRenderer::draw(const npMesh *mesh)
 
 void npShadowMapMeshRenderer::draw(const npMultiMesh &multiMesh)
 {
+	if(multiMesh.isCombinedMesh)
+	{
+		draw(multiMesh.combinedMesh);
+		return;
+	}
 	npMesh * mesh   = multiMesh.mesh;
 
 

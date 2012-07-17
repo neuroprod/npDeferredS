@@ -26,9 +26,12 @@ public:
     virtual ~npMesh()
     {
         delete[] vertices;
+		vertices =NULL;
         delete[] indices;
-		  delete[] indices2;
-
+			indices =NULL;
+		delete[] indices2;
+		indices2 =NULL;
+		
 		//if (vertexBuffer!=0) glDeleteBuffers(1 ,&vertexBuffer);
 	//	if (indexBuffer!=0) 	glDeleteBuffers(1 ,&indexBuffer);
 	//	if (indexBuffer2!=0) 	glDeleteBuffers(1 ,&indexBuffer);

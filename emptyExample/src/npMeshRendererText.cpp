@@ -81,6 +81,13 @@ void npMeshRendererText::draw(const npMesh *mesh)
 }
 void  npMeshRendererText::draw(const npMultiMesh &multiMesh)
 {
+
+	if (multiMesh.isCombinedMesh)
+	{
+		draw(multiMesh.combinedMesh);
+	return;
+	}
+
 	npMesh *mesh = multiMesh.mesh;
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, mesh->material.normalTexture);

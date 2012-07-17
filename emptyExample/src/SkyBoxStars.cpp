@@ -28,7 +28,7 @@ void SkyBoxStars::setup()
 		n.normalize();
 
 	 
-		n.scale((float)rand()/RAND_MAX*0.5+0.5);
+		n.scale((float)rand()/RAND_MAX*0.2+0.9);
 		objectMatrix.makeLookAtMatrix(n,ofVec3f(0,0,0),ofVec3f(0,1,0));
 	
 		int sOf = rand()%5;

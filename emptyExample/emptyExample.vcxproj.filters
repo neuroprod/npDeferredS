@@ -109,6 +109,9 @@
     <ClCompile Include="src\SkyBoxStars.cpp">
       <Filter>src\game\sky</Filter>
     </ClCompile>
+    <ClCompile Include="src\npMultiMesh.cpp">
+      <Filter>src\np\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h">
