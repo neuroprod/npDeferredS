@@ -249,47 +249,52 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 		else
 		{
 
-			if (r%10==3 ){
+			if (r%2==1 ){
 				ofMatrix4x4 objMatrix;
 				objMatrix.makeLookAtViewMatrix(ofVec3f(0,0.0,0),vertex->normal, ofVec3f(0,0.0,-1));
+			
 				objMatrix.rotate(  180.0f,1,0,0);
-				float s =  1;
-				objMatrix.postMultScale(ofVec3f(s,s,s));
+				objMatrix.rotate(  (float)rand()/RAND_MAX*360,0,1,0);
 
-				objMatrix.postMultTranslate(vertex->position);
-				
+				objMatrix.postMultTranslate(vertex->position +ofVec3f((float)rand()/RAND_MAX,0,(float)rand()/RAND_MAX)*2);
+			
 					
 				chunk->detail1Objects[1].objectMatrices.push_back(objMatrix);
-				chunk->detail2Objects[1].objectMatrices.push_back(objMatrix);
+
+
+			
+
+
+
+				//chunk->detail2Objects[1].objectMatrices.push_back(objMatrix);
 						
 				return;
 			}
 		}
-		if (r%400==2 &&vertex->hil>0.9 && vertex->position.y<40){
+		if (r%50==2 &&vertex->hil>0.8 ){
 				ofMatrix4x4 objMatrix;
-				objMatrix.makeLookAtViewMatrix(ofVec3f(0,0.0,0),vertex->normal, ofVec3f(0,0.0,-1));
+			objMatrix.makeLookAtViewMatrix(ofVec3f(0,0.0,0),vertex->normal, ofVec3f(0,0.0,-1));
 				objMatrix.rotate(  180.0f,1,0,0);
-				float s = (float)rand()/RAND_MAX *2.4 +1;
-				objMatrix.postMultScale(ofVec3f(s,s,s));
+				objMatrix.rotate(  (float)rand()/RAND_MAX*360,0,1,0);
 
 				objMatrix.postMultTranslate(vertex->position);
 				
 					
 				chunk->detail1Objects[1].objectMatrices.push_back(objMatrix);
-				chunk->detail2Objects[1].objectMatrices.push_back(objMatrix);
+				//chunk->detail2Objects[1].objectMatrices.push_back(objMatrix);
 						
 				return;
 			}
 	}
-	if ( veg>0.5)
+	if ( veg>0.5 && vertex->position.y<100 )
 	{
 		 r  = rand();
-		 if (r%250==4)
+		 if (r%150==4)
 		 {
 		
 			int pIndex =  rand()%chunk->pLights.size();
 			ofMatrix4x4 objMatrix;
-			ofVec3f center =vertex->position +ofVec4f(0,8,0);
+			ofVec3f center =vertex->position +ofVec4f(0,5* (float)rand()/RAND_MAX+3,0);
 
 			objMatrix.makeTranslationMatrix( center);
 			chunk->pLights[pIndex ].objectMatrices.push_back(objMatrix);

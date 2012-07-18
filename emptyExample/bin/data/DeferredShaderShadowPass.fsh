@@ -7,10 +7,10 @@
 //
 #version 120
 
-const float strength = 0.1;
+const float strength = 0.09;
 const float offsetAO = 30.0;
-const float falloff = 0.004;
-const float rad = 0.02;
+const float falloff = 0.00001;
+const float rad = 0.01;
 
 
 
@@ -192,7 +192,7 @@ void main()
 
 
 
-		 shadowTerm*=1.0-(bl/10.0);
+		 shadowTerm*=clamp(1-(bl/10.0),0.0,1.0);
 
 
 

@@ -20,7 +20,7 @@ public:
 	
 	GLint   uPerspectiveMatrix;
 	GLint  uObjectMatrix;
-
+	GLint  uRenderAlpha;
 	npMaterial sunMaterial;
 	GLfloat * sunVertices;
 

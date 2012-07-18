@@ -102,8 +102,8 @@ void testApp::update(){
 	 timeStep =currentTime -previousTime;   
 	previousTime  = currentTime;
 	
-	float cycleTime =  (currentTime/1000)%60000;
-	dayTime = cycleTime/60000.0f ;
+	float cycleTime =  (currentTime/1000)%260000;
+	dayTime = cycleTime/260000.0f ;
 	
 
 
@@ -338,13 +338,30 @@ void testApp::update(){
 				 }
 			}
 			renderTexture.stop();
+		
 		glDisable(GL_ALPHA_TEST);
-	
+		rendererColor.start(camera);
+		/*for (int i=0;i< chunkHandler.chunks.size();i++)
+		{
+			if(chunkHandler.chunks[i]->detailLevel==1 || chunkHandler.chunks[i]->detailLevel==2)
+			{
+				for (int j=0;j< chunkHandler.chunks[i]->pLights.size();j++)
+				{	
+					rendererColor.draw(chunkHandler.chunks[i]->pLights[j] );
+				}
+			}
+		}*/
+
+			rendererColor.stop();
 
 		
 		boneMeshRenderer.start(camera);
 			boneMeshRenderer.draw(&girl.charMesh);
 		boneMeshRenderer.stop();
+
+
+
+
     deferredBuffer.stop();
  
    

@@ -22,6 +22,7 @@ void SkyBoxElements::setup(){
     glUseProgram(program);
      uPerspectiveMatrix = glGetUniformLocation(program,"perspectiveMatrix");
 	  uObjectMatrix = glGetUniformLocation(program,"objectMatrix");
+	   uRenderAlpha= glGetUniformLocation(program,"renderAlpha");
   glUseProgram(0);
 
   
@@ -58,6 +59,14 @@ void SkyBoxElements::update(){}
 
 void SkyBoxElements::draw(const GameCamera &camera,const float &time){
 
+	float colorFactor = 1;
+	if (time>0.30 && time<0.70)colorFactor  =0;
+	if (time>0.20 && time<0.30)colorFactor  =1.0f-((time-0.20)*10);
+		if (time>0.70 && time<0.80)colorFactor  =(time-0.70)*10;
+
+
+
+
 	 glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	ofMatrix4x4	objectMatrix;
@@ -67,7 +76,7 @@ void SkyBoxElements::draw(const GameCamera &camera,const float &time){
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	// stars
-
+	glUniform1f(uRenderAlpha,1- colorFactor);
 	objectMatrix.makeIdentityMatrix();
 	objectMatrix.glRotate(time*360,1,0,0);
 	glUniformMatrix4fv( uObjectMatrix, 1, 0,objectMatrix.getPtr());  
@@ -81,7 +90,7 @@ void SkyBoxElements::draw(const GameCamera &camera,const float &time){
 
 
 	// sun 
-
+	glUniform1f(uRenderAlpha, 1);
 	ofVec4f p= light->pos;
 	p.normalize();
 	objectMatrix.makeLookAtMatrix(p,ofVec3f(0,0,0),ofVec3f(0,1,0.0));

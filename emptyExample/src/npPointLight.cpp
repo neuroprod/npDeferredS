@@ -21,11 +21,11 @@ void npPointLight::setup(float radius,float  r,float g,float b, float radiusDraw
     npMaterial mat2;
     mat2.hasColor =true;
     mat2.hasUV = false;
-    mat2.r =r*3;
-    mat2.g =g*3;
-    mat2.b =b*3;
+    mat2.r =r;
+    mat2.g =g;
+    mat2.b =b;
     
-    drawSphere.setup(mat2,radiusDraw ,4,3);
+    drawSphere.setup(mat2,radius*1.1 ,4,3);
     
     rangeSphere.setup(mat,radius*1.1,8,6);// make the radius bigger becouse not perfect sphere
 

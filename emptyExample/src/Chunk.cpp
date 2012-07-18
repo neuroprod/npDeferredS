@@ -165,15 +165,15 @@ void Chunk::makeTerrainObjects()
 	terrainFunctions->stopNewObjectsForChunk(this);
 	detail1Objects[1].makeOneMesh();
 detail2Objects[1].makeOneMesh();
-detail2Objects[4].makeOneMesh();
+//detail2Objects[4].makeOneMesh();
 
-detail1Objects[3].makeOneMesh();
+/*detail1Objects[3].makeOneMesh();
 detail2Objects[3].makeOneMesh();
 
 
-//detail2Objects[4].makeOneMesh();
+detail2Objects[4].makeOneMesh();
 					
-//detail3Objects[0].makeOneMesh();
+detail3Objects[0].makeOneMesh();*/
 }
 TerrainVertex * Chunk::getVertexForXY(int x, int y)
 {

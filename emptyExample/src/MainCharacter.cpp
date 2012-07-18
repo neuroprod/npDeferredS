@@ -48,7 +48,7 @@ void MainCharacter::update(unsigned long timeStep)
 	
 	
 		walkDir.set(sin(walkDirRot),0,cos (walkDirRot));
-		walkSlerp =0.5;
+		if (!isMoving){walkSlerp =0.4;}
 
 		walkDir.normalize();
 	
@@ -62,7 +62,7 @@ void MainCharacter::update(unsigned long timeStep)
 	if (walkSlerp>1)walkSlerp =1;
 	}else
 	{
-	walkSlerp -=0.1;
+	walkSlerp -=0.2;
 	if (walkSlerp<0)walkSlerp =0;
 	}
 	

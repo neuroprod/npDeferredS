@@ -64,6 +64,31 @@ void npMeshRendererColor::draw(const npMesh *mesh)
 
 
 }
+void  npMeshRendererColor::draw(const npMultiPointLight &mpl)
+{
+
+
+		 glBindBuffer(GL_ARRAY_BUFFER,mpl.pLight->drawSphere.vertexBuffer);
+    
+	
+    glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9,(GLvoid*) (sizeof(float) * 0));
+    glVertexAttribPointer(ATTRIB_NORMAL, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9,(GLvoid*) (sizeof(float) *3 ));
+    glVertexAttribPointer(ATTRIB_COLOR, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9,(GLvoid*) (sizeof(float) * 6));
+  
+    
+    
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  mpl.pLight->drawSphere.indexBuffer);
+
+	for(int i=0;i<   mpl.objectMatrices.size();i++){
+    glUniformMatrix4fv(uObjectMatrix, 1, 0,  mpl.objectMatrices[i].getPtr());
+	glUniformMatrix4fv(uNormalMatrix, 1, 0,   mpl.objectMatrices[i].getPtr());
+    
+	glDrawElements(GL_TRIANGLES,mpl.pLight->drawSphere.numIndices , GL_UNSIGNED_INT, (void*)0);
+	}
+
+
+}
 void npMeshRendererColor::stop()
 {
     glDisableVertexAttribArray(ATTRIB_VERTEX);

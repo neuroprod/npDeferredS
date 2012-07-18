@@ -19,6 +19,7 @@ public:
     
     npMesh():vertices(NULL),indices(NULL),indices2(NULL) ,stride(8),numVertices(-1), numIndices2(0)
 	{
+		needsShadow =true;
 	vertexBuffer =0;
 	indexBuffer =0;
 		indexBuffer2 =0;
@@ -61,7 +62,7 @@ public:
     GLuint indexBuffer;
      GLuint indexBuffer2;
     
-   
+   bool needsShadow;
    
     
 };

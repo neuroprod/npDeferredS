@@ -29,13 +29,14 @@ void npMultiMesh::makeOneMesh()
 	int indexCount =0;
 	int vertexCount =0;
 	ofMatrix4x4 objectMatrix;
+	ofMatrix4x4 normalMatrix;
 	ofVec3f pos ;
 	ofVec3f post ;
 	
 	for(int i=0;i<numObjects;i++)
 	{
 		objectMatrix = objectMatrices[i];
-	
+	normalMatrix = normalMatrices[i];
 		for(int j=0;j<numVerticesM;j++)
 		{
 			int ofset =  (i* numVerticesM*stride) +(j*stride);
@@ -45,15 +46,17 @@ void npMultiMesh::makeOneMesh()
 			vertices[vertexCount ++ ] = post.x;
 			vertices[vertexCount ++  ] = post.y;
 			vertices[vertexCount ++ ] = post.z;
+			pos.set(mesh->vertices[j*stride+3],mesh->vertices[j*stride +4],mesh->vertices[j*stride+5]);
+			post =pos* normalMatrix;
+			vertices[vertexCount ++ ] = post.x;
+			vertices[vertexCount ++ ] =  post.y;
+			vertices[vertexCount ++ ] = post.z;
 
-			vertices[vertexCount ++ ] =  mesh->vertices[j*stride +3];
-			vertices[vertexCount ++ ] =  mesh->vertices[j*stride +4];;
-			vertices[vertexCount ++ ] =  mesh->vertices[j*stride +5];;
-
-
-			vertices[vertexCount ++ ] =mesh->vertices[j*stride +6];
-			vertices[vertexCount ++  ] = mesh->vertices[j*stride +7];
-			vertices[vertexCount ++ ] =mesh->vertices[j*stride +8];
+				pos.set(mesh->vertices[j*stride+6],mesh->vertices[j*stride +7],mesh->vertices[j*stride+8]);
+			post =pos* normalMatrix;
+			vertices[vertexCount ++ ] =post.x;
+			vertices[vertexCount ++  ] = post.y;
+			vertices[vertexCount ++ ] =post.z;
 
 
 			vertices[vertexCount ++ ] = mesh->vertices[j*stride +9];

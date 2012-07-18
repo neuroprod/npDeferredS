@@ -12,7 +12,7 @@
 #include "npIncludes.h"
 #include "npMesh.h"
 #include "npCamera.h"
-
+#include "npMultiPointLight.h"
 class npMeshRendererColor
 {
 public:
@@ -26,6 +26,7 @@ public:
     
     void start(const npCamera &cam);
     void draw(const npMesh *mesh);
+	   void draw(const npMultiPointLight &mpl);
     void stop();
     
    
