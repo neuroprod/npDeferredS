@@ -36,7 +36,7 @@ public:
 
 	int cDivX ;
 	int cDivY ;
-	TerrainMaterial *currentDetailTexture;
+	TerrainMaterial *currentDetailMaterial;
 
 	int posX ;	
 	int posY;

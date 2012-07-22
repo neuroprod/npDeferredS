@@ -20,7 +20,7 @@ void testApp::setup(){
 
 	girl.setup();
 	girl.terrainFunctions =  &terrainFunctions;
-
+	girl.chunkHandler = &chunkHandler ;
 	camera.setup();
 	camera.mainCharacter =&girl;
 	camera.terrainFunctions  =   &terrainFunctions;

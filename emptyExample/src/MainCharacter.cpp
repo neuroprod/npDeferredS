@@ -1,5 +1,5 @@
 #include "MainCharacter.h"
-
+#include "TerrainVertex.h"
 
 void MainCharacter::setup()
 {
@@ -19,7 +19,7 @@ aLoader.addAnimation(ofToDataPath("3DAssets/girlWalk.dae"));
 		walkDir.set(-0.085,0,0.996);
 	charPos.set(0,0,0);
 
-	walkspeed =15*20;
+	walkspeed =15;
 	 isMoving =false;
 	 lastDown =-1;
 	 rightIsDown =false;
@@ -65,10 +65,11 @@ void MainCharacter::update(unsigned long timeStep)
 	walkSlerp -=0.2;
 	if (walkSlerp<0)walkSlerp =0;
 	}
+	if (chunkHandler->frameCount>60){
+	TerrainVertex v = chunkHandler->getVertexforPos(charPos);
 	
-
-	
-	charPos.y =  terrainFunctions->getHeightForPos(charPos.x, charPos.z) +2.3;
+	charPos.y =v.position.y+2.3;//  terrainFunctions->getHeightForPos(charPos.x, charPos.z) +2.3;
+	}
 	charMesh.objectMatrix.makeLookAtViewMatrix(ofVec3f(0,0,0),walkDir,ofVec3f(0,-1,0));
 	charMesh.objectMatrix.postMultTranslate(charPos);
 	//	charMesh.objectMatrix.preMultScale(ofVec3f(5,5,5));

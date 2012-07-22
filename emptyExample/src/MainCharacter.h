@@ -4,6 +4,7 @@
 #include "npIncludes.h"
 #include "npBoneMesh.h"
 #include "TerrainFunctions.h"
+#include "ChunkHandler.h"
 class MainCharacter
 {
 
@@ -29,7 +30,7 @@ public :
 	int lastDown;
 	bool leftIsDown;
 	bool rightIsDown;
-
+	ChunkHandler *chunkHandler;
 	TerrainFunctions * terrainFunctions;
 	float walkSlerp;
 	enum

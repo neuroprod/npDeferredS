@@ -6,6 +6,7 @@
 #include "TerrainFunctions.h"
 #include "TerrainFBO.h"
 #include "TerrainTextureHandler.h"
+#include "TerrainVertex.h"
 struct ComparePrio 
 {
   bool operator () ( Chunk * a, Chunk * b )
@@ -37,6 +38,8 @@ public:
 	 GLuint texture;
 	TerrainFunctions *terrainFunctions;
 
+	Chunk *getClosestChunk(const ofVec3f &pos, int detailLevel =1);
+	TerrainVertex getVertexforPos(const ofVec3f &pos, int detailLevel =1);
 	TerrainFBO terrainFBO;
 	TerrainTextureHandler textureHandler;
 };

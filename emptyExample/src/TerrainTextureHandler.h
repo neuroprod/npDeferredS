@@ -10,7 +10,7 @@ public:
 	TerrainTextureHandler(){};
 	void setup();
 	void getChunkMaterial(Chunk *chunk);
-
-
+	void updateDetailMaterial(TerrainMaterial *mat,Chunk *chunk);
+	vector<TerrainMaterial *> detailMaterials;
 
 };

@@ -13,7 +13,7 @@ Chunk::Chunk(){
 	terrain = new npMesh();
 	cDivX =1;
 	cDivY =1;
-	currentDetailTexture =NULL;
+	currentDetailMaterial =NULL;
 	
 }
 
@@ -267,7 +267,7 @@ void Chunk::calculateDetail(const ofVec3f &camPos,const ofVec3f &lookDir)
 	 updatePrio = 1/dist ;
 	 if( dot < 0)updatePrio=(1.0 -updatePrio) *-1; 
 	 // 29  = width*wisth* 2 <-sqrt
-	if (dist< 362*0.7)updatePrio =2;
+	if (dist< 362*0.6)updatePrio =2;
 	if (isReady ==false)
 	{
 	setDetailLevel(0);
@@ -276,7 +276,7 @@ void Chunk::calculateDetail(const ofVec3f &camPos,const ofVec3f &lookDir)
 	}
 	
 	
-	if ( dist<362*0.7)
+	if ( dist<362*0.6)
 	{
 	setDetailLevel(1);
 	return;
@@ -309,12 +309,12 @@ void Chunk::setDetailLevel(int _detailLevel)
 	if (detailLevel==1 && _detailLevel!=1)
 	{
 	// free texture
-		if (currentDetailTexture)
-	currentDetailTexture->isUsed =false;
+		if (currentDetailMaterial) currentDetailMaterial->isUsed =false;
 	}
 	else if(detailLevel!=1 && _detailLevel==1)
 	{
-	
+	texureHandler->getChunkMaterial(this);
+
 	
 	}
 	detailLevel = _detailLevel;
