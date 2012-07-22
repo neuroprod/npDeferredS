@@ -46,6 +46,7 @@ void ObjectLib::setup()
 	tree1_hr->material.loadNormal("3DAssets/tree1_n.png",GL_RGB );
 	objects.push_back(tree1_hr);
 	}
+		srand(88);	
 	for (int i =0;i<20;i++)
 	{
 		npPointLight *p = new npPointLight();

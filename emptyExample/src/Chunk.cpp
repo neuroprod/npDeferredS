@@ -13,6 +13,7 @@ Chunk::Chunk(){
 	terrain = new npMesh();
 	cDivX =1;
 	cDivY =1;
+	currentDetailTexture =NULL;
 	
 }
 
@@ -117,8 +118,8 @@ void Chunk::update()
             mesh->vertices[vertcount++] = vertex->normal.z;
 	
 
-			vertcount++;
-			vertcount++;
+			vertcount+=4;//uv*2
+			//vertcount++;
 
 
 
@@ -265,8 +266,8 @@ void Chunk::calculateDetail(const ofVec3f &camPos,const ofVec3f &lookDir)
 	 float dot = lookDir.dot( dirChunk);
 	 updatePrio = 1/dist ;
 	 if( dot < 0)updatePrio=(1.0 -updatePrio) *-1; 
-
-	if (dist< width*1.5)updatePrio =2;
+	 // 29  = width*wisth* 2 <-sqrt
+	if (dist< 362*0.7)updatePrio =2;
 	if (isReady ==false)
 	{
 	setDetailLevel(0);
@@ -275,7 +276,7 @@ void Chunk::calculateDetail(const ofVec3f &camPos,const ofVec3f &lookDir)
 	}
 	
 	
-	if ( dist< width*1.5)
+	if ( dist<362*0.7)
 	{
 	setDetailLevel(1);
 	return;
@@ -305,6 +306,17 @@ void Chunk::calculateDetail(const ofVec3f &camPos,const ofVec3f &lookDir)
 }
 void Chunk::setDetailLevel(int _detailLevel)
 {
+	if (detailLevel==1 && _detailLevel!=1)
+	{
+	// free texture
+		if (currentDetailTexture)
+	currentDetailTexture->isUsed =false;
+	}
+	else if(detailLevel!=1 && _detailLevel==1)
+	{
+	
+	
+	}
 	detailLevel = _detailLevel;
 
 }
@@ -327,23 +339,22 @@ void  Chunk::buildFirst()
 	float cStepY  = (float)height/cDivY;
 	float cStepX  =(float) width/cDivX;
 
-		float uvXStart =(float)((posXStart
-			) +numChunksW2)/(numChunksW2*2);
+		float uvXStart =(float)((posXStart) +numChunksW2)/(numChunksW2*2);
 	float uvYStart =(float)((posYStart)  +numChunksW2)/(numChunksW2*2);
 	float uvXStep =1.0f/(numChunksW2*2*cDivX );
 	float uvYStep =1.0f/(numChunksW2*2*cDivY);
 
 	vpX =uvXStart*2048*2;
 	vpY =uvYStart*2048*2;
-	vpW = 128*2;
-	vpH = 128*2;
+	vpW = 128;
+	vpH = 128;
 	
 	
 	
 	terrain =new npMesh();
 	npMesh * mesh = terrain;
 	
-	mesh->stride = 8;
+	mesh->stride = 10;
 	mesh->numVertices =(cDivX+1) *(cDivY+1); 
 	
 	mesh->vertices =new float [mesh->numVertices*	mesh->stride ];
@@ -381,7 +392,8 @@ void  Chunk::buildFirst()
 			mesh->vertices[vertcount++] =uvXStart+(x)*uvXStep ;
             mesh->vertices[vertcount++] =uvYStart+(y)*uvYStep;
 	
-
+				mesh->vertices[vertcount++] =(float) x/cDivX ;
+            mesh->vertices[vertcount++] =(float) y/cDivY ;
 
 
 

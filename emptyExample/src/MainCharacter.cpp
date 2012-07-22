@@ -19,7 +19,7 @@ aLoader.addAnimation(ofToDataPath("3DAssets/girlWalk.dae"));
 		walkDir.set(-0.085,0,0.996);
 	charPos.set(0,0,0);
 
-	walkspeed =15;
+	walkspeed =15*20;
 	 isMoving =false;
 	 lastDown =-1;
 	 rightIsDown =false;

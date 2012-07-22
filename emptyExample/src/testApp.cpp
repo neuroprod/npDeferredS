@@ -1,6 +1,6 @@
 #include "testApp.h"
 #include "GLErrorCheck.h"
-
+//<iframe src="http://player.vimeo.com/video/46021001?title=0&amp;byline=0&amp;portrait=0" width="700" height="394" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 //--------------------------------------------------------------
 void testApp::setup(){
 
@@ -59,7 +59,7 @@ void testApp::setup(){
  
    
 	dirLight.lookAt.set(0,0,0);
-	dirLight.pos.set(1,0.8,0);
+	dirLight.pos.set(1,1.8,0);
 
 	deferredFinal.dirLight =&dirLight;
 	
@@ -102,8 +102,8 @@ void testApp::update(){
 	 timeStep =currentTime -previousTime;   
 	previousTime  = currentTime;
 	
-	float cycleTime =  (currentTime/1000)%260000;
-	dayTime = cycleTime/260000.0f ;
+	float cycleTime =  (currentTime/1000)%120000;
+	dayTime = cycleTime/120000.0f ;
 	
 
 
@@ -340,8 +340,8 @@ void testApp::update(){
 			renderTexture.stop();
 		
 		glDisable(GL_ALPHA_TEST);
-		rendererColor.start(camera);
-		/*for (int i=0;i< chunkHandler.chunks.size();i++)
+	/*rendererColor.start(camera);
+		for (int i=0;i< chunkHandler.chunks.size();i++)
 		{
 			if(chunkHandler.chunks[i]->detailLevel==1 || chunkHandler.chunks[i]->detailLevel==2)
 			{
@@ -350,9 +350,9 @@ void testApp::update(){
 					rendererColor.draw(chunkHandler.chunks[i]->pLights[j] );
 				}
 			}
-		}*/
+		}
 
-			rendererColor.stop();
+			rendererColor.stop();*/
 
 		
 		boneMeshRenderer.start(camera);
@@ -404,7 +404,7 @@ deferredFinal.draw(camera, dayTime,colorFactor);//dayTime
 
    GLErrorCheck::test("draw end");
 
-  cout << ofGetFrameRate()<< endl;
+ // cout << ofGetFrameRate()<< endl;
 
 }
 

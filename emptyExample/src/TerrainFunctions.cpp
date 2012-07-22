@@ -105,6 +105,7 @@ ofVec3f  TerrainFunctions::getNormal(const ofVec3f &p1,const ofVec3f &p2,const o
 
 void TerrainFunctions::startNewObjectsForChunk(Chunk *chunk)
 {
+	srand(chunk->center.x+ chunk->center.y/3);
 	//objectLib.getMultiMeshes(chunk);
 
 	chunk->detail1Objects.push_back(npMultiMesh(objectLib.objects[0]));
@@ -191,7 +192,7 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 			
 		
 			
-			if (r%120==2){
+			if (r%120==3){
 
 
 
@@ -288,13 +289,13 @@ void TerrainFunctions::getObjectsForVertex( TerrainVertex *vertex, Chunk *chunk)
 	}
 	if ( veg>0.5 && vertex->position.y<100 )
 	{
-		 r  = rand();
+		// r  = rand();
 		 if (r%150==4)
 		 {
 		
 			int pIndex =  rand()%chunk->pLights.size();
 			ofMatrix4x4 objMatrix;
-			ofVec3f center =vertex->position +ofVec4f(0,5* (float)rand()/RAND_MAX+3,0);
+			ofVec3f center =vertex->position +ofVec4f(0,2* (float)rand()/RAND_MAX+3,0);
 
 			objMatrix.makeTranslationMatrix( center);
 			chunk->pLights[pIndex ].objectMatrices.push_back(objMatrix);

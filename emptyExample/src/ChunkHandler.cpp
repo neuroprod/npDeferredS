@@ -1,11 +1,11 @@
 #include "ChunkHandler.h"
 ChunkHandler::ChunkHandler()
 {
-	chunkSize =256;
-	numChunksW=16; 
+	chunkSize =256/2;
+	numChunksW=16*2; 
 	numChunksW2=numChunksW/2;
 	frameCount =0;
-	 chunkParts =64;
+	 chunkParts =64/2;
 };
 
 
@@ -14,14 +14,14 @@ void ChunkHandler::setup()
 	 terrainFBO.cDivX = chunkParts;
  terrainFBO.cDivY = chunkParts;
 	 terrainFBO.setup();
-
+	 textureHandler.setup();
 
 	for (int y= -numChunksW2;y<numChunksW2;y++)
 	{
 		for (int x= -numChunksW2;x<numChunksW2;x++)
 		{
 				Chunk * chunk = new Chunk();
-			
+				chunk->texureHandler = &textureHandler;
 				chunk->posX = x;
 				chunk->posY= y;
 				chunk-> posXStart =x;
@@ -57,7 +57,7 @@ void ChunkHandler::update(ofVec3f camPos, ofVec3f lookPos)
 
 	
 
-	unsigned updateTime =frameCount%4;
+	unsigned updateTime =frameCount%2;
 
 	if (updateTime ==0)
 	{
@@ -70,7 +70,7 @@ void ChunkHandler::update(ofVec3f camPos, ofVec3f lookPos)
 	
 		checkChunkPositions( chunkPosX, chunkPosY);
 	
-	}if (updateTime ==2)
+	}if (updateTime ==1)
 	{
 		updateChunkPositions();
 		
@@ -90,7 +90,7 @@ void ChunkHandler::updateChunkPositions()
 	
 	for (int i=0;i< chunks.size(); ++i)
 	{
-
+		//if (chunks[i]->detailLevel==1 )cout << chunks[i]->detailLevel;
 	
 		if (!chunks[i]->isReady)
 		{

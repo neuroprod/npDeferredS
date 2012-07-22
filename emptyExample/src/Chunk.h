@@ -9,8 +9,10 @@
 #include "TerrainVertex.h"
 #include "npPointLight.h"
 #include "npMultiPointLight.h"
+#include "TerrainTextureHandler.h"
+#include "TerrainMaterial.h"
 
-
+class TerrainTextureHandler;
 class TerrainFunctions;
 
 
@@ -30,10 +32,11 @@ public:
 	void makeTerrainObjects();
 	void buildFirst();
 	void clearCurrent();
+	TerrainTextureHandler  *texureHandler;
 
 	int cDivX ;
 	int cDivY ;
-
+	TerrainMaterial *currentDetailTexture;
 
 	int posX ;	
 	int posY;

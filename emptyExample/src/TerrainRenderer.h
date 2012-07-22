@@ -17,13 +17,24 @@ public:
     void setup();
     
     
-    void start(const npCamera &cam);
+    void start(npCamera &cam);
     void draw(const npMesh *mesh,int detailLevel);
-    void stop();
-    
-   
 
-    GLint program;
+
+    void stop();
+	
+	void switchProgram();
+	int	currentDetailLevel;    
+   
+	GLint programDetail;
+    GLint uNormalMatrixDetail;
+    GLint uNormalWorldMatrixDetail;
+    GLint uPerspectiveMatrixDetail;
+    GLint uWorldMatrixDetail;
+    GLint uObjectMatrixDetail;
+	
+	
+	GLint program;
     GLint uNormalMatrix;
     GLint uNormalWorldMatrix;
     GLint uPerspectiveMatrix;
@@ -45,7 +56,7 @@ public:
         ATTRIB_NORMAL,
         ATTRIB_UV,
     };
-    
+    npCamera *camera;
 };
 
 #endif

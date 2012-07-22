@@ -112,6 +112,9 @@
     <ClCompile Include="src\npMultiMesh.cpp">
       <Filter>src\np\objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\TerrainTextureHandler.cpp">
+      <Filter>src\game\terrain</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h">
@@ -246,6 +249,12 @@
     <ClInclude Include="src\SkyBoxStars.h">
       <Filter>src\game\sky</Filter>
     </ClInclude>
+    <ClInclude Include="src\TerrainMaterial.h">
+      <Filter>src\game\terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TerrainTextureHandler.h">
+      <Filter>src\game\terrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -350,6 +359,12 @@
       <Filter>data\shaders</Filter>
     </None>
     <None Include="bin\data\SkyBoxTextureShader.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderTerrainDetail.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DeferredShaderTerrainDetail.vsh">
       <Filter>data\shaders</Filter>
     </None>
   </ItemGroup>

@@ -149,6 +149,7 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClCompile Include="src\SkyBoxElements.cpp" />
     <ClCompile Include="src\SkyBoxStars.cpp" />
     <ClCompile Include="src\SkyColorBox.cpp" />
+    <ClCompile Include="src\TerrainTextureHandler.cpp" />
     <ClCompile Include="src\TerrainFBO.cpp" />
     <ClCompile Include="src\TerrainFunctions.cpp" />
     <ClCompile Include="src\TerrainRenderer.cpp" />
@@ -200,8 +201,10 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClInclude Include="src\SkyBoxElements.h" />
     <ClInclude Include="src\SkyBoxStars.h" />
     <ClInclude Include="src\SkyColorBox.h" />
+    <ClInclude Include="src\TerrainTextureHandler.h" />
     <ClInclude Include="src\TerrainFBO.h" />
     <ClInclude Include="src\TerrainFunctions.h" />
+    <ClInclude Include="src\TerrainMaterial.h" />
     <ClInclude Include="src\TerrainRenderer.h" />
     <ClInclude Include="src\TerrainVertex.h" />
     <ClInclude Include="src\testApp.h" />
@@ -221,6 +224,8 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <None Include="bin\data\DeferredShaderShadowPass.vsh" />
     <None Include="bin\data\DeferredShaderTerrain.fsh" />
     <None Include="bin\data\DeferredShaderTerrain.vsh" />
+    <None Include="bin\data\DeferredShaderTerrainDetail.fsh" />
+    <None Include="bin\data\DeferredShaderTerrainDetail.vsh" />
     <None Include="bin\data\ShadowShaderBones.fsh" />
     <None Include="bin\data\ShadowShaderBones.vsh" />
     <None Include="bin\data\ShadowShaderMesh.fsh" />
