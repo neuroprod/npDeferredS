@@ -201,7 +201,7 @@ Chunk * ChunkHandler::getClosestChunk(const ofVec3f &pos, int detailLevel)
 {
 
 	ofVec3f vec;
-	float maxDist =10000000000;
+	float maxDist =1000000;
 	Chunk *cChunk =NULL;
 	for (int i=0;i< chunks.size(); ++i)
 	{

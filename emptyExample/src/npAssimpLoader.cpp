@@ -94,7 +94,7 @@ void  npAssimpLoader::makeBoneMesh(aiMesh *mesh)
 	npBoneMesh * boneMesh = new npBoneMesh();
 
 	int numVertices  = mesh->mNumVertices;
-	vector < vector<pair <unsigned,float>> > boneweights;
+	vector < vector<pair <unsigned,float> > > boneweights;
 	boneweights.resize(numVertices);
 	aiBone **bones  =mesh->mBones;
 	if (mesh->mNumBones != 22) cout << "WARNING CURRENT SHADERS SUPPORTS 22 BONES +ROOT, NOW USING "<< mesh->mNumBones<< endl;
