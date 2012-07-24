@@ -65,10 +65,12 @@ void MainCharacter::update(unsigned long timeStep)
 	walkSlerp -=0.2;
 	if (walkSlerp<0)walkSlerp =0;
 	}
-	if (chunkHandler->frameCount>60){
+	if (chunkHandler->frameCount>10){
 	TerrainVertex v = chunkHandler->getVertexforPos(charPos);
 	
-	charPos.y =v.position.y+2.3;//  terrainFunctions->getHeightForPos(charPos.x, charPos.z) +2.3;
+	charPos.y =v.position.y;//+2.3;
+	//charPos.x =v.position.x; 
+	//charPos.z =v.position.z;//  terrainFunctions->getHeightForPos(charPos.x, charPos.z) +2.3;
 	}
 	charMesh.objectMatrix.makeLookAtViewMatrix(ofVec3f(0,0,0),walkDir,ofVec3f(0,-1,0));
 	charMesh.objectMatrix.postMultTranslate(charPos);

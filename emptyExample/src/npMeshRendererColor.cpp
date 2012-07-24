@@ -52,10 +52,10 @@ void npMeshRendererColor::drawTriangle(const ofVec3f &p0,const ofVec3f &p1,const
 	glDisable(GL_CULL_FACE);
 	float *pointer =new float[9*3];
 	//cout <<p0 <<" --  "<< p1<<" -- " <<p2 <<endl;
-	float f =1;
-	pointer[0] = p0.x*f; 
-	pointer[1] = p0.y+0.1; 
-	pointer[2] = p0.z*f; 
+	
+	pointer[0] = p0.x; 
+	pointer[1] = p0.y; 
+	pointer[2] = p0.z; 
 
 	pointer[3] = 0; 
 	pointer[4] = 1; 
@@ -67,9 +67,9 @@ void npMeshRendererColor::drawTriangle(const ofVec3f &p0,const ofVec3f &p1,const
 
 
 
-	pointer[9] = p1.x*f; 
-	pointer[10] = p1.y+0.1; 
-	pointer[11] = p1.z*f; 
+	pointer[9] = p1.x; 
+	pointer[10] = p1.y; 
+	pointer[11] = p1.z; 
 
 	pointer[12] = 0; 
 	pointer[13] = 1; 
@@ -80,16 +80,16 @@ void npMeshRendererColor::drawTriangle(const ofVec3f &p0,const ofVec3f &p1,const
 	pointer[17] = 0; 
 
 
-	pointer[18] = p2.x*f; 
-	pointer[19] = p2.y+0.1; 
-	pointer[20] = p2.z*f; 
+	pointer[18] = p2.x; 
+	pointer[19] = p2.y; 
+	pointer[20] = p2.z; 
    
 	pointer[21] = 0; 
 	pointer[22] = 1; 
 	pointer[23] =0; 
 
-	pointer[24] = 1; 
-	pointer[25] = 1; 
+	pointer[24] = 0; 
+	pointer[25] = 0; 
 	pointer[26] = 1; 
 
 	float *p =pointer; 

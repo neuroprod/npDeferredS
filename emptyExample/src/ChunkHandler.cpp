@@ -44,9 +44,15 @@ void ChunkHandler::setup()
 }
 TerrainVertex  ChunkHandler::getVertexforPos(const ofVec3f &pos, int detailLevel)
 {
-	cout <<endl;
+	TerrainVertex  vert ;
+	vert.position.y =0;
+	//cout <<endl;
 	//cout << pos<<endl;
 	Chunk *chunk = getClosestChunk(pos,  detailLevel);
+	if (chunk==NULL) {
+	return vert;
+	}
+
 	ofVec2f posSearch;
 	posSearch.x = pos.x;
 	posSearch.y= pos.z;
@@ -73,7 +79,7 @@ TerrainVertex  ChunkHandler::getVertexforPos(const ofVec3f &pos, int detailLevel
 		{
 			posX2-=1;
 			posY2+=1;
-			cout <<"1";
+		//	cout <<"1";
 		//posX1-=1;
 		// of posY1+=1;
 			v1 =  chunk->getVertexForXY( posX0-1,posY0);
@@ -82,17 +88,17 @@ TerrainVertex  ChunkHandler::getVertexforPos(const ofVec3f &pos, int detailLevel
 			if(pos.distance(v1->position)<pos.distance(v2->position))
 			{
 				posX1-=1;
-				cout <<"a";
+			//	cout <<"a";
 			
 			}else
 			{
 				posY1+=1;
-						cout <<"b";
+				//		cout <<"b";
 			}
 
 		}else
 		{
-			cout <<"2";
+			//cout <<"2";
 			posY2-=1;
 			posX1-=1;
 		}
@@ -102,12 +108,12 @@ TerrainVertex  ChunkHandler::getVertexforPos(const ofVec3f &pos, int detailLevel
 		{
 			posY2+=1;
 			posX1+=1;
-		cout <<"3";
+		//cout <<"3";
 		}else
 		{
 			posX2+=1;
 			posY2-=1;
-			cout <<"4";
+			//cout <<"4";
 			//posX1+=1;
 		// of posY1-=1;
 			v1 =  chunk->getVertexForXY( posX0+1,posY0);
@@ -115,42 +121,77 @@ TerrainVertex  ChunkHandler::getVertexforPos(const ofVec3f &pos, int detailLevel
 			if(pos.distance(v1->position)<pos.distance(v2->position))
 			{
 				posX1+=1;
-					cout <<"a";
+				//	cout <<"a";
 			}
 			else
 			{
 				posY1-=1;
-					cout <<"b";
+					//cout <<"b";
 			}
 
 		}
 	}
 	
-	cout <<" "<<v0->position<<" ----" << pos; ;
+//	cout <<" "<<v0->position<<" ----" << pos; ;
 
 	
 	v1 =  chunk->getVertexForXY( posX1,posY1);
 	v2 =  chunk->getVertexForXY( posX2,posY2);
 
-	ofVec3f intersectionPoint;
+
+	ofVec3f normal= terrainFunctions->getNormal(v0->position,v1->position,v2->position);
+
+	///
+	
+	ofVec3f  rayStartPoint;
+	rayStartPoint.set(pos.x,10000,pos.z);
+	ofVec3f  raydir;
+	raydir.set(0,-1,0);
+	if (normal.y<0)normal*=-1;
+	ofVec3f  tv0 = rayStartPoint -v0->position;    
+	float a  = normal.dot(tv0);
+	float b = normal.dot(raydir);
+			
+				
+		
+                   
+                   
+	float r  = -a / b;
+			
+		
+                
+	//	intersection = new Vector3D(rayStartPoint.x + (raydir.x * r), raystartPoint.y + (raydir.y * r), raystartPoint.z + (raydir.z * r));
+
+
+	//cout<<normal<<"  --  " << r<<"  " << a<< " "<< b<<endl;
+
+
+	ofVec3f intersectionPoint ;
+	intersectionPoint.set(rayStartPoint.x + (raydir.x * r), rayStartPoint.y + (raydir.y * r), rayStartPoint.z + (raydir.z * r));
+	vert.position = intersectionPoint;
+	return vert;
+	
 	intersectionPoint.set(pos.x,0,pos.z);
+	
+	//
+
 	ofVec3f vp1,vp2,vp0;
-	vp0.set(v0->position.x,0,v0->position.z);
-	vp1.set(v1->position.x,0,v1->position.z);
-	vp2.set(v2->position.x,0,v2->position.z);
-	if (vp1.x ==0) return *v2;
+	vp0.set(v0->position.x,v0->position.y,v0->position.z);
+	vp1.set(v1->position.x,v1->position.y,v1->position.z);
+	vp2.set(v2->position.x,v2->position.y,v2->position.z);
+	
 	float  b0  = barMass(intersectionPoint, vp1, vp2);
 	float  b1  = barMass(intersectionPoint, vp0, vp2);
 	float  b2  = barMass(intersectionPoint, vp0, vp1);
-		//	cout << b0 <<" "<< b1 <<" "<< b2 <<endl;
-	float  b = b0 + b1 + b2;
-	b0 /= b;
-	b1 /= b;
-	b2 /= b;
+	//cout	<<endl<< "masses:" << b0 <<" "<< b1 <<" "<< b2 <<endl;
+	float  bn = b0 + b1 + b2;
+	b0 /= bn;
+	b1 /= bn;
+	b2 /= bn;
 	
-	TerrainVertex  vret ;
-	vret.position=(v0->position *b0)+(v1->position *b1)+(v2->position *b2);
-	return vret;
+	
+	vert.position=(v0->position *b0)+(v1->position *b1)+(v2->position *b2);
+	return vert;
 	
 }
 float ChunkHandler::barMass(const ofVec3f &p, const ofVec3f &l0 , const ofVec3f &l1)
@@ -174,7 +215,7 @@ Chunk * ChunkHandler::getClosestChunk(const ofVec3f &pos, int detailLevel)
 
 	ofVec3f vec;
 	float maxDist =10000000000;
-	Chunk *cChunk;
+	Chunk *cChunk =NULL;
 	for (int i=0;i< chunks.size(); ++i)
 	{
 		if (chunks[i]->detailLevel>detailLevel)break;
