@@ -359,11 +359,11 @@ void testApp::update(){
 			rendererColor.stop();
 
 		
-	/*	boneMeshRenderer.start(camera);
+		boneMeshRenderer.start(camera);
 			boneMeshRenderer.draw(&girl.charMesh);
 		boneMeshRenderer.stop();
 
-		*/
+		
 
 
     deferredBuffer.stop();

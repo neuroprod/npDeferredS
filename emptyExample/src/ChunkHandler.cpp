@@ -46,8 +46,7 @@ TerrainVertex  ChunkHandler::getVertexforPos(const ofVec3f &pos, int detailLevel
 {
 	TerrainVertex  vert ;
 	vert.position.y =0;
-	//cout <<endl;
-	//cout << pos<<endl;
+
 	Chunk *chunk = getClosestChunk(pos,  detailLevel);
 	if (chunk==NULL) {
 	return vert;
@@ -79,26 +78,24 @@ TerrainVertex  ChunkHandler::getVertexforPos(const ofVec3f &pos, int detailLevel
 		{
 			posX2-=1;
 			posY2+=1;
-		//	cout <<"1";
-		//posX1-=1;
-		// of posY1+=1;
+	
 			v1 =  chunk->getVertexForXY( posX0-1,posY0);
 			v2 =  chunk->getVertexForXY( posX0,posY0+1);
 
 			if(pos.distance(v1->position)<pos.distance(v2->position))
 			{
 				posX1-=1;
-			//	cout <<"a";
+			
 			
 			}else
 			{
 				posY1+=1;
-				//		cout <<"b";
+				
 			}
 
 		}else
 		{
-			//cout <<"2";
+			
 			posY2-=1;
 			posX1-=1;
 		}
@@ -108,33 +105,29 @@ TerrainVertex  ChunkHandler::getVertexforPos(const ofVec3f &pos, int detailLevel
 		{
 			posY2+=1;
 			posX1+=1;
-		//cout <<"3";
+		
 		}else
 		{
 			posX2+=1;
 			posY2-=1;
-			//cout <<"4";
-			//posX1+=1;
-		// of posY1-=1;
+		
 			v1 =  chunk->getVertexForXY( posX0+1,posY0);
 			v2 =  chunk->getVertexForXY( posX0,posY0-1);
 			if(pos.distance(v1->position)<pos.distance(v2->position))
 			{
 				posX1+=1;
-				//	cout <<"a";
+				
 			}
 			else
 			{
 				posY1-=1;
-					//cout <<"b";
+					
 			}
 
 		}
 	}
 	
-//	cout <<" "<<v0->position<<" ----" << pos; ;
 
-	
 	v1 =  chunk->getVertexForXY( posX1,posY1);
 	v2 =  chunk->getVertexForXY( posX2,posY2);
 
@@ -160,20 +153,14 @@ TerrainVertex  ChunkHandler::getVertexforPos(const ofVec3f &pos, int detailLevel
 			
 		
                 
-	//	intersection = new Vector3D(rayStartPoint.x + (raydir.x * r), raystartPoint.y + (raydir.y * r), raystartPoint.z + (raydir.z * r));
-
-
-	//cout<<normal<<"  --  " << r<<"  " << a<< " "<< b<<endl;
-
 
 	ofVec3f intersectionPoint ;
 	intersectionPoint.set(rayStartPoint.x + (raydir.x * r), rayStartPoint.y + (raydir.y * r), rayStartPoint.z + (raydir.z * r));
 	vert.position = intersectionPoint;
-	return vert;
+
 	
-	intersectionPoint.set(pos.x,0,pos.z);
-	
-	//
+
+
 
 	ofVec3f vp1,vp2,vp0;
 	vp0.set(v0->position.x,v0->position.y,v0->position.z);
@@ -183,14 +170,14 @@ TerrainVertex  ChunkHandler::getVertexforPos(const ofVec3f &pos, int detailLevel
 	float  b0  = barMass(intersectionPoint, vp1, vp2);
 	float  b1  = barMass(intersectionPoint, vp0, vp2);
 	float  b2  = barMass(intersectionPoint, vp0, vp1);
-	//cout	<<endl<< "masses:" << b0 <<" "<< b1 <<" "<< b2 <<endl;
+	
 	float  bn = b0 + b1 + b2;
 	b0 /= bn;
 	b1 /= bn;
 	b2 /= bn;
 	
 	
-	vert.position=(v0->position *b0)+(v1->position *b1)+(v2->position *b2);
+	vert.normal=(v0->normal *b0)+(v1->normal *b1)+(v2->normal *b2);
 	return vert;
 	
 }

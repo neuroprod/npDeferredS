@@ -19,7 +19,7 @@ aLoader.addAnimation(ofToDataPath("3DAssets/girlWalk.dae"));
 		walkDir.set(-0.085,0,0.996);
 	charPos.set(0,0,0);
 
-	walkspeed =15/3;
+	walkspeed =15;
 	 isMoving =false;
 	 lastDown =-1;
 	 rightIsDown =false;
@@ -58,25 +58,31 @@ void MainCharacter::update(unsigned long timeStep)
 	if (isMoving){
 	charPos  +=walkDir*(walkspeed* (float)timeStep/1000000);
 
-	walkSlerp +=0.2;
+	walkSlerp +=0.2f;
 	if (walkSlerp>1)walkSlerp =1;
 	}else
 	{
-	walkSlerp -=0.2;
+	walkSlerp -=0.2f;
 	if (walkSlerp<0)walkSlerp =0;
 	}
 	if (chunkHandler->frameCount>10){
 	TerrainVertex v = chunkHandler->getVertexforPos(charPos);
 	
-	charPos.y =v.position.y;//+2.3;
-	//charPos.x =v.position.x; 
-	//charPos.z =v.position.z;//  terrainFunctions->getHeightForPos(charPos.x, charPos.z) +2.3;
-	}
+	charPos.y =v.position.y+2.5;
+	//ofVec3f charPosReal  =charPos+2.5*v.normal;
+
+	//charMesh.objectMatrix.makeLookAtViewMatrix(ofVec3f(0,0,0),walkDir,-v.normal);
 	charMesh.objectMatrix.makeLookAtViewMatrix(ofVec3f(0,0,0),walkDir,ofVec3f(0,-1,0));
 	charMesh.objectMatrix.postMultTranslate(charPos);
-	//	charMesh.objectMatrix.preMultScale(ofVec3f(5,5,5));
+
 	charMesh.calculateNormalMatrix();
-	//cout <<charPos <<" " <<walkDir<< endl;
+	}else
+	{
+	
+	
+	}
+	
+	
 }
 
 
