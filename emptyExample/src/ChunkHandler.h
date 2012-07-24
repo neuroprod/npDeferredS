@@ -40,7 +40,13 @@ public:
 
 	Chunk *getClosestChunk(const ofVec3f &pos, int detailLevel =1);
 	TerrainVertex getVertexforPos(const ofVec3f &pos, int detailLevel =1);
+	float barMass(const ofVec3f &p, const ofVec3f &l0 , const ofVec3f &l1);
 	TerrainFBO terrainFBO;
 	TerrainTextureHandler textureHandler;
+
+
+	TerrainVertex *v0;
+	TerrainVertex *v1;
+	TerrainVertex *v2;
 };
 

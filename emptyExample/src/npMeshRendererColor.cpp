@@ -42,6 +42,69 @@ void npMeshRendererColor::start(const npCamera &cam)
     
 
 }
+void npMeshRendererColor::drawTriangle(const ofVec3f &p0,const ofVec3f &p1,const ofVec3f &p2)
+{
+	ofMatrix4x4 objectMatrix;
+	objectMatrix.makeIdentityMatrix();
+	glUniformMatrix4fv(uObjectMatrix, 1, 0,  objectMatrix.getPtr());
+    glUniformMatrix4fv(uNormalMatrix, 1, 0,  objectMatrix.getPtr());
+    
+	glDisable(GL_CULL_FACE);
+	float *pointer =new float[9*3];
+	//cout <<p0 <<" --  "<< p1<<" -- " <<p2 <<endl;
+	float f =1;
+	pointer[0] = p0.x*f; 
+	pointer[1] = p0.y+0.1; 
+	pointer[2] = p0.z*f; 
+
+	pointer[3] = 0; 
+	pointer[4] = 1; 
+	pointer[5] =0; 
+
+	pointer[6] = 1; 
+	pointer[7] = 0; 
+	pointer[8] = 0; 
+
+
+
+	pointer[9] = p1.x*f; 
+	pointer[10] = p1.y+0.1; 
+	pointer[11] = p1.z*f; 
+
+	pointer[12] = 0; 
+	pointer[13] = 1; 
+	pointer[14] =0; 
+
+	pointer[15] = 0; 
+	pointer[16] = 1; 
+	pointer[17] = 0; 
+
+
+	pointer[18] = p2.x*f; 
+	pointer[19] = p2.y+0.1; 
+	pointer[20] = p2.z*f; 
+   
+	pointer[21] = 0; 
+	pointer[22] = 1; 
+	pointer[23] =0; 
+
+	pointer[24] = 1; 
+	pointer[25] = 1; 
+	pointer[26] = 1; 
+
+	float *p =pointer; 
+
+    glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, 0, 9*sizeof(GLfloat), p);
+    p +=3;
+    glVertexAttribPointer(ATTRIB_NORMAL, 3, GL_FLOAT, 0, 9*sizeof(GLfloat), p);
+    p +=3;
+	glVertexAttribPointer(ATTRIB_COLOR, 3, GL_FLOAT, 0, 9*sizeof(GLfloat), p);
+
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+	delete [] pointer;
+
+}
 void npMeshRendererColor::draw(const npMesh *mesh)
 {
     glBindBuffer(GL_ARRAY_BUFFER,mesh->vertexBuffer);

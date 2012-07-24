@@ -55,11 +55,11 @@ void GameCamera::update(unsigned long timeStep)
 	camDir =  currentRotation *ofVec3f(0,0,10);
 	camPos =camDir +lookAtPos;
 
-	float terHeight = terrainFunctions->getHeightForPos(camPos.x,camPos.z);
+/*	float terHeight = terrainFunctions->getHeightForPos(camPos.x,camPos.z);
 	if (camPos.y<terHeight+1){
 		camPos.y =terHeight+1 ;
 	
-	}
+	}*/
 	//
 	 worldMatrix.makeLookAtViewMatrix(camPos,  lookAtPos, ofVec3f (0,1,0));
 

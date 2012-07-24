@@ -7,6 +7,9 @@ ChunkHandler::ChunkHandler()
 
 	frameCount =0;
 	 chunkParts =64/2;
+	 v0 =NULL;
+	 v1 =NULL;
+	 v2 =NULL;
 };
 
 
@@ -41,10 +44,12 @@ void ChunkHandler::setup()
 }
 TerrainVertex  ChunkHandler::getVertexforPos(const ofVec3f &pos, int detailLevel)
 {
+	cout <<endl;
+	//cout << pos<<endl;
 	Chunk *chunk = getClosestChunk(pos,  detailLevel);
 	ofVec2f posSearch;
- posSearch.x = pos.x;
-posSearch.y= pos.z;
+	posSearch.x = pos.x;
+	posSearch.y= pos.z;
 	posSearch.x-=chunk->center.x-chunkSize/2;
 	posSearch.y-=chunk->center.z-chunkSize/2;
 
@@ -53,37 +58,117 @@ posSearch.y= pos.z;
 
 	int posX0 =floor( posSearch.x+0.5);
 	int posY0 =floor(  posSearch.y+0.5);
-	cout << posSearch << " "<< posX0 <<" "<<posY0 <<endl;
-	TerrainVertex *v0 =  chunk->getVertexForXY( posX0,posY0);
-	float dif1 = posSearch.x-posX0;
-	int	posX1;
-	if (dif1 <0)
+
+	v0 =  chunk->getVertexForXY( posX0,posY0);
+	float difx = posSearch.x-posX0;
+	float dify = posSearch.y;
+	int	posX1= posX0 ;
+	int	posX2= posX0 ;
+	int	posY1= posY0 ;
+	int	posY2= posY0 ;
+
+	if (pos.x <v0->position.x)
 	{
-		posX1 =  posX0 -1;
+		if (pos.z >v0->position.z)
+		{
+			posX2-=1;
+			posY2+=1;
+			cout <<"1";
+		//posX1-=1;
+		// of posY1+=1;
+			v1 =  chunk->getVertexForXY( posX0-1,posY0);
+			v2 =  chunk->getVertexForXY( posX0,posY0+1);
+
+			if(pos.distance(v1->position)<pos.distance(v2->position))
+			{
+				posX1-=1;
+				cout <<"a";
+			
+			}else
+			{
+				posY1+=1;
+						cout <<"b";
+			}
+
+		}else
+		{
+			cout <<"2";
+			posY2-=1;
+			posX1-=1;
+		}
 	}else
 	{
-	posX1 =  posX0 +1;
+		if (pos.z >v0->position.z)
+		{
+			posY2+=1;
+			posX1+=1;
+		cout <<"3";
+		}else
+		{
+			posX2+=1;
+			posY2-=1;
+			cout <<"4";
+			//posX1+=1;
+		// of posY1-=1;
+			v1 =  chunk->getVertexForXY( posX0+1,posY0);
+			v2 =  chunk->getVertexForXY( posX0,posY0-1);
+			if(pos.distance(v1->position)<pos.distance(v2->position))
+			{
+				posX1+=1;
+					cout <<"a";
+			}
+			else
+			{
+				posY1-=1;
+					cout <<"b";
+			}
+
+		}
 	}
 	
-	float dif2 = posX0-posSearch.y;
-	int	posY2;
-	if (dif2 <0)
-	{
-		posY2 =  posY0 -1;
-	}else
-	{
-		posY2 =  posY0 +1;
-	}
-
-	TerrainVertex *v1 =  chunk->getVertexForXY( posX1,posY0);
-	TerrainVertex *v2 =  chunk->getVertexForXY( posX0,posY2);
+	cout <<" "<<v0->position<<" ----" << pos; ;
 
 	
+	v1 =  chunk->getVertexForXY( posX1,posY1);
+	v2 =  chunk->getVertexForXY( posX2,posY2);
 
-
-	return *v1;
+	ofVec3f intersectionPoint;
+	intersectionPoint.set(pos.x,0,pos.z);
+	ofVec3f vp1,vp2,vp0;
+	vp0.set(v0->position.x,0,v0->position.z);
+	vp1.set(v1->position.x,0,v1->position.z);
+	vp2.set(v2->position.x,0,v2->position.z);
+	if (vp1.x ==0) return *v2;
+	float  b0  = barMass(intersectionPoint, vp1, vp2);
+	float  b1  = barMass(intersectionPoint, vp0, vp2);
+	float  b2  = barMass(intersectionPoint, vp0, vp1);
+		//	cout << b0 <<" "<< b1 <<" "<< b2 <<endl;
+	float  b = b0 + b1 + b2;
+	b0 /= b;
+	b1 /= b;
+	b2 /= b;
+	
+	TerrainVertex  vret ;
+	vret.position=(v0->position *b0)+(v1->position *b1)+(v2->position *b2);
+	return vret;
 	
 }
+float ChunkHandler::barMass(const ofVec3f &p, const ofVec3f &l0 , const ofVec3f &l1)
+{
+	
+			ofVec3f v  = l0 -l1;
+			ofVec3f w = p -l0;
+
+			float c1= v.dot(w);
+			float  c2  = v.dot(v);
+			float  b = c1 / c2;
+			v.scale(b);
+			ofVec3f pB = l0 +v;
+			ofVec3f t1  = pB-p ;
+			ofVec3f t2  = l0-l1 ;
+			return t1.length() * t2.length();
+}
+
 Chunk * ChunkHandler::getClosestChunk(const ofVec3f &pos, int detailLevel)
 {
 

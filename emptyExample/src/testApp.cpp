@@ -340,8 +340,10 @@ void testApp::update(){
 			renderTexture.stop();
 		
 		glDisable(GL_ALPHA_TEST);
-	/*rendererColor.start(camera);
-		for (int i=0;i< chunkHandler.chunks.size();i++)
+	rendererColor.start(camera);
+	if (chunkHandler.v0)
+	rendererColor.drawTriangle(chunkHandler.v0->position,chunkHandler.v1->position,chunkHandler.v2->position);
+		/*for (int i=0;i< chunkHandler.chunks.size();i++)
 		{
 			if(chunkHandler.chunks[i]->detailLevel==1 || chunkHandler.chunks[i]->detailLevel==2)
 			{
@@ -351,8 +353,8 @@ void testApp::update(){
 				}
 			}
 		}
-
-			rendererColor.stop();*/
+		*/
+			rendererColor.stop();
 
 		
 		boneMeshRenderer.start(camera);
