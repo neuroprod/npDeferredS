@@ -16,7 +16,11 @@ class ObjectLib;
 
 class TerrainFunctions {
 public:
-	TerrainFunctions(){};
+	TerrainFunctions(){	heightPerlin1=NULL;
+	heightPerlin2=NULL;
+	typePerlin=NULL;
+
+	vegatationPerlin  =NULL;}
 	~TerrainFunctions(){};
 
 	void setup();

@@ -8,7 +8,9 @@ void TerrainFunctions::setup()
 	srand(100);
 
 	
-	heightPerlin1 = new Perlin(5,1,1,54);
+
+
+	heightPerlin1= new Perlin(5,1,1,801);
 	
 	heightPerlin2= new Perlin(3,1,1,81);
 	typePerlin= new Perlin(8,1,1,21);	
@@ -19,7 +21,7 @@ void TerrainFunctions::setup()
 
 float TerrainFunctions::getHeightForPos(float  x, float z)
 {
-	
+	return 0;
 	float heightMac1  =heightPerlin1->Get(x/1500.1, z/1500.1)+0.5+0.3 ;
 	heightMac1 =  heightMac1*heightMac1*heightMac1*100;
 	if (heightMac1 >70)

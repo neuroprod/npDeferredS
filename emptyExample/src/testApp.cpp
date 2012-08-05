@@ -1,8 +1,38 @@
 #include "testApp.h"
 #include "GLErrorCheck.h"
+
+
+#include "btBulletDynamicsCommon.h"
+
 //<iframe src="http://player.vimeo.com/video/46021001?title=0&amp;byline=0&amp;portrait=0" width="700" height="394" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 //--------------------------------------------------------------
 void testApp::setup(){
+
+
+	  btBroadphaseInterface* broadphase = new btDbvtBroadphase();
+ 
+    // Set up the collision configuration and dispatcher
+    btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
+    btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
+ 
+    // The actual physics solver
+    btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
+ 
+    // The world.
+    btDiscreteDynamicsWorld* dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
+    dynamicsWorld->setGravity(btVector3(0,-10,0));
+
+
+
+
+
+
+
+
+
+
+
+
 
 	/*int units;
 	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS,  &units);
@@ -106,7 +136,7 @@ void testApp::update(){
 	dayTime = cycleTime/120000.0f ;
 	
 
-
+	cout << "here";
 
 
 	 colorFactor = 1;
