@@ -115,11 +115,11 @@
     <ClCompile Include="src\TerrainTextureHandler.cpp">
       <Filter>src\game\terrain</Filter>
     </ClCompile>
+    <ClCompile Include="src\PhysicsHandler.cpp">
+      <Filter>src\physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\testApp.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\npDeferredBuffers.h">
       <Filter>src\np\deferred</Filter>
     </ClInclude>
@@ -255,6 +255,12 @@
     <ClInclude Include="src\TerrainTextureHandler.h">
       <Filter>src\game\terrain</Filter>
     </ClInclude>
+    <ClInclude Include="src\PhysicsHandler.h">
+      <Filter>src\physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\testApp.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -286,6 +292,9 @@
     </Filter>
     <Filter Include="src\np\objects\utils">
       <UniqueIdentifier>{dcdb91bb-553b-410d-9dd7-5dafa9d0ede8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\physics">
+      <UniqueIdentifier>{e43b7641-9048-40bf-bfe5-809e2ac19e79}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

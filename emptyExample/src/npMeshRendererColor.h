@@ -25,7 +25,7 @@ public:
     
     
     void start(const npCamera &cam);
-    void draw(const npMesh *mesh);
+    void draw(const npMesh &mesh);
 	   void draw(const npMultiPointLight &mpl);
 	  void drawTriangle(const ofVec3f &p0,const ofVec3f &p1,const ofVec3f &p2);
     void stop();

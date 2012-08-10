@@ -46,7 +46,7 @@ TerrainVertex  ChunkHandler::getVertexforPos(const ofVec3f &pos, int detailLevel
 {
 	TerrainVertex  vert ;
 	vert.position.y =0;
-
+	
 	Chunk *chunk = getClosestChunk(pos,  detailLevel);
 	if (chunk==NULL) {
 	return vert;
@@ -147,11 +147,13 @@ TerrainVertex  ChunkHandler::getVertexforPos(const ofVec3f &pos, int detailLevel
 			
 				
 		
-                   
-                   
-	float r  = -a / b;
+           float r  = -a / b;        
+	if (b==0){r =10000;}
+
+
 			
 		
+	
                 
 
 	ofVec3f intersectionPoint ;

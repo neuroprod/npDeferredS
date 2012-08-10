@@ -105,9 +105,9 @@ void npMeshRendererColor::drawTriangle(const ofVec3f &p0,const ofVec3f &p1,const
 	delete [] pointer;
 
 }
-void npMeshRendererColor::draw(const npMesh *mesh)
+void npMeshRendererColor::draw(const npMesh &mesh)
 {
-    glBindBuffer(GL_ARRAY_BUFFER,mesh->vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER,mesh.vertexBuffer);
     
 	
     glVertexAttribPointer(ATTRIB_VERTEX, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9,(GLvoid*) (sizeof(float) * 0));
@@ -117,12 +117,12 @@ void npMeshRendererColor::draw(const npMesh *mesh)
     
     
     
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  mesh->indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,  mesh.indexBuffer);
  
-    glUniformMatrix4fv(uObjectMatrix, 1, 0,  mesh->objectMatrix.getPtr());
-    glUniformMatrix4fv(uNormalMatrix, 1, 0,   mesh->normalMatrix.getPtr());
+    glUniformMatrix4fv(uObjectMatrix, 1, 0,  mesh.objectMatrix.getPtr());
+    glUniformMatrix4fv(uNormalMatrix, 1, 0,   mesh.normalMatrix.getPtr());
     
-    glDrawElements(GL_TRIANGLES,mesh->numIndices , GL_UNSIGNED_INT, (void*)0);
+    glDrawElements(GL_TRIANGLES,mesh.numIndices , GL_UNSIGNED_INT, (void*)0);
 
 
 

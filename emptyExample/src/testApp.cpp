@@ -2,38 +2,15 @@
 #include "GLErrorCheck.h"
 
 
-#include "btBulletDynamicsCommon.h"
+
 
 //<iframe src="http://player.vimeo.com/video/46021001?title=0&amp;byline=0&amp;portrait=0" width="700" height="394" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 //--------------------------------------------------------------
 void testApp::setup(){
 
 
-	  btBroadphaseInterface* broadphase = new btDbvtBroadphase();
+	 
  
-    // Set up the collision configuration and dispatcher
-    btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
-    btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
- 
-    // The actual physics solver
-    btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
- 
-    // The world.
-    btDiscreteDynamicsWorld* dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
-    dynamicsWorld->setGravity(btVector3(0,-10,0));
-
-
-
-
-
-
-
-
-
-
-
-
-
 	/*int units;
 	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS,  &units);
 	cout <<"maxTexture units " <<units<< endl;
@@ -117,9 +94,12 @@ void testApp::setup(){
 	previousTime=ofGetElapsedTimeMicros();
 	currentTime =ofGetElapsedTimeMicros();
 
+	physicsHandler.setup();
 
 	GLErrorCheck::test("setup end");
 	cout << "setupDone"<< endl;
+
+	
 	
 }
 
@@ -132,11 +112,14 @@ void testApp::update(){
 	 timeStep =currentTime -previousTime;   
 	previousTime  = currentTime;
 	
+		physicsHandler.update((float)timeStep/1000000.0f);
+
+
 	float cycleTime =  (currentTime/1000)%120000;
 	dayTime = cycleTime/120000.0f ;
 	
 
-	cout << "here";
+
 
 
 	 colorFactor = 1;
@@ -375,7 +358,11 @@ void testApp::update(){
 			rendererColor.drawTriangle(chunkHandler.v0->position,chunkHandler.v1->position,chunkHandler.v2->position);
 	
 	rendererColor.drawTriangle(girl.charPos,girl.charPos+ofVec3f(0,1,0),girl.charPos+ofVec3f(0,1,1));
-		/*for (int i=0;i< chunkHandler.chunks.size();i++)
+		
+	rendererColor.draw(physicsHandler.testSphere);
+		rendererColor.draw(physicsHandler.testSphereChar1);
+	rendererColor.draw(physicsHandler.testSphereChar2);
+	/*for (int i=0;i< chunkHandler.chunks.size();i++)
 		{
 			if(chunkHandler.chunks[i]->detailLevel==1 || chunkHandler.chunks[i]->detailLevel==2)
 			{

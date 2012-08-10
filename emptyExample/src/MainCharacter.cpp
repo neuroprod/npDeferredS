@@ -9,7 +9,7 @@ aLoader.load(ofToDataPath("3DAssets/girlStop.dae"));
 aLoader.addAnimation(ofToDataPath("3DAssets/girlWalk.dae"));
 
 	charMesh  = *aLoader.boneMeshes[0];
-	charMesh.setPos(0,0,0);
+	charMesh.setPos(0.0,0.001,0.0);
 	charMesh.material.loadDiffuse("3DAssets/vrouwFinal.png");
 	walkDirRot =0;
 	rotSpeed =2;
@@ -17,7 +17,7 @@ aLoader.addAnimation(ofToDataPath("3DAssets/girlWalk.dae"));
 	//charPos.set(98.99,77.23,189.178);
 
 		walkDir.set(-0.085,0,0.996);
-	charPos.set(0,0,0);
+	charPos.set(0.00,0.00,0.00);
 
 	walkspeed =15;
 	 isMoving =false;

@@ -32,7 +32,7 @@
 #include "npShadowMapBoneRenderer.h"
 #include "npDeferredShadowPass.h"
 
-
+#include "PhysicsHandler.h"
 #include "SkyBox.h"
 
 class testApp : public ofBaseApp{
@@ -91,6 +91,8 @@ public:
 
 
 	SkyBox skyBox;
+
+	PhysicsHandler physicsHandler;
 };
 
 

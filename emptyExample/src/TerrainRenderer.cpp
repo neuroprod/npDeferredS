@@ -103,7 +103,7 @@ void TerrainRenderer::draw(const npMesh *mesh, int detailLevel)
 			glUniformMatrix4fv(uObjectMatrixDetail, 1, 0,  mesh->objectMatrix.getPtr());
 			glUniformMatrix4fv(uNormalMatrixDetail, 1, 0,   mesh->normalMatrix.getPtr());
     
-			glDrawElements(GL_LINES,mesh->numIndices , GL_UNSIGNED_INT, (void*)0);
+			glDrawElements(GL_TRIANGLES,mesh->numIndices , GL_UNSIGNED_INT, (void*)0);
 	
 	
 	}
