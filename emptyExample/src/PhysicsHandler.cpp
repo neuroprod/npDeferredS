@@ -1,4 +1,15 @@
 #include "PhysicsHandler.h"
+PhysicsHandler *PhysicsHandler::mSingleton =NULL;
+PhysicsHandler::PhysicsHandler(){};
+PhysicsHandler::~PhysicsHandler(){};
+PhysicsHandler * PhysicsHandler::getInstance()
+{
+	if (mSingleton==NULL)
+	{
+		mSingleton = new PhysicsHandler();
+	}
+	return mSingleton;
+}
 
 void PhysicsHandler::setup()
 {
@@ -21,14 +32,14 @@ void PhysicsHandler::setup()
  
         btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,0,0)));
         btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0,groundMotionState,groundShape,btVector3(0,0,0));
-		groundRigidBodyCI.m_friction =0.1;
+		//groundRigidBodyCI.m_friction =0.1;
         btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
 		
         dynamicsWorld->addRigidBody(groundRigidBody);
  
   fallShape = new btSphereShape(1);
         btDefaultMotionState* fallMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,10,0)));
-        btScalar mass = 1;
+        btScalar mass = 100;
         btVector3 fallInertia(0.1,0.1,0.1);
         fallShape->calculateLocalInertia(mass,fallInertia);
         btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass,fallMotionState,fallShape,fallInertia);
@@ -106,7 +117,7 @@ capsuleRigidBody->setAngularFactor(0.0);
 	void PhysicsHandler::update(float timeStep)
 	{
 	
-	 dynamicsWorld->stepSimulation(timeStep,10);
+	 dynamicsWorld->stepSimulation(1.0f/60.0f,10);
  
                 btTransform trans;
                 fallRigidBody->getMotionState()->getWorldTransform(trans);

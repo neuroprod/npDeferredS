@@ -5,6 +5,8 @@
 #include "npBoneMesh.h"
 #include "TerrainFunctions.h"
 #include "ChunkHandler.h"
+#include "PhysicsHandler.h"
+#include "btBulletDynamicsCommon.h"
 class MainCharacter
 {
 
@@ -33,12 +35,14 @@ public :
 	ChunkHandler *chunkHandler;
 	TerrainFunctions * terrainFunctions;
 	float walkSlerp;
+	PhysicsHandler * physicsHandler;
+	
 	enum
 	{
 	     FORWARD_DOWN,FORWARD_UP,
 		 LEFT_DOWN,LEFT_UP,
 		RIGHT_DOWN,RIGHT_UP,
-	
+	JUMP,
 	
 	};
 

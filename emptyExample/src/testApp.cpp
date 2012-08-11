@@ -17,7 +17,7 @@ void testApp::setup(){
 
 	*/
 	ofSetFrameRate(60);
-    
+	physicsHandler  =PhysicsHandler::getInstance();
 
 	terrainFunctions.setup();
 	chunkHandler.terrainFunctions =&terrainFunctions;
@@ -94,7 +94,7 @@ void testApp::setup(){
 	previousTime=ofGetElapsedTimeMicros();
 	currentTime =ofGetElapsedTimeMicros();
 
-	physicsHandler.setup();
+	physicsHandler->setup();
 
 	GLErrorCheck::test("setup end");
 	cout << "setupDone"<< endl;
@@ -112,7 +112,7 @@ void testApp::update(){
 	 timeStep =currentTime -previousTime;   
 	previousTime  = currentTime;
 	
-		physicsHandler.update((float)timeStep/1000000.0f);
+		physicsHandler->update((float)timeStep/1000000.0f);
 
 
 	float cycleTime =  (currentTime/1000)%120000;
@@ -359,9 +359,9 @@ void testApp::update(){
 	
 	rendererColor.drawTriangle(girl.charPos,girl.charPos+ofVec3f(0,1,0),girl.charPos+ofVec3f(0,1,1));
 		
-	rendererColor.draw(physicsHandler.testSphere);
-		rendererColor.draw(physicsHandler.testSphereChar1);
-	rendererColor.draw(physicsHandler.testSphereChar2);
+	rendererColor.draw(physicsHandler->testSphere);
+		rendererColor.draw(physicsHandler->testSphereChar1);
+	rendererColor.draw(physicsHandler->testSphereChar2);
 	/*for (int i=0;i< chunkHandler.chunks.size();i++)
 		{
 			if(chunkHandler.chunks[i]->detailLevel==1 || chunkHandler.chunks[i]->detailLevel==2)
@@ -434,6 +434,10 @@ deferredFinal.draw(camera, dayTime,colorFactor);//dayTime
 void testApp::keyPressed(int key){
     
 	switch (key) {
+		  case 32: 
+			girl.setKey(MainCharacter::JUMP);
+		
+        break;
 		case OF_KEY_UP: 
 			girl.setKey(MainCharacter::FORWARD_DOWN);
 		

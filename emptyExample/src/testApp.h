@@ -92,7 +92,7 @@ public:
 
 	SkyBox skyBox;
 
-	PhysicsHandler physicsHandler;
+	PhysicsHandler *physicsHandler;
 };
 
 

@@ -3,7 +3,7 @@
 
 void MainCharacter::setup()
 {
-	
+	physicsHandler = PhysicsHandler::getInstance();
 	//	aLoader.load(ofToDataPath("3DAssets/vrouwAnimeTest2.dae"));
 aLoader.load(ofToDataPath("3DAssets/girlStop.dae"));
 aLoader.addAnimation(ofToDataPath("3DAssets/girlWalk.dae"));
@@ -53,29 +53,43 @@ void MainCharacter::update(unsigned long timeStep)
 		walkDir.normalize();
 	
 	}
+	
+	float yp = physicsHandler->capsuleRigidBody->getLinearVelocity().y();
+	if (isMoving)
+	{
+		ofVec3f moveStep = walkDir*(walkspeed* (float)timeStep/1000000);
 
-
-	if (isMoving){
-	charPos  +=walkDir*(walkspeed* (float)timeStep/1000000);
-
-	walkSlerp +=0.2f;
-	if (walkSlerp>1)walkSlerp =1;
+		charPos  +=walkDir*(walkspeed* (float)timeStep/1000000);
+		
+		physicsHandler->capsuleRigidBody->setLinearVelocity(btVector3( moveStep.x*35,- yp, moveStep.z*35));
+		//physicsHandler->capsuleRigidBody->applyForce(btVector3(moveStep.x*200,0,moveStep.z*200),btVector3(0,0,0)); 
+		walkSlerp +=0.2f;
+		if (walkSlerp>1)
+		{
+			walkSlerp =1;
+		}
 	}else
 	{
-	walkSlerp -=0.2f;
-	if (walkSlerp<0)walkSlerp =0;
+		walkSlerp -=0.2f;
+		if (walkSlerp<0)
+		{
+			walkSlerp =0;
+		}
+
+			physicsHandler->capsuleRigidBody->setLinearVelocity(btVector3( 0,yp,0));
 	}
-	if (chunkHandler->frameCount>10){
-	TerrainVertex v = chunkHandler->getVertexforPos(charPos);
+
+
+	if (chunkHandler->frameCount>10)
+	{
+		TerrainVertex v = chunkHandler->getVertexforPos(charPos);
 	
-	charPos.y =v.position.y+2.5;
-	//ofVec3f charPosReal  =charPos+2.5*v.normal;
+		charPos.y =v.position.y+2.5;
 
-	//charMesh.objectMatrix.makeLookAtViewMatrix(ofVec3f(0,0,0),walkDir,-v.normal);
-	charMesh.objectMatrix.makeLookAtViewMatrix(ofVec3f(0,0,0),walkDir,ofVec3f(0,-1,0));
-	charMesh.objectMatrix.postMultTranslate(charPos);
+		charMesh.objectMatrix.makeLookAtViewMatrix(ofVec3f(0,0,0),walkDir,ofVec3f(0,-1,0));
+		charMesh.objectMatrix.postMultTranslate(charPos);
 
-	charMesh.calculateNormalMatrix();
+		charMesh.calculateNormalMatrix();
 	}else
 	{
 	
@@ -89,7 +103,12 @@ void MainCharacter::update(unsigned long timeStep)
 void  MainCharacter::setKey(int key)
 {
 
-if (key== FORWARD_DOWN) isMoving =true;
+		if (key== JUMP)
+	{
+	cout <<"jump"<<endl;
+	physicsHandler->capsuleRigidBody->applyImpulse(btVector3(0,10,0),btVector3(0,0,0)); 
+	}
+else if (key== FORWARD_DOWN) isMoving =true;
 else if (key== FORWARD_UP) isMoving =false;
 	
 else if (key== RIGHT_DOWN)

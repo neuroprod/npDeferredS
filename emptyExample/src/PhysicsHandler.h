@@ -4,8 +4,14 @@
 #include "npSphere.h"
 class PhysicsHandler
 {
+
+private:
+	static PhysicsHandler *mSingleton;
+protected:
+	PhysicsHandler();
 public:
-	PhysicsHandler(){};
+	virtual ~PhysicsHandler();
+	static PhysicsHandler * getInstance();
 	void setup();
 
 
