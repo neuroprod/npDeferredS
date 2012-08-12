@@ -5,8 +5,8 @@ void MainCharacter::setup()
 {
 	physicsHandler = PhysicsHandler::getInstance();
 	//	aLoader.load(ofToDataPath("3DAssets/vrouwAnimeTest2.dae"));
-aLoader.load(ofToDataPath("3DAssets/girlStop.dae"));
-aLoader.addAnimation(ofToDataPath("3DAssets/girlWalk.dae"));
+	aLoader.load(ofToDataPath("3DAssets/girlStop.dae"));
+	aLoader.addAnimation(ofToDataPath("3DAssets/girlWalk.dae"));
 
 	charMesh  = *aLoader.boneMeshes[0];
 	charMesh.setPos(0.0,0.001,0.0);
@@ -16,22 +16,35 @@ aLoader.addAnimation(ofToDataPath("3DAssets/girlWalk.dae"));
 	//walkDir.set(-0.085,0,0.996);
 	//charPos.set(98.99,77.23,189.178);
 
-		walkDir.set(-0.085,0,0.996);
+	walkDir.set(-0.085,0,0.996);
 	charPos.set(0.00,0.00,0.00);
 
 	walkspeed =15;
-	 isMoving =false;
-	 lastDown =-1;
-	 rightIsDown =false;
-	 leftIsDown =false;
-	  walkSlerp=0;
+	isMoving =false;
+	lastDown =-1;
+	rightIsDown =false;
+	leftIsDown =false;
+	walkSlerp=0;
+
+	btScalar mass = 1;
+    btVector3 fallInertia(0.0,0.0,0.0);
+	capsuleShape = new btCapsuleShape(1,3.6); 
+    capsuleMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0.2,1.8+2,0.2)));
+    capsuleShape->calculateLocalInertia(mass,fallInertia);
+    btRigidBody::btRigidBodyConstructionInfo capsuleRigidBodyCI(mass,capsuleMotionState,capsuleShape,fallInertia);
+    capsuleRigidBody = new btRigidBody(capsuleRigidBodyCI);
+	capsuleRigidBody->setSleepingThresholds(0.0, 0.0);
+	capsuleRigidBody->setAngularFactor(0.0);
+
+	physicsHandler->capsuleRigidBody  =capsuleRigidBody; 
+	physicsHandler->dynamicsWorld->addRigidBody(capsuleRigidBody);
+	
 }
 void MainCharacter::update(unsigned long timeStep)
 {
 	
 	
 	
-	charMesh.update((float)timeStep/300000 ,walkSlerp,0,1);
 
 	if (lastDown >-1)
 	{
@@ -54,14 +67,14 @@ void MainCharacter::update(unsigned long timeStep)
 	
 	}
 	
-	float yp = physicsHandler->capsuleRigidBody->getLinearVelocity().y();
+	float yp = capsuleRigidBody->getLinearVelocity().y();
 	if (isMoving)
 	{
 		ofVec3f moveStep = walkDir*(walkspeed* (float)timeStep/1000000);
 
-		charPos  +=walkDir*(walkspeed* (float)timeStep/1000000);
+		//charPos  +=walkDir*(walkspeed* (float)timeStep/1000000);
 		
-		physicsHandler->capsuleRigidBody->setLinearVelocity(btVector3( moveStep.x*35,- yp, moveStep.z*35));
+		capsuleRigidBody->setLinearVelocity(btVector3( moveStep.x*35,yp, moveStep.z*35));
 		//physicsHandler->capsuleRigidBody->applyForce(btVector3(moveStep.x*200,0,moveStep.z*200),btVector3(0,0,0)); 
 		walkSlerp +=0.2f;
 		if (walkSlerp>1)
@@ -76,11 +89,11 @@ void MainCharacter::update(unsigned long timeStep)
 			walkSlerp =0;
 		}
 
-			physicsHandler->capsuleRigidBody->setLinearVelocity(btVector3( 0,yp,0));
+			capsuleRigidBody->setLinearVelocity(btVector3( 0,yp,0));
 	}
 
 
-	if (chunkHandler->frameCount>10)
+/*	if (chunkHandler->frameCount>10)
 	{
 		TerrainVertex v = chunkHandler->getVertexforPos(charPos);
 	
@@ -94,57 +107,82 @@ void MainCharacter::update(unsigned long timeStep)
 	{
 	
 	
-	}
+	}*/
 	
 	
 }
+void MainCharacter::resolve( unsigned long timeStep)
+{
+	if (chunkHandler->frameCount>10)
+	{
+		//TerrainVertex v = chunkHandler->getVertexforPos(charPos);
+		
 
+		charPos.x =capsuleMotionState->m_graphicsWorldTrans.getOrigin().getX();
+		charPos.y =capsuleMotionState->m_graphicsWorldTrans.getOrigin().getY();
+		charPos.z =capsuleMotionState->m_graphicsWorldTrans.getOrigin().getZ();
+		charMesh.objectMatrix.makeLookAtViewMatrix(ofVec3f(0,0,0),walkDir,ofVec3f(0,-1,0));
+		charMesh.objectMatrix.postMultTranslate(charPos);
+
+		charMesh.calculateNormalMatrix();
+	}else
+	{
+	
+	
+	}
+	charMesh.update((float)timeStep/300000 ,walkSlerp,0,1);
+
+
+
+}
 
 void  MainCharacter::setKey(int key)
 {
 
-		if (key== JUMP)
+	if (key== JUMP)
 	{
-	cout <<"jump"<<endl;
-	physicsHandler->capsuleRigidBody->applyImpulse(btVector3(0,10,0),btVector3(0,0,0)); 
+		cout <<"jump"<<endl;
+		capsuleRigidBody->applyImpulse(btVector3(0,10,0),btVector3(0,0,0)); 
 	}
-else if (key== FORWARD_DOWN) isMoving =true;
-else if (key== FORWARD_UP) isMoving =false;
+	else if (key== FORWARD_DOWN) isMoving =true;
+	else if (key== FORWARD_UP) isMoving =false;
 	
-else if (key== RIGHT_DOWN)
-{
-	lastDown= RIGHT_DOWN;
-	
-	rightIsDown =true;
-} 
-else if (key== LEFT_DOWN)
-{
-	lastDown= LEFT_DOWN;
-	
-	leftIsDown =true;
-} else if (key== RIGHT_UP)
-{
-	rightIsDown =false;
-	if (leftIsDown)
+	else if (key== RIGHT_DOWN)
 	{
-		lastDown  =  LEFT_DOWN;
-	}else
+		lastDown= RIGHT_DOWN;
+	
+		rightIsDown =true;
+	} 
+	else if (key== LEFT_DOWN)
 	{
-		lastDown =-1;
+		lastDown= LEFT_DOWN;
+	
+		leftIsDown =true;
 	}
-} 
-else if (key== LEFT_UP)
-{
-	leftIsDown =false;
-	if (rightIsDown)
+	else if (key== RIGHT_UP)
 	{
-		lastDown  = RIGHT_DOWN;
-	}else
+		rightIsDown =false;
+	
+		if (leftIsDown)
+		{
+			lastDown  =  LEFT_DOWN;
+		}
+		else
+		{
+			lastDown =-1;
+		}
+	} 
+	else if (key== LEFT_UP)
 	{
-		lastDown =-1;
-	}
-} 
-
-
+		leftIsDown =false;
+		if (rightIsDown)
+		{
+			lastDown  = RIGHT_DOWN;
+		}
+		else
+		{
+			lastDown =-1;
+		}
+	} 
 
 }

@@ -2,6 +2,7 @@
 #include "npIncludes.h"
 #include "btBulletDynamicsCommon.h"
 #include "npSphere.h"
+#include "npBox.h"
 class PhysicsHandler
 {
 
@@ -36,10 +37,13 @@ public:
         btCollisionShape* fallShape;
 		 btRigidBody* fallRigidBody ;
 		
-		 btCollisionShape* capsuleShape;
+
 		btRigidBody* capsuleRigidBody ;
 
 		npSphere testSphere;
 		npSphere testSphereChar1;
 		npSphere testSphereChar2;
+
+
+		npBox testBox;
 };

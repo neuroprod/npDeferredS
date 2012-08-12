@@ -14,7 +14,7 @@ public :
 	MainCharacter(){};
 	void setup();
 	void update( unsigned long timeStep);
-
+	void resolve( unsigned long timeStep);
 
 	bool isMoving;
 	float walkspeed;
@@ -46,4 +46,8 @@ public :
 	
 	};
 
+
+		 btCollisionShape* capsuleShape;
+		btRigidBody* capsuleRigidBody ;
+		 btDefaultMotionState* capsuleMotionState;
 };

@@ -126,6 +126,7 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClCompile Include="src\npBoneAnimation.cpp" />
     <ClCompile Include="src\npBoneMesh.cpp" />
     <ClCompile Include="src\npBoneMeshRenderer.cpp" />
+    <ClCompile Include="src\npBox.cpp" />
     <ClCompile Include="src\npDeferredBuffers.cpp" />
     <ClCompile Include="src\npDeferredFinal.cpp" />
     <ClCompile Include="src\npDeferredShadowPass.cpp" />
@@ -173,6 +174,7 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClInclude Include="src\npBoneAnimation.h" />
     <ClInclude Include="src\npBoneMesh.h" />
     <ClInclude Include="src\npBoneMeshRenderer.h" />
+    <ClInclude Include="src\npBox.h" />
     <ClInclude Include="src\npCamera.h" />
     <ClInclude Include="src\npDeferredBuffers.h" />
     <ClInclude Include="src\npDeferredFinal.h" />

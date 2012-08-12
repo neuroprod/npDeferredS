@@ -93,7 +93,9 @@ public:
 	SkyBox skyBox;
 
 	PhysicsHandler *physicsHandler;
-};
+
+	unsigned int frameCount;
+ };
 
 
 

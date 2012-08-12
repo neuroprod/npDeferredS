@@ -18,6 +18,7 @@ void testApp::setup(){
 	*/
 	ofSetFrameRate(60);
 	physicsHandler  =PhysicsHandler::getInstance();
+	physicsHandler->setup();
 
 	terrainFunctions.setup();
 	chunkHandler.terrainFunctions =&terrainFunctions;
@@ -94,12 +95,10 @@ void testApp::setup(){
 	previousTime=ofGetElapsedTimeMicros();
 	currentTime =ofGetElapsedTimeMicros();
 
-	physicsHandler->setup();
-
 	GLErrorCheck::test("setup end");
 	cout << "setupDone"<< endl;
 
-	
+	frameCount =0;
 	
 }
 
@@ -108,24 +107,25 @@ void testApp::setup(){
 //--------------------------------------------------------------
 void testApp::update(){
 	 
+	frameCount ++;
 	currentTime =ofGetElapsedTimeMicros();
-	 timeStep =currentTime -previousTime;   
+	timeStep =currentTime -previousTime;   
 	previousTime  = currentTime;
 	
-		physicsHandler->update((float)timeStep/1000000.0f);
+	
 
 
-	float cycleTime =  (currentTime/1000)%120000;
-	dayTime = cycleTime/120000.0f ;
+	float cycleTime =  (currentTime/1000)%1200000;
+	dayTime = cycleTime/1200000.0f ;
 	
 
 
 
 
-	 colorFactor = 1;
+	colorFactor = 1;
 	if (dayTime>0.30 && dayTime<0.70)colorFactor  =0;
 	if (dayTime>0.20 && dayTime<0.30)colorFactor  =1.0f-((dayTime-0.20)*10);
-		if (dayTime>0.70 && dayTime<0.80)colorFactor  =(dayTime-0.70)*10;
+	if (dayTime>0.70 && dayTime<0.80)colorFactor  =(dayTime-0.70)*10;
 	//glClearColor(0.46f* colorFactor,0.800f*colorFactor,1.0f*colorFactor,1.0f);
 	//glClearColor(0.0f* colorFactor,0.000f*colorFactor,0.0f*colorFactor,1.0f);
 	//cout <<dayTime<<endl;
@@ -133,8 +133,18 @@ void testApp::update(){
 	// PRE RENDER UPDATE
 	//
 	//
+	
+	//update player input
 	girl.update(timeStep);
-		dirLight.pos.x = sin(dayTime*3.14*2);
+	
+	//update physics
+	physicsHandler->update((float)timeStep/1000000.0f);
+
+	//update for graphics
+	girl.resolve(timeStep);
+
+	
+	dirLight.pos.x = sin(dayTime*3.14*2);
 	dirLight.pos.z = cos(dayTime*3.14*2);
 	dirLight.update();
 
@@ -143,6 +153,7 @@ void testApp::update(){
 	camera.update(timeStep);
 	chunkHandler.update(camera.lookAtPos,camera.camPos);
 	
+	//drawGraphics
 	//
 	//
 	// FRAME  BUFFERS
@@ -153,15 +164,17 @@ void testApp::update(){
     // SHADOW MAP DRAW;
 	//
 	
-	 glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 	glPolygonOffset(4.2f,1.3f);
 	glEnable(GL_POLYGON_OFFSET_FILL);
 	
 	glEnable(GL_ALPHA_TEST);
 	
-			glAlphaFunc(GL_GREATER,0.5f);
+	glAlphaFunc(GL_GREATER,0.5f);
 
-//MAP 1
+	//MAP 1
+	
+
 		shadowMap.start1();
 		shadowMeshRenderer.start(camera,1);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
@@ -182,15 +195,18 @@ void testApp::update(){
 				 
 		}
 		shadowMeshRenderer.stop();
-			glDisable(GL_ALPHA_TEST);
+		glDisable(GL_ALPHA_TEST);
 		shadowBoneRenderer.start(camera);
 		shadowBoneRenderer.draw(&girl.charMesh);
 		shadowBoneRenderer.stop();
 			
 	glEnable(GL_ALPHA_TEST);
 	shadowMap.stop1();
+	
 //MAP 2
-	shadowMap.start2();
+	if (true)//frameCount%20 ==1)
+	{
+		shadowMap.start2();
 		shadowMeshRenderer.start(camera,2);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
 			{
@@ -227,8 +243,11 @@ void testApp::update(){
 		
 			
 		
-	shadowMap.stop2();
+		shadowMap.stop2();
+	}
 //MAP 3
+	if (frameCount%2 ==1)
+	{
 		shadowMap.start3();
 		shadowMeshRenderer.start(camera,3);
 			for (int i=0;i< chunkHandler.chunks.size();i++)
@@ -283,7 +302,7 @@ void testApp::update(){
 		
 		
 	shadowMap.stop3();
-
+	}
 	glDisable(GL_ALPHA_TEST);
 	glViewport(0,0 , SCREEN_W,SCREEN_H);
 	glDisable(GL_POLYGON_OFFSET_FILL);
@@ -362,6 +381,7 @@ void testApp::update(){
 	rendererColor.draw(physicsHandler->testSphere);
 		rendererColor.draw(physicsHandler->testSphereChar1);
 	rendererColor.draw(physicsHandler->testSphereChar2);
+	rendererColor.draw(physicsHandler->testBox);
 	/*for (int i=0;i< chunkHandler.chunks.size();i++)
 		{
 			if(chunkHandler.chunks[i]->detailLevel==1 || chunkHandler.chunks[i]->detailLevel==2)

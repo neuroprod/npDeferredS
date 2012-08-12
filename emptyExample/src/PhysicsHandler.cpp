@@ -38,29 +38,18 @@ void PhysicsHandler::setup()
         dynamicsWorld->addRigidBody(groundRigidBody);
  
   fallShape = new btSphereShape(1);
-        btDefaultMotionState* fallMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,10,0)));
-        btScalar mass = 100;
+        btDefaultMotionState* fallMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,2,0)));
+        btScalar mass = 0;
         btVector3 fallInertia(0.1,0.1,0.1);
         fallShape->calculateLocalInertia(mass,fallInertia);
         btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass,fallMotionState,fallShape,fallInertia);
-		fallRigidBodyCI.m_friction =0.1;
-		fallRigidBodyCI.m_linearDamping =0.8;
+	
 
         fallRigidBody = new btRigidBody(fallRigidBodyCI);
         dynamicsWorld->addRigidBody(fallRigidBody);
 	
 
-		capsuleShape = new btCapsuleShape(1,3.6);
-       // btDefaultMotionState* fallMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,1,0)));
-     btDefaultMotionState* capsuleMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0.2,1.8+2,0.2)));
-       // btVector3 fallInertia(0,0,0);
-       capsuleShape->calculateLocalInertia(mass,fallInertia);
-        btRigidBody::btRigidBodyConstructionInfo capsuleRigidBodyCI(mass,capsuleMotionState,capsuleShape,fallInertia);
-        capsuleRigidBody = new btRigidBody(capsuleRigidBodyCI);
-		  capsuleRigidBody->setSleepingThresholds(0.0, 0.0);
-capsuleRigidBody->setAngularFactor(0.0);
-
-        dynamicsWorld->addRigidBody(capsuleRigidBody);
+	
 
 
 
@@ -112,12 +101,26 @@ capsuleRigidBody->setAngularFactor(0.0);
 		mat2.b =1.0f;
 	testSphereChar2.setup( mat2,1  ,10 ,10);
 	testSphereChar1.setup( mat2,1  ,10 ,10);
+
+
+
+	npMaterial mat3;
+		mat3.hasColor =true;
+		mat3.hasUV =false;
+		mat3.r =0.5f;
+		mat3.g =0.5f;
+		mat3.b =0.5f;
+
+	testBox.setup(mat3,4,2,4);
+	testBox.setPos(5,1,0);
+	testBox.makePhysicsBox();
+	    dynamicsWorld->addRigidBody(testBox.fRigidBody);
 	}
 
 	void PhysicsHandler::update(float timeStep)
 	{
 	
-	 dynamicsWorld->stepSimulation(1.0f/60.0f,10);
+	 dynamicsWorld->stepSimulation(timeStep,100);
  
                 btTransform trans;
                 fallRigidBody->getMotionState()->getWorldTransform(trans);

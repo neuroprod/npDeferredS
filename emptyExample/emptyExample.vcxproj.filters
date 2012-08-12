@@ -118,6 +118,9 @@
     <ClCompile Include="src\PhysicsHandler.cpp">
       <Filter>src\physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\npBox.cpp">
+      <Filter>src\np\objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\npDeferredBuffers.h">
@@ -260,6 +263,9 @@
     </ClInclude>
     <ClInclude Include="src\testApp.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\npBox.h">
+      <Filter>src\np\objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
