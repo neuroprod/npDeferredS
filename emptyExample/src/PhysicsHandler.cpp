@@ -22,7 +22,7 @@ void PhysicsHandler::setup()
  
         dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
  
-        dynamicsWorld->setGravity(btVector3(0,-10,0));
+        dynamicsWorld->setGravity(btVector3(0,-20,0));
  
  
         groundShape = new btStaticPlaneShape(btVector3(0,1,0),0);
@@ -38,9 +38,9 @@ void PhysicsHandler::setup()
         dynamicsWorld->addRigidBody(groundRigidBody);
  
   fallShape = new btSphereShape(1);
-        btDefaultMotionState* fallMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,2,0)));
+        btDefaultMotionState* fallMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,2,4)));
         btScalar mass = 0;
-        btVector3 fallInertia(0.1,0.1,0.1);
+        btVector3 fallInertia(0.0,0.0,0.0);
         fallShape->calculateLocalInertia(mass,fallInertia);
         btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass,fallMotionState,fallShape,fallInertia);
 	
@@ -111,8 +111,13 @@ void PhysicsHandler::setup()
 		mat3.g =0.5f;
 		mat3.b =0.5f;
 
-	testBox.setup(mat3,4,2,4);
-	testBox.setPos(5,1,0);
+	testBox.setup(mat3,20,2,4);
+	ofQuaternion q;
+	ofMatrix4x4 m;
+	m.makeRotationMatrix(30,0,0,1);
+
+	q.set(m);
+	testBox.setPos(5,1,0,q);
 	testBox.makePhysicsBox();
 	    dynamicsWorld->addRigidBody(testBox.fRigidBody);
 	}

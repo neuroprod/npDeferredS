@@ -187,7 +187,8 @@ void npBox::makePhysicsBox()
 	
 
 	  fCollisionShape = new btBoxShape(btVector3(width/2,height/2,depth/2));
-        btDefaultMotionState* fMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(x,y,z)));
+	  ofVec4f q =quat.asVec4();
+	  btDefaultMotionState* fMotionState =new btDefaultMotionState(btTransform(btQuaternion(q.x,q.y,q.z,q.w),btVector3(x,y,z)));
         btScalar mass = 0;
         btVector3 fallInertia(0.0,0.0,0.1);
         fCollisionShape->calculateLocalInertia(mass,fallInertia);

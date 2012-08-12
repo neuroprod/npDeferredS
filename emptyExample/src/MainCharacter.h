@@ -45,7 +45,7 @@ public :
 	JUMP,
 	
 	};
-
+	bool onGround;
 
 		 btCollisionShape* capsuleShape;
 		btRigidBody* capsuleRigidBody ;

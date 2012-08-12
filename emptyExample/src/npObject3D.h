@@ -21,7 +21,7 @@ class npObject3D
     float y;
     float z;
  
-	
+	ofQuaternion quat;
 
     void calculateNormalMatrix()
     {
@@ -41,7 +41,17 @@ class npObject3D
         calculateNormalMatrix();
     
     }
-
+	void setPos(float _x, float _y,float _z,ofQuaternion _quat)
+    {
+        x =_x;
+        y =_y;
+        z =_z;
+		quat =_quat ;
+		  objectMatrix.makeRotationMatrix(quat);
+        objectMatrix.translate(ofVec3f(x,y,z));
+        calculateNormalMatrix();
+    
+    }
 };
 
 

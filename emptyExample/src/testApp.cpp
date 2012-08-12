@@ -379,8 +379,8 @@ void testApp::update(){
 	rendererColor.drawTriangle(girl.charPos,girl.charPos+ofVec3f(0,1,0),girl.charPos+ofVec3f(0,1,1));
 		
 	rendererColor.draw(physicsHandler->testSphere);
-		rendererColor.draw(physicsHandler->testSphereChar1);
-	rendererColor.draw(physicsHandler->testSphereChar2);
+	//	rendererColor.draw(physicsHandler->testSphereChar1);
+	//rendererColor.draw(physicsHandler->testSphereChar2);
 	rendererColor.draw(physicsHandler->testBox);
 	/*for (int i=0;i< chunkHandler.chunks.size();i++)
 		{

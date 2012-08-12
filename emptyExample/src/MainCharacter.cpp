@@ -91,7 +91,15 @@ void MainCharacter::update(unsigned long timeStep)
 
 			capsuleRigidBody->setLinearVelocity(btVector3( 0,yp,0));
 	}
-
+	if (capsuleRigidBody->getLinearVelocity().y() <0.0005 && capsuleRigidBody->getLinearVelocity().y() >-0.0005)
+	{
+	//cout << "onGround?"<< endl;
+	onGround =true;
+	}else
+	{
+		//cout << "not "<< capsuleRigidBody->getLinearVelocity().y() << endl;
+		onGround =false;
+	}
 
 /*	if (chunkHandler->frameCount>10)
 	{
@@ -132,14 +140,14 @@ void MainCharacter::resolve( unsigned long timeStep)
 	}
 	charMesh.update((float)timeStep/300000 ,walkSlerp,0,1);
 
-
+	
 
 }
 
 void  MainCharacter::setKey(int key)
 {
 
-	if (key== JUMP)
+	if (key== JUMP && onGround)
 	{
 		cout <<"jump"<<endl;
 		capsuleRigidBody->applyImpulse(btVector3(0,10,0),btVector3(0,0,0)); 
