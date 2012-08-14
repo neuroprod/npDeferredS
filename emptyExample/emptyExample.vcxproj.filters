@@ -121,6 +121,9 @@
     <ClCompile Include="src\npBox.cpp">
       <Filter>src\np\objects</Filter>
     </ClCompile>
+    <ClCompile Include="src\PhysicsDebugDrawer.cpp">
+      <Filter>src\physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\npDeferredBuffers.h">
@@ -267,6 +270,9 @@
     <ClInclude Include="src\npBox.h">
       <Filter>src\np\objects</Filter>
     </ClInclude>
+    <ClInclude Include="src\PhysicsDebugDrawer.h">
+      <Filter>src\physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -380,6 +386,12 @@
       <Filter>data\shaders</Filter>
     </None>
     <None Include="bin\data\DeferredShaderTerrainDetail.vsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DebugShader.fsh">
+      <Filter>data\shaders</Filter>
+    </None>
+    <None Include="bin\data\DebugShader.vsh">
       <Filter>data\shaders</Filter>
     </None>
   </ItemGroup>

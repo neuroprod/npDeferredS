@@ -11,6 +11,9 @@
 #include "npMultiPointLight.h"
 #include "TerrainTextureHandler.h"
 #include "TerrainMaterial.h"
+#include "btBulletDynamicsCommon.h"
+#include "BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
+#include "PhysicsHandler.h"
 
 class TerrainTextureHandler;
 class TerrainFunctions;
@@ -75,5 +78,9 @@ public:
 
 	vector <TerrainVertex > terrainVertices;
 
-	 
+	//physics
+	void removePhysicsHeightField();
+	void addPhysicsHeightField();
+	btHeightfieldTerrainShape *heightShape;
+	btRigidBody * heightBody;
 };

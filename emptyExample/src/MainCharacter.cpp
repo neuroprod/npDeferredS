@@ -29,7 +29,7 @@ void MainCharacter::setup()
 	btScalar mass = 1;
     btVector3 fallInertia(0.0,0.0,0.0);
 	capsuleShape = new btCapsuleShape(1,3.6); 
-    capsuleMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0.2,1.8+2,0.2)));
+    capsuleMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0.2,1.8+2+100,0.2)));
     capsuleShape->calculateLocalInertia(mass,fallInertia);
     btRigidBody::btRigidBodyConstructionInfo capsuleRigidBodyCI(mass,capsuleMotionState,capsuleShape,fallInertia);
     capsuleRigidBody = new btRigidBody(capsuleRigidBodyCI);
@@ -128,6 +128,7 @@ void MainCharacter::resolve( unsigned long timeStep)
 
 		charPos.x =capsuleMotionState->m_graphicsWorldTrans.getOrigin().getX();
 		charPos.y =capsuleMotionState->m_graphicsWorldTrans.getOrigin().getY();
+//		cout<<"currentCharPos: " << charPos.y<< endl;
 		charPos.z =capsuleMotionState->m_graphicsWorldTrans.getOrigin().getZ();
 		charMesh.objectMatrix.makeLookAtViewMatrix(ofVec3f(0,0,0),walkDir,ofVec3f(0,-1,0));
 		charMesh.objectMatrix.postMultTranslate(charPos);
@@ -147,7 +148,7 @@ void MainCharacter::resolve( unsigned long timeStep)
 void  MainCharacter::setKey(int key)
 {
 
-	if (key== JUMP && onGround)
+	if (key== JUMP ) //&& onGround)
 	{
 		cout <<"jump"<<endl;
 		capsuleRigidBody->applyImpulse(btVector3(0,10,0),btVector3(0,0,0)); 

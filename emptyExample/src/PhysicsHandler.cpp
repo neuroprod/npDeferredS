@@ -23,7 +23,7 @@ void PhysicsHandler::setup()
         dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher,broadphase,solver,collisionConfiguration);
  
         dynamicsWorld->setGravity(btVector3(0,-20,0));
- 
+	
  
         groundShape = new btStaticPlaneShape(btVector3(0,1,0),0);
  
@@ -35,7 +35,7 @@ void PhysicsHandler::setup()
 		//groundRigidBodyCI.m_friction =0.1;
         btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
 		
-        dynamicsWorld->addRigidBody(groundRigidBody);
+       dynamicsWorld->addRigidBody(groundRigidBody);
  
   fallShape = new btSphereShape(1);
         btDefaultMotionState* fallMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,2,4)));

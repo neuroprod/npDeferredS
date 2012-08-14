@@ -2,6 +2,7 @@
 #include "GLErrorCheck.h"
 
 
+//#define DEBUG_PHYSICS
 
 
 //<iframe src="http://player.vimeo.com/video/46021001?title=0&amp;byline=0&amp;portrait=0" width="700" height="394" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
@@ -19,7 +20,9 @@ void testApp::setup(){
 	ofSetFrameRate(60);
 	physicsHandler  =PhysicsHandler::getInstance();
 	physicsHandler->setup();
-
+	debugDrawer = new PhysicsDebugDrawer();
+		debugDrawer->setup(); 
+	physicsHandler->dynamicsWorld->setDebugDrawer(debugDrawer);
 	terrainFunctions.setup();
 	chunkHandler.terrainFunctions =&terrainFunctions;
 	chunkHandler.setup();
@@ -444,9 +447,12 @@ void testApp::draw(){
 deferredFinal.draw(camera, dayTime,colorFactor);//dayTime
 
    GLErrorCheck::test("draw end");
-
+#ifdef DEBUG_PHYSICS
  // cout << ofGetFrameRate()<< endl;
-
+   glDisable(GL_DEPTH_TEST);
+   PhysicsHandler::getInstance()->dynamicsWorld->debugDrawWorld();
+   debugDrawer->draw(camera);
+   #endif 
 }
 
 

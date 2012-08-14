@@ -14,7 +14,7 @@ Chunk::Chunk(){
 	cDivX =1;
 	cDivY =1;
 	currentDetailMaterial =NULL;
-	
+	heightBody =NULL;
 }
 
 
@@ -143,6 +143,12 @@ void Chunk::update()
 
 
 	isReady =true;
+if	(detailLevel==1)
+	{
+		
+		addPhysicsHeightField();
+	
+	}
 
 }
 
@@ -310,17 +316,17 @@ void Chunk::setDetailLevel(int _detailLevel)
 	{
 	// free texture
 		if (currentDetailMaterial) currentDetailMaterial->isUsed =false;
+		removePhysicsHeightField();
 	}
 	else if(detailLevel!=1 && _detailLevel==1)
 	{
-	texureHandler->getChunkMaterial(this);
-
+		texureHandler->getChunkMaterial(this);
+		if (isReady)addPhysicsHeightField();
 	
 	}
 	detailLevel = _detailLevel;
 
 }
-
 
 
 
@@ -448,4 +454,66 @@ void  Chunk::buildFirst()
 
 		makeTerrainObjects();
 	isReady =true;
+}
+
+
+void  Chunk::removePhysicsHeightField()
+{
+
+
+}
+void  Chunk::addPhysicsHeightField()
+{
+	cout << "addPhysics" <<terrainVertices.size()<<endl;
+	if (heightBody)return;
+	int numHeights  = terrainVertices.size();
+	float *heightfieldData  = new float [numHeights];
+	float maxHeight =-100000.0f;
+	float minHeight =10000.0f;
+
+	float _height;
+
+	int count =0;
+		for(int y=0;y<cDivY +1 ;y++)
+	{
+		
+		for(int x=0;x<cDivX+1;x++)
+		{
+		
+			TerrainVertex * vertex= getVertexForXY(x,y);
+			_height=vertex->position.y;
+				heightfieldData[count++] =_height;
+	
+		if (_height>maxHeight)maxHeight = _height;
+		if (_height<minHeight)minHeight =_height;
+		}
+		
+	}
+
+/*
+	for(int i=0;i<numHeights;i++)
+	{
+		_height = terrainVertices[i].position.y;
+		
+		heightfieldData[i] =_height;
+	
+		if (height>maxHeight)maxHeight = _height;
+		if (height<minHeight)minHeight =_height;
+	
+	
+	}*/
+	//maxHeight  =400;
+//minHeight  =0;
+	cout << maxHeight <<" "<<minHeight<<" "<<(float)height/cDivY<<endl;
+	float  dif = ( maxHeight -minHeight)/2.0f;
+	heightShape  = new btHeightfieldTerrainShape(cDivX+1,cDivY+1,heightfieldData,1,minHeight,maxHeight,1,  PHY_FLOAT, false);
+	heightShape->setLocalScaling(btVector3(4,1, 4));
+	btTransform tr;
+	tr.setIdentity();
+	tr.setOrigin(btVector3(center.x, minHeight+dif, center.z));
+	cout<<"center: " <<center.x<<" "<< center.z<<endl;
+	btDefaultMotionState *m_pMotionState = new btDefaultMotionState(tr);
+
+	heightBody = new btRigidBody(0 , m_pMotionState,heightShape );
+	PhysicsHandler::getInstance()->dynamicsWorld->addRigidBody(heightBody );
 }

@@ -34,7 +34,7 @@
 
 #include "PhysicsHandler.h"
 #include "SkyBox.h"
-
+#include "PhysicsDebugDrawer.h"
 class testApp : public ofBaseApp{
 	
 public:
@@ -93,7 +93,7 @@ public:
 	SkyBox skyBox;
 
 	PhysicsHandler *physicsHandler;
-
+PhysicsDebugDrawer *debugDrawer;
 	unsigned int frameCount;
  };
 

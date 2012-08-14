@@ -144,6 +144,7 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClCompile Include="src\npShadowMapMeshRenderer.cpp" />
     <ClCompile Include="src\ObjectLib.cpp" />
     <ClCompile Include="src\perlin.cpp" />
+    <ClCompile Include="src\PhysicsDebugDrawer.cpp" />
     <ClCompile Include="src\PhysicsHandler.cpp" />
     <ClCompile Include="src\ShadowMap.cpp" />
     <ClCompile Include="src\npSphere.cpp" />
@@ -196,6 +197,7 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClInclude Include="src\npShadowMapMeshRenderer.h" />
     <ClInclude Include="src\ObjectLib.h" />
     <ClInclude Include="src\perlin.h" />
+    <ClInclude Include="src\PhysicsDebugDrawer.h" />
     <ClInclude Include="src\PhysicsHandler.h" />
     <ClInclude Include="src\ShadowMap.h" />
     <ClInclude Include="src\npSphere.h" />
@@ -214,6 +216,8 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     <ClInclude Include="src\testApp.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\data\DebugShader.fsh" />
+    <None Include="bin\data\DebugShader.vsh" />
     <None Include="bin\data\DeferredShaderBones.fsh" />
     <None Include="bin\data\DeferredShaderBones.vsh" />
     <None Include="bin\data\DeferredShaderColor.fsh" />
