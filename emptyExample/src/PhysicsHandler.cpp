@@ -38,8 +38,8 @@ void PhysicsHandler::setup()
        dynamicsWorld->addRigidBody(groundRigidBody);
  
   fallShape = new btSphereShape(1);
-        btDefaultMotionState* fallMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,2,4)));
-        btScalar mass = 0;
+        btDefaultMotionState* fallMotionState =new btDefaultMotionState(btTransform(btQuaternion(0,0,0,1),btVector3(0,100,4)));
+        btScalar mass = 1;
         btVector3 fallInertia(0.0,0.0,0.0);
         fallShape->calculateLocalInertia(mass,fallInertia);
         btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass,fallMotionState,fallShape,fallInertia);
@@ -117,7 +117,7 @@ void PhysicsHandler::setup()
 	m.makeRotationMatrix(30,0,0,1);
 
 	q.set(m);
-	testBox.setPos(5,1,0,q);
+	testBox.setPos(5,55,0,q);
 	testBox.makePhysicsBox();
 	    dynamicsWorld->addRigidBody(testBox.fRigidBody);
 	}

@@ -128,7 +128,7 @@ void MainCharacter::resolve( unsigned long timeStep)
 
 		charPos.x =capsuleMotionState->m_graphicsWorldTrans.getOrigin().getX();
 		charPos.y =capsuleMotionState->m_graphicsWorldTrans.getOrigin().getY();
-//		cout<<"currentCharPos: " << charPos.y<< endl;
+		cout<<"currentCharPos: " << charPos.y<< endl;
 		charPos.z =capsuleMotionState->m_graphicsWorldTrans.getOrigin().getZ();
 		charMesh.objectMatrix.makeLookAtViewMatrix(ofVec3f(0,0,0),walkDir,ofVec3f(0,-1,0));
 		charMesh.objectMatrix.postMultTranslate(charPos);
